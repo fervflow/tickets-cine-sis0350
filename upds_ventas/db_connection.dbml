@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="upds_ventas" Class="db_connectionDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=localhost;Initial Catalog=upds_ventas;Integrated Security=True;Trust Server Certificate=True" SettingsObjectName="upds_ventas.Properties.Settings" SettingsPropertyName="upds_ventasConnectionString" Provider="System.Data.SqlClient" />
+  <Function Name="dbo.sp_insertar_usuario" Method="sp_insertar_usuario">
+    <Parameter Name="ci" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="nombre" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="ap_paterno" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="ap_materno" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="usuario" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="pass" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="tipo" Type="System.String" DbType="VarChar(15)" />
+    <Parameter Name="estado" Type="System.Boolean" DbType="Bit" />
+    <Return Type="System.Int32" />
+  </Function>
+</Database>
