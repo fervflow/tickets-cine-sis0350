@@ -1,4 +1,84 @@
---creacion de los procedimientos almacenados
+-- INSERTAR USUARIO
+CREATE OR ALTER PROC sp_insertar_usuario
+    @ci VARCHAR(20),
+    @nombre VARCHAR(30),
+    @ap_paterno VARCHAR(30),
+    @ap_materno VARCHAR(30),
+    @usuario VARCHAR(30),
+    @pass VARCHAR(30),
+    @tipo VARCHAR(15),
+    @estado BIT
+AS
+DECLARE @id_persona INT
+INSERT INTO persona
+    (ci, nombre, ap_paterno, ap_materno)
+VALUES
+    (@ci, @nombre, @ap_paterno, @ap_materno);
+SET @id_persona=SCOPE_IDENTITY();
+INSERT INTO usuario
+    (id_usuario, nombre_usuario, pass, tipo, estado)
+VALUES
+    (@id_persona, @usuario, ENCRYPTBYPASSPHRASE('upds2024',@pass), @tipo, @estado)
+GO
+
+-- verificamos usuario
+SELECT*
+FROM persona
+SELECT *
+FROM usuario
+GO
+
+-- LISTAR USUARIOS
+CREATE OR ALTER PROC sp_listar_usuarios
+AS
+SELECT
+    p.id_persona,
+    p.ci,
+    p.nombre,
+    p.ap_paterno,
+    p.ap_materno,
+    u.nombre_usuario,
+    CONVERT(VARCHAR(30), DECRYPTBYPASSPHRASE('upds2024',u.pass)) AS pass,
+    u.tipo,
+    u.estado
+FROM persona p INNER JOIN usuario u
+    ON p.id_persona=u.id_usuario
+GO
+
+-- procedimiento para modificar usuaro
+ALTER PROC modificar_usuario
+    @ci VARCHAR(20),
+    @nom VARCHAR(30),
+    @ap_paterno VARCHAR(30),
+    @ap_materno VARCHAR(30),
+    @usuario VARCHAR(30),
+    @pass VARCHAR(30),
+    @tipo VARCHAR(15),
+    @id_us INT
+AS
+DECLARE @error INT
+BEGIN TRAN
+UPDATE persona SET nombre=@nom,ap_paterno=@ap_paterno,ap_materno=@ap_materno,ci=@ci
+WHERE id_persona=@id_us
+SET @error=@@ERROR
+IF(@error<>0)
+ROLLBACK TRAN
+ELSE
+BEGIN
+    UPDATE usuario SET nombre_usuario=@usuario,pass=ENCRYPTBYPASSPHRASE('upds2024',@pass),tipo=@tipo
+WHERE id_usuario=@id_us
+    COMMIT TRAN
+END
+-- procedimiento almacenado para dar de baja usuario
+GO
+ALTER PROC baja_usuarios(@id_us INT,
+    @est VARCHAR(20))
+AS
+IF(@est='BAJA')
+UPDATE usuario SET estado='BAJA' WHERE id_usuario=@id_us
+ELSE
+UPDATE usuario SET estado='ACTIVO'WHERE id_usuario=@id_us
+
 
 -- procedimiento almacenado para insertar proveedor
 CREATE PROC insertar_proveedor
@@ -44,76 +124,7 @@ FROM proveedor
 WHERE nombre LIKE '%'+@nom+'%'
 GO
 
--- PROCEDIMIENTO ALMACENADO PARA INSERTAR USUARIO
-CREATE OR ALTER PROC sp_insertar_usuario
-    @ci VARCHAR(20),
-    @nombre VARCHAR(30),
-    @ap_paterno VARCHAR(30),
-    @ap_materno VARCHAR(30),
-    @usuario VARCHAR(30),
-    @pass VARCHAR(30),
-    @tipo VARCHAR(15),
-    @estado BIT
-AS
-DECLARE @id_persona INT
-INSERT INTO persona
-    (ci, nombre, ap_paterno, ap_materno)
-VALUES
-    (@ci, @nombre, @ap_paterno, @ap_materno);
-SET @id_persona=SCOPE_IDENTITY();
-INSERT INTO usuario
-    (id_usuario, nombre_usuario, pass, tipo, estado)
-VALUES
-    (@id_persona, @usuario, ENCRYPTBYPASSPHRASE('upds2024',@pass), @tipo, @estado)
-GO
 
--- verificamos usuario
-SELECT*
-FROM persona
-SELECT *
-FROM usuario
-GO
-
--- procediemiento almacenado para lista usuarios
-CREATE PROC listar_usuarios
-AS
-SELECT p.id_persona, p.nombre, p.ap_paterno, p.ap_materno, p.ci, u.nombre_usuario, CONVERT(VARCHAR(30),DECRYPTBYPASSPHRASE('upds2024',u.pass)) AS contraseña, u.tipo, u.estado
-FROM persona p INNER JOIN usuario u
-    ON p.id_persona=u.id_usuario
--- procedimiento para modificar usuaro
-GO
-ALTER PROC modificar_usuario
-    @ci VARCHAR(20),
-    @nom VARCHAR(30),
-    @ap_paterno VARCHAR(30),
-    @ap_materno VARCHAR(30),
-    @usuario VARCHAR(30),
-    @pass VARCHAR(30),
-    @tipo VARCHAR(15),
-    @id_us INT
-AS
-DECLARE @error INT
-BEGIN TRAN
-UPDATE persona SET nombre=@nom,ap_paterno=@ap_paterno,ap_materno=@ap_materno,ci=@ci
-WHERE id_persona=@id_us
-SET @error=@@ERROR
-IF(@error<>0)
-ROLLBACK TRAN
-ELSE
-BEGIN
-    UPDATE usuario SET nombre_usuario=@usuario,pass=ENCRYPTBYPASSPHRASE('upds2024',@pass),tipo=@tipo
-WHERE id_usuario=@id_us
-    COMMIT TRAN
-END
--- procedimiento almacenado para dar de baja usuario
-GO
-ALTER PROC baja_usuarios(@id_us INT,
-    @est VARCHAR(20))
-AS
-IF(@est='BAJA')
-UPDATE usuario SET estado='BAJA' WHERE id_usuario=@id_us
-ELSE
-UPDATE usuario SET estado='ACTIVO'WHERE id_usuario=@id_us
 -- PROCEDIMIENTO ALMACENADO PARA IDENTIFICARSE
 GO
 CREATE PROC identificarse(@usuario VARCHAR(30),
