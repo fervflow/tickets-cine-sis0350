@@ -1,17 +1,49 @@
+using Microsoft.Extensions.DependencyInjection;
+using upds_ventas.Data;
+using upds_ventas.Forms;
+using upds_ventas.Repos;
+
 namespace upds_ventas
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
+        public static IServiceProvider ServiceProvider { get; private set; } = null!;
         [STAThread]
         static void Main()
+        //{
+        //    ApplicationConfiguration.Initialize();
+        //    Application.Run(new Forms.Login());
+        //}
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
+            var services = ConfigureServices();
+            ServiceProvider = services.BuildServiceProvider();
+
             ApplicationConfiguration.Initialize();
-            Application.Run(new Forms.Login());
+
+            // Create and run the main form with DI
+            var mainForm = ServiceProvider.GetRequiredService<Login>();
+            Application.Run(mainForm);
+        }
+
+        private static IServiceCollection ConfigureServices()
+        {
+            var services = new ServiceCollection();
+
+            // Register DbContext with the connection string
+            services.AddDbContext<UpdsVentasContext>();
+
+            // Register repositories
+            services.AddScoped<UsuarioRepo>();
+            //services.AddScoped<ProductoRepo>();
+            //services.AddScoped<ProveedorRepo>();
+
+            // Register the main form and other forms if needed
+            services.AddScoped<Login>();
+            services.AddScoped<MenuPrincipal>();
+            services.AddScoped<SetUsuario>();
+            services.AddScoped<SetProveedor>();
+
+            return services;
         }
     }
 }
