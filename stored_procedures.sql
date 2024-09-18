@@ -21,13 +21,6 @@ VALUES
     (@id_persona, @usuario, ENCRYPTBYPASSPHRASE('upds2024',@pass), @tipo, @estado)
 GO
 
--- verificamos usuario
-SELECT*
-FROM persona
-SELECT *
-FROM usuario
-GO
-
 -- LISTAR USUARIOS
 CREATE OR ALTER PROC sp_listar_usuarios
 AS
@@ -46,82 +39,109 @@ FROM persona p INNER JOIN usuario u
 GO
 
 -- procedimiento para modificar usuaro
-ALTER PROC modificar_usuario
+CREATE OR ALTER PROC sp_modificar_usuario
+    @id_usuario INT,
     @ci VARCHAR(20),
-    @nom VARCHAR(30),
+    @nombre VARCHAR(30),
     @ap_paterno VARCHAR(30),
     @ap_materno VARCHAR(30),
     @usuario VARCHAR(30),
     @pass VARCHAR(30),
     @tipo VARCHAR(15),
-    @id_us INT
+    @estado BIT
 AS
-DECLARE @error INT
-BEGIN TRAN
-UPDATE persona SET nombre=@nom,ap_paterno=@ap_paterno,ap_materno=@ap_materno,ci=@ci
-WHERE id_persona=@id_us
-SET @error=@@ERROR
-IF(@error<>0)
-ROLLBACK TRAN
-ELSE
 BEGIN
-    UPDATE usuario SET nombre_usuario=@usuario,pass=ENCRYPTBYPASSPHRASE('upds2024',@pass),tipo=@tipo
-WHERE id_usuario=@id_us
-    COMMIT TRAN
-END
--- procedimiento almacenado para dar de baja usuario
-GO
-ALTER PROC baja_usuarios(@id_us INT,
-    @est VARCHAR(20))
-AS
-IF(@est='BAJA')
-UPDATE usuario SET estado='BAJA' WHERE id_usuario=@id_us
-ELSE
-UPDATE usuario SET estado='ACTIVO'WHERE id_usuario=@id_us
+    SET XACT_ABORT ON;
+    
+    BEGIN TRY
+        BEGIN TRANSACTION;
+        UPDATE persona
+        SET
+            nombre = @nombre,
+            ap_paterno = @ap_paterno,
+            ap_materno = @ap_materno,
+            ci = @ci
+        WHERE id_persona = @id_usuario;
 
+        UPDATE usuario
+        SET
+            nombre_usuario = @usuario,
+            pass = ENCRYPTBYPASSPHRASE('upds2024', @pass),
+            tipo = @tipo,
+            estado = @estado
+        WHERE id_usuario = @id_usuario;
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        IF XACT_STATE() <> 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+        DECLARE @ErrorMessage NVARCHAR(4000) = ERROR_MESSAGE();
+        THROW 50000, @ErrorMessage, 1; -- Rethrow the error to the client
+    END CATCH
+END;
+GO
+
+EXEC dbo.sp_modificar_usuario 2, '12129090 CBB', 'nando', 'Vel', 'Flowers', 'fervflow', 'asd', 'VENDEDOR', 1;
+GO
+
+-- procedimiento almacenado para dar de baja usuario
+CREATE OR ALTER PROC sp_deshabilitar_usuario
+    @id_usuario INT,
+    @estado BIT
+AS
+    UPDATE usuario SET estado=0 WHERE id_usuario=@id_usuario;
+GO
 
 -- procedimiento almacenado para insertar proveedor
-CREATE PROC insertar_proveedor
-    (@nom VARCHAR(30),
-    @cel VARCHAR(20),
+CREATE OR ALTER PROC sp_insertar_proveedor
     @nit VARCHAR(20),
-    @dir VARCHAR(30),
-    @ciu VARCHAR(20))
+    @nombre VARCHAR(30),
+    @direccion VARCHAR(30),
+    @telefono VARCHAR(20),
+    @ciudad VARCHAR(20)
 AS
 INSERT INTO proveedor
-    (nombre,telefono,nit,direccion,ciudad)
-VALUES(@nom, @cel, @nit, @dir, @ciu)
--- verificamos 
-SELECT*
-FROM proveedor
+    (nit, nombre, direccion, telefono, ciudad)
+VALUES
+    (@nit, @nombre, @direccion, @telefono, @ciudad)
+GO
+
 -- procedimiento almacenado para listar proveedores
 GO
-CREATE PROC listar_proveedor
+CREATE OR ALTER PROC sp_listar_proveedores
 AS
 SELECT *
 FROM proveedor
+GO
+
 -- procedimiento almacenado para modificar proveedor
-GO
-CREATE PROC modificar_proveedor
-    (@nom VARCHAR(30),
-    @cel VARCHAR(20),
+CREATE OR ALTER PROC sp_modificar_proveedor
+    @id_proveedor INT,
     @nit VARCHAR(20),
-    @dir VARCHAR(30),
-    @ciu VARCHAR(20),
-    @id_pro INT)
+    @nombre VARCHAR(30),
+    @direccion VARCHAR(30),
+    @telefono VARCHAR(20),
+    @ciudad VARCHAR(20)
 AS
-UPDATE proveedor SET nombre=@nom,telefono=@cel,nit=@nit,direccion=@dir,ciudad=@ciu
-WHERE id_proveedor=@id_pro
---- ´probamos
-SELECT *
-FROM proveedor
--- procedimiento almacenado para buscar proveedor
+UPDATE proveedor
+SET
+    nit=@nit,
+    nombre=@nombre,
+    direccion=@direccion,
+    telefono=@telefono,
+    ciudad=@ciudad
+WHERE id_proveedor=@id_proveedor
 GO
-CREATE PROC buscar_proveedor(@nom VARCHAR(30))
+
+-- procedimiento almacenado para buscar proveedor
+CREATE PROC buscar_proveedor(@nombre VARCHAR(30))
 AS
 SELECT *
 FROM proveedor
-WHERE nombre LIKE '%'+@nom+'%'
+WHERE nombre LIKE '%'+@nombre+'%'
 GO
 
 

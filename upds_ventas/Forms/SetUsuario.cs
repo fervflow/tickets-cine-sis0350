@@ -18,48 +18,87 @@ namespace upds_ventas.Forms
     public partial class SetUsuario : Form
     {
         private readonly UsuarioRepo _usuarioRepo;
+        private bool isNewUser;
+        private Usuario usuario;
 
         public SetUsuario(UsuarioRepo usuarioRepo)
         {
             _usuarioRepo = usuarioRepo;
+            isNewUser = true;
+            usuario = new Usuario
+            {
+                Persona = new Persona()
+            };
+
             InitializeComponent();
 
-            //db_connection = new UpdsVentasContext();
-
+            SetUsuarioForm.Text = "Registrar Nuevo Usuario";
             tbNombre.Text = tbApPaterno.Text = tbApMaterno.Text = tbCi.Text = tbUsuario.Text = tbPass.Text = "";
-            cbTipo.Items.Clear();
+            //cbTipo.Items.Clear();
             cbTipo.Items.Add("VENDEDOR");
             cbTipo.Items.Add("ADMINISTRADOR");
         }
 
+        public void SetForModificar(Usuario u) {
+            isNewUser = false;
+
+            SetUsuarioForm.Text = "Modificar Usuario";
+            tbNombre.Text = u.Persona.Nombre;
+            tbApPaterno.Text = u.Persona.ApPaterno;
+            tbApMaterno.Text = u.Persona.ApMaterno;
+            tbCi.Text = u.Persona.Ci;
+            tbUsuario.Text = u.NombreUsuario;
+            tbPass.Text = u.Pass;
+            cbTipo.SelectedItem = u.Tipo;
+
+            usuario.IdUsuario = u.IdUsuario;
+        }
+
+        private void SetUsuario_Load(object sender, EventArgs e)
+        {
+            //cbTipo.Items.Clear();
+            //cbTipo.Items.Add("VENDEDOR");
+            //cbTipo.Items.Add("ADMINISTRADOR");
+
+            //if (isNewUser)
+            //{
+            //    cbTipo.SelectedItem = usuario!.Tipo;
+            //}
+        }
+
         private async void btnGuardar_Click(object sender, EventArgs e)
         {
-            var persona = new Persona
+            usuario.Persona.Ci = tbCi.Text;
+            usuario.Persona.Nombre = tbNombre.Text;
+            usuario.Persona.ApPaterno = tbApPaterno.Text;
+            usuario.Persona.ApMaterno = tbApMaterno.Text;
+            usuario.NombreUsuario = tbUsuario.Text;
+            usuario.Pass = tbPass.Text;
+            usuario.Tipo = cbTipo.Text;
+            usuario.Estado = tglHabilitado.Checked;
+
+
+            bool querySuccess;
+            if (isNewUser)
             {
-                Ci = tbCi.Text,
-                Nombre = tbNombre.Text,
-                ApPaterno = tbApPaterno.Text,
-                ApMaterno = tbApMaterno.Text
-            };
-
-            string usuario = tbUsuario.Text;
-            string pass = tbPass.Text;
-            string tipo = cbTipo.Text;
-            bool estado = tglHabilitado.Checked;
-
-            MessageBox.Show("Nombre: " + persona.Nombre + "\nAp_paterno: " + persona.ApPaterno + "\nAp_materno: " + persona.ApMaterno +
-                "\nCI: " + persona.Ci + "\nUsuario: " + usuario + "\nPass: " + pass + "\nTipo: " + tipo + "\nestado: " + estado);
-
-            int rowsAffected = await _usuarioRepo.InsertarUsuarioAsync(persona, usuario, pass, tipo, estado);
-
-            if (rowsAffected > 0)
-            {
-                MessageBox.Show("Usuario registrado exitosamente!");
+                querySuccess = await _usuarioRepo.InsertarUsuarioAsync(usuario);
             }
             else
             {
-                MessageBox.Show("Error al registrar el usuario.");
+                querySuccess = await _usuarioRepo.ModificarUsuarioAsync(usuario);
+                //MessageBox.Show("SP modificar executed with rowsAffected: " + rowsAffected);
             }
+
+            if (querySuccess)
+            {
+                MessageBox.Show("Datos de usuario guardados exitosamente!");
+            }
+            else
+            {
+                MessageBox.Show("Error al guardar los datos del usuario.");
+            }
+
+            this.Close();
 
         }
     }

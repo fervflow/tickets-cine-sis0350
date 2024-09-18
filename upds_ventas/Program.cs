@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using upds_ventas.Data;
 using upds_ventas.Forms;
@@ -31,6 +32,9 @@ namespace upds_ventas
 
             // Register DbContext with the connection string
             services.AddDbContext<UpdsVentasContext>();
+            //services.AddDbContext<UpdsVentasContext>(options =>
+            //    options.UseSqlServer("Server=localhost;Database=upds_ventas;Trusted_Connection=True;TrustServerCertificate=True"));//,
+                //ServiceLifetime.Singleton);
 
             // Register repositories
             services.AddScoped<UsuarioRepo>();
@@ -40,8 +44,8 @@ namespace upds_ventas
             // Register the main form and other forms if needed
             services.AddScoped<Login>();
             services.AddScoped<MenuPrincipal>();
-            services.AddScoped<SetUsuario>();
-            services.AddScoped<SetProveedor>();
+            services.AddTransient<SetUsuario>();
+            services.AddTransient<SetProveedor>();
 
             return services;
         }

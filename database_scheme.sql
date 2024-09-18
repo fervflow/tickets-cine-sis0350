@@ -1,4 +1,11 @@
 USE master;
+
+IF EXISTS (SELECT name FROM sys.databases WHERE name = 'upds_ventas')
+BEGIN
+    USE master;
+    ALTER DATABASE upds_ventas SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+    DROP DATABASE upds_ventas;
+END
 GO
 
 CREATE DATABASE upds_ventas;
@@ -49,10 +56,10 @@ CREATE TABLE venta
 CREATE TABLE proveedor
 (
     id_proveedor INT         PRIMARY KEY IDENTITY(1, 1),
-    nombre       VARCHAR(30) NOT NULL,
-    telefono     VARCHAR(20) NOT NULL,
     nit          VARCHAR(20) UNIQUE,
+    nombre       VARCHAR(30) NOT NULL,
     direccion    VARCHAR(30) NOT NULL,
+    telefono     VARCHAR(20) NOT NULL,
     ciudad       VARCHAR(20) CHECK(ciudad IN(
         'POTOSI', 'COCHABAMBA', 'CHUQUISACA', 'TARIJA',
         'LA PAZ', 'SANTA CRUZ', 'ORURO', 'BENI', 'PANDO')),

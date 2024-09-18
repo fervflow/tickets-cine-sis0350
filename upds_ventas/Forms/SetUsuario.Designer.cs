@@ -407,6 +407,7 @@
             gbDatosUsuario.PerformLayout();
             gbDatosPersonales.ResumeLayout(false);
             gbDatosPersonales.PerformLayout();
+            Load += SetUsuario_Load;
             ResumeLayout(false);
         }
 
