@@ -17,13 +17,14 @@ namespace upds_ventas.Forms
 {
     public partial class SetUsuario : Form
     {
-        private readonly UsuarioRepo _usuarioRepo;
+        private UsuarioRepo _usuarioRepo;
         private bool isNewUser;
         private Usuario usuario;
 
-        public SetUsuario(UsuarioRepo usuarioRepo)
+        public SetUsuario()// UsuarioRepo usuarioRepo)
         {
-            _usuarioRepo = usuarioRepo;
+            //_usuarioRepo = usuarioRepo;
+            _usuarioRepo = new UsuarioRepo();
             isNewUser = true;
             usuario = new Usuario
             {
@@ -78,7 +79,7 @@ namespace upds_ventas.Forms
             usuario.Estado = tglHabilitado.Checked;
 
 
-            bool querySuccess;
+            bool querySuccess = false;
             if (isNewUser)
             {
                 querySuccess = await _usuarioRepo.InsertarUsuarioAsync(usuario);

@@ -3,6 +3,19 @@ SELECT * FROM usuario
 GO
 
 -- USUARIOS
+    -- Login
+EXEC dbo.sp_login 'qwe', 'qwe';
+
+UPDATE usuario
+SET estado = 1
+WHERE id_usuario = 1;
+
+SELECT 1
+FROM usuario
+WHERE nombre_usuario = 'qwe'
+    AND CONVERT(VARCHAR(30), DECRYPTBYPASSPHRASE('upds2024', pass)) = 'qwe'
+    AND estado = 1
+
 SELECT
     p.id_persona,
     p.ci,

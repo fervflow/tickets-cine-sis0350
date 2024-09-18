@@ -11,43 +11,43 @@ namespace upds_ventas
         public static IServiceProvider ServiceProvider { get; private set; } = null!;
         [STAThread]
         static void Main()
-        //{
-        //    ApplicationConfiguration.Initialize();
-        //    Application.Run(new Forms.Login());
-        //}
         {
-            var services = ConfigureServices();
-            ServiceProvider = services.BuildServiceProvider();
-
             ApplicationConfiguration.Initialize();
-
-            // Create and run the main form with DI
-            var mainForm = ServiceProvider.GetRequiredService<Login>();
-            Application.Run(mainForm);
+            Application.Run(new Login());
         }
+        //{
+        //    var services = ConfigureServices();
+        //    ServiceProvider = services.BuildServiceProvider();
 
-        private static IServiceCollection ConfigureServices()
-        {
-            var services = new ServiceCollection();
+        //    ApplicationConfiguration.Initialize();
 
-            // Register DbContext with the connection string
-            services.AddDbContext<UpdsVentasContext>();
-            //services.AddDbContext<UpdsVentasContext>(options =>
-            //    options.UseSqlServer("Server=localhost;Database=upds_ventas;Trusted_Connection=True;TrustServerCertificate=True"));//,
-                //ServiceLifetime.Singleton);
+        //    // Create and run the main form with DI
+        //    var mainForm = ServiceProvider.GetRequiredService<Login>();
+        //    Application.Run(mainForm);
+        //}
 
-            // Register repositories
-            services.AddScoped<UsuarioRepo>();
-            //services.AddScoped<ProductoRepo>();
-            //services.AddScoped<ProveedorRepo>();
+        //private static IServiceCollection ConfigureServices()
+        //{
+        //    var services = new ServiceCollection();
 
-            // Register the main form and other forms if needed
-            services.AddScoped<Login>();
-            services.AddScoped<MenuPrincipal>();
-            services.AddTransient<SetUsuario>();
-            services.AddTransient<SetProveedor>();
+        //    // Register DbContext with the connection string
+        //    services.AddDbContext<UpdsVentasContext>();
+        //    //services.AddDbContext<UpdsVentasContext>(options =>
+        //    //    options.UseSqlServer("Server=localhost;Database=upds_ventas;Trusted_Connection=True;TrustServerCertificate=True"));//,
+        //        //ServiceLifetime.Singleton);
 
-            return services;
-        }
+        //    // Register repositories
+        //    services.AddScoped<UsuarioRepo>();
+        //    //services.AddScoped<ProductoRepo>();
+        //    //services.AddScoped<ProveedorRepo>();
+
+        //    // Register the main form and other forms if needed
+        //    services.AddScoped<Login>();
+        //    services.AddScoped<MenuPrincipal>();
+        //    services.AddTransient<SetUsuario>();
+        //    services.AddTransient<SetProveedor>();
+
+        //    return services;
+        //}
     }
 }

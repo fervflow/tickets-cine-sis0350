@@ -145,7 +145,7 @@
             CbCiudad.Location = new Point(193, 242);
             CbCiudad.Name = "CbCiudad";
             CbCiudad.Size = new Size(240, 30);
-            CbCiudad.TabIndex = 15;
+            CbCiudad.TabIndex = 4;
             // 
             // TbTelefono
             // 
@@ -159,7 +159,7 @@
             TbTelefono.Name = "TbTelefono";
             TbTelefono.ReadOnly = false;
             TbTelefono.Size = new Size(240, 38);
-            TbTelefono.TabIndex = 12;
+            TbTelefono.TabIndex = 3;
             TbTelefono.Text = "60607070";
             TbTelefono.TextAlignment = HorizontalAlignment.Left;
             TbTelefono.UseSystemPasswordChar = false;
@@ -176,7 +176,7 @@
             TbNit.Name = "TbNit";
             TbNit.ReadOnly = false;
             TbNit.Size = new Size(240, 38);
-            TbNit.TabIndex = 12;
+            TbNit.TabIndex = 0;
             TbNit.Text = "123456789017";
             TbNit.TextAlignment = HorizontalAlignment.Left;
             TbNit.UseSystemPasswordChar = false;
@@ -193,7 +193,7 @@
             TbDireccion.Name = "TbDireccion";
             TbDireccion.ReadOnly = false;
             TbDireccion.Size = new Size(240, 41);
-            TbDireccion.TabIndex = 14;
+            TbDireccion.TabIndex = 2;
             TbDireccion.Text = "Av Panamericana S/N";
             TbDireccion.TextAlignment = HorizontalAlignment.Left;
             TbDireccion.UseSystemPasswordChar = false;
@@ -210,7 +210,7 @@
             TbNombre.Name = "TbNombre";
             TbNombre.ReadOnly = false;
             TbNombre.Size = new Size(240, 41);
-            TbNombre.TabIndex = 14;
+            TbNombre.TabIndex = 1;
             TbNombre.Text = "Monsters INC.";
             TbNombre.TextAlignment = HorizontalAlignment.Left;
             TbNombre.UseSystemPasswordChar = false;

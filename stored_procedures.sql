@@ -137,26 +137,53 @@ WHERE id_proveedor=@id_proveedor
 GO
 
 -- procedimiento almacenado para buscar proveedor
-CREATE PROC buscar_proveedor(@nombre VARCHAR(30))
+CREATE OR ALTER PROC sp_buscar_proveedor
+    @nombre VARCHAR(30)
 AS
 SELECT *
 FROM proveedor
-WHERE nombre LIKE '%'+@nombre+'%'
+WHERE LOWER(nombre) LIKE '%'+@nombre+'%'
 GO
 
 
 -- PROCEDIMIENTO ALMACENADO PARA IDENTIFICARSE
-GO
-CREATE PROC identificarse(@usuario VARCHAR(30),
-    @contra VARCHAR(30),
-    @id INT output)
+CREATE OR ALTER PROC sp_login
+    @usuario VARCHAR(30),
+    @pass VARCHAR(30)
 AS
-SET @id=0;
-SELECT @id=id_usuario
-FROM usuario
-WHERE nombre_usuario=@usuario AND CONVERT(VARCHAR(30),DECRYPTBYPASSPHRASE('upds2024',pass))=@contra AND estado='ACTIVO'
--- procedimiento almacenado para mostrar usuario logeado
+BEGIN
+    -- 0: Success, 1: Usuario no encontrado, 2: Usuario Deshabilitado, 3: Password incorrecto
+    IF EXISTS (
+        SELECT 1
+        FROM usuario
+        WHERE nombre_usuario = @usuario
+    )
+    BEGIN
+        DECLARE @id_usuario INT = (
+            SELECT id_usuario
+            FROM usuario
+            WHERE nombre_usuario = @usuario
+        );
+        IF (SELECT estado
+            FROM usuario
+            WHERE id_usuario = @id_usuario
+        ) = 1
+        BEGIN
+            IF (
+                SELECT DECRYPTBYPASSPHRASE('upds2024', pass)
+                FROM usuario
+                WHERE id_usuario = @id_usuario
+            ) = @pass
+                SELECT 0;
+            ELSE SELECT 3;
+        END
+        ELSE SELECT 2;
+    END
+    ELSE SELECT 1;
+END;
 GO
+
+-- procedimiento almacenado para mostrar usuario logeado
 CREATE PROC mostrar_usuario(@id INT,
     @nombre VARCHAR(100) output,
     @cargo VARCHAR(30) output)

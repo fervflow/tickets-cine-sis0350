@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             formLogin = new ReaLTaiizor.Forms.ForeverForm();
-            btnClose = new ReaLTaiizor.Controls.ForeverClose();
-            tbUsuario = new ReaLTaiizor.Controls.ForeverTextBox();
-            lbUsuario = new ReaLTaiizor.Controls.ForeverLabel();
-            tbPass = new ReaLTaiizor.Controls.ForeverTextBox();
-            lbPass = new ReaLTaiizor.Controls.ForeverLabel();
             btnLogin = new ReaLTaiizor.Controls.ForeverButton();
+            lbPass = new ReaLTaiizor.Controls.ForeverLabel();
+            lbUsuario = new ReaLTaiizor.Controls.ForeverLabel();
+            TbPass = new ReaLTaiizor.Controls.ForeverTextBox();
+            TbUsuario = new ReaLTaiizor.Controls.ForeverTextBox();
+            btnClose = new ReaLTaiizor.Controls.ForeverClose();
             formLogin.SuspendLayout();
             SuspendLayout();
             // 
@@ -46,8 +46,8 @@
             formLogin.Controls.Add(btnLogin);
             formLogin.Controls.Add(lbPass);
             formLogin.Controls.Add(lbUsuario);
-            formLogin.Controls.Add(tbPass);
-            formLogin.Controls.Add(tbUsuario);
+            formLogin.Controls.Add(TbPass);
+            formLogin.Controls.Add(TbUsuario);
             formLogin.Controls.Add(btnClose);
             formLogin.Dock = DockStyle.Fill;
             formLogin.Font = new Font("Segoe UI", 12F);
@@ -67,67 +67,19 @@
             formLogin.TextColor = Color.FromArgb(234, 234, 234);
             formLogin.TextLight = Color.SeaGreen;
             // 
-            // btnClose
+            // btnLogin
             // 
-            btnClose.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnClose.BackColor = Color.White;
-            btnClose.BaseColor = Color.FromArgb(45, 47, 49);
-            btnClose.DefaultLocation = true;
-            btnClose.DownColor = Color.FromArgb(30, 0, 0, 0);
-            btnClose.Font = new Font("Marlett", 10F);
-            btnClose.Location = new Point(294, 17);
-            btnClose.Name = "btnClose";
-            btnClose.OverColor = Color.FromArgb(30, 255, 255, 255);
-            btnClose.Size = new Size(18, 18);
-            btnClose.TabIndex = 0;
-            btnClose.Text = "foreverClose1";
-            btnClose.TextColor = Color.FromArgb(243, 243, 243);
-            // 
-            // tbUsuario
-            // 
-            tbUsuario.BackColor = Color.Transparent;
-            tbUsuario.BaseColor = Color.FromArgb(45, 47, 49);
-            tbUsuario.BorderColor = Color.FromArgb(35, 168, 109);
-            tbUsuario.FocusOnHover = false;
-            tbUsuario.ForeColor = Color.FromArgb(192, 192, 192);
-            tbUsuario.Location = new Point(39, 116);
-            tbUsuario.MaxLength = 32767;
-            tbUsuario.Multiline = false;
-            tbUsuario.Name = "tbUsuario";
-            tbUsuario.ReadOnly = false;
-            tbUsuario.Size = new Size(246, 29);
-            tbUsuario.TabIndex = 1;
-            tbUsuario.TextAlign = HorizontalAlignment.Left;
-            tbUsuario.UseSystemPasswordChar = false;
-            // 
-            // lbUsuario
-            // 
-            lbUsuario.AutoSize = true;
-            lbUsuario.BackColor = Color.Transparent;
-            lbUsuario.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            lbUsuario.ForeColor = Color.LightGray;
-            lbUsuario.Location = new Point(39, 92);
-            lbUsuario.Name = "lbUsuario";
-            lbUsuario.Size = new Size(73, 21);
-            lbUsuario.TabIndex = 2;
-            lbUsuario.Text = "Usuario:";
-            // 
-            // tbPass
-            // 
-            tbPass.BackColor = Color.Transparent;
-            tbPass.BaseColor = Color.FromArgb(45, 47, 49);
-            tbPass.BorderColor = Color.FromArgb(35, 168, 109);
-            tbPass.FocusOnHover = false;
-            tbPass.ForeColor = Color.FromArgb(192, 192, 192);
-            tbPass.Location = new Point(39, 192);
-            tbPass.MaxLength = 32767;
-            tbPass.Multiline = false;
-            tbPass.Name = "tbPass";
-            tbPass.ReadOnly = false;
-            tbPass.Size = new Size(246, 29);
-            tbPass.TabIndex = 1;
-            tbPass.TextAlign = HorizontalAlignment.Left;
-            tbPass.UseSystemPasswordChar = true;
+            btnLogin.BackColor = Color.Transparent;
+            btnLogin.BaseColor = Color.FromArgb(35, 168, 109);
+            btnLogin.Font = new Font("Segoe UI", 12F);
+            btnLogin.Location = new Point(39, 295);
+            btnLogin.Name = "btnLogin";
+            btnLogin.Rounded = false;
+            btnLogin.Size = new Size(246, 40);
+            btnLogin.TabIndex = 2;
+            btnLogin.Text = "INGRESAR";
+            btnLogin.TextColor = Color.FromArgb(243, 243, 243);
+            btnLogin.Click += btnLogin_Click;
             // 
             // lbPass
             // 
@@ -141,19 +93,67 @@
             lbPass.TabIndex = 2;
             lbPass.Text = "Contraseña:";
             // 
-            // btnLogin
+            // lbUsuario
             // 
-            btnLogin.BackColor = Color.Transparent;
-            btnLogin.BaseColor = Color.FromArgb(35, 168, 109);
-            btnLogin.Font = new Font("Segoe UI", 12F);
-            btnLogin.Location = new Point(39, 295);
-            btnLogin.Name = "btnLogin";
-            btnLogin.Rounded = false;
-            btnLogin.Size = new Size(246, 40);
-            btnLogin.TabIndex = 3;
-            btnLogin.Text = "INGRESAR";
-            btnLogin.TextColor = Color.FromArgb(243, 243, 243);
-            btnLogin.Click += btnLogin_Click;
+            lbUsuario.AutoSize = true;
+            lbUsuario.BackColor = Color.Transparent;
+            lbUsuario.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            lbUsuario.ForeColor = Color.LightGray;
+            lbUsuario.Location = new Point(39, 92);
+            lbUsuario.Name = "lbUsuario";
+            lbUsuario.Size = new Size(73, 21);
+            lbUsuario.TabIndex = 2;
+            lbUsuario.Text = "Usuario:";
+            // 
+            // TbPass
+            // 
+            TbPass.BackColor = Color.Transparent;
+            TbPass.BaseColor = Color.FromArgb(45, 47, 49);
+            TbPass.BorderColor = Color.FromArgb(35, 168, 109);
+            TbPass.FocusOnHover = false;
+            TbPass.ForeColor = Color.FromArgb(192, 192, 192);
+            TbPass.Location = new Point(39, 192);
+            TbPass.MaxLength = 32767;
+            TbPass.Multiline = false;
+            TbPass.Name = "TbPass";
+            TbPass.ReadOnly = false;
+            TbPass.Size = new Size(246, 29);
+            TbPass.TabIndex = 1;
+            TbPass.TextAlign = HorizontalAlignment.Left;
+            TbPass.UseSystemPasswordChar = true;
+            // 
+            // TbUsuario
+            // 
+            TbUsuario.BackColor = Color.Transparent;
+            TbUsuario.BaseColor = Color.FromArgb(45, 47, 49);
+            TbUsuario.BorderColor = Color.FromArgb(35, 168, 109);
+            TbUsuario.FocusOnHover = false;
+            TbUsuario.ForeColor = Color.FromArgb(192, 192, 192);
+            TbUsuario.Location = new Point(39, 116);
+            TbUsuario.MaxLength = 32767;
+            TbUsuario.Multiline = false;
+            TbUsuario.Name = "TbUsuario";
+            TbUsuario.ReadOnly = false;
+            TbUsuario.Size = new Size(246, 29);
+            TbUsuario.TabIndex = 0;
+            TbUsuario.TextAlign = HorizontalAlignment.Left;
+            TbUsuario.UseSystemPasswordChar = false;
+            // 
+            // btnClose
+            // 
+            btnClose.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnClose.BackColor = Color.White;
+            btnClose.BaseColor = Color.FromArgb(45, 47, 49);
+            btnClose.DefaultLocation = true;
+            btnClose.DownColor = Color.FromArgb(30, 0, 0, 0);
+            btnClose.Font = new Font("Marlett", 10F);
+            btnClose.Location = new Point(294, 16);
+            btnClose.Name = "btnClose";
+            btnClose.OverColor = Color.FromArgb(30, 255, 255, 255);
+            btnClose.Size = new Size(18, 18);
+            btnClose.TabIndex = 0;
+            btnClose.Text = "foreverClose1";
+            btnClose.TextColor = Color.FromArgb(243, 243, 243);
             // 
             // Login
             // 
@@ -176,9 +176,9 @@
         private ReaLTaiizor.Forms.ForeverForm formLogin;
         private ReaLTaiizor.Controls.ForeverClose btnClose;
         private ReaLTaiizor.Controls.ForeverLabel lbUsuario;
-        private ReaLTaiizor.Controls.ForeverTextBox tbUsuario;
+        private ReaLTaiizor.Controls.ForeverTextBox TbUsuario;
         private ReaLTaiizor.Controls.ForeverButton btnLogin;
         private ReaLTaiizor.Controls.ForeverLabel lbPass;
-        private ReaLTaiizor.Controls.ForeverTextBox tbPass;
+        private ReaLTaiizor.Controls.ForeverTextBox TbPass;
     }
 }

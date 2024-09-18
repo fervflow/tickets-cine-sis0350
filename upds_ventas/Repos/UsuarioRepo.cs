@@ -1,7 +1,8 @@
-﻿using Microsoft.Data.SqlClient;
+﻿//using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Text;
 using System.Threading.Tasks;
 using upds_ventas.Data;
@@ -10,50 +11,69 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace upds_ventas.Repos
 {
-    public class UsuarioRepo
+    internal class UsuarioRepo
     {
-        private readonly UpdsVentasContext _dbContext;
+        private readonly DatabaseContext dbContext;
 
-        public UsuarioRepo(UpdsVentasContext dbContext)
+        public UsuarioRepo()
         {
-            _dbContext = dbContext;
+            dbContext = new DatabaseContext();
+        }
+
+        public async Task<int> Autenticar(string usuario, string pass)
+        {
+            const string sql = "EXEC dbo.sp_login @usuario, @pass";
+            try
+            {
+                dbContext.Connect();
+                using SqlCommand cmd = new SqlCommand(sql, dbContext.Con);
+                cmd.Parameters.AddWithValue("@usuario", usuario);
+                cmd.Parameters.AddWithValue("@pass", pass);
+                var result = await cmd.ExecuteScalarAsync();
+                return (int)result!;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error inesperado:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 3;
+            }
+            finally { dbContext.Close(); }
         }
 
         public async Task<bool> InsertarUsuarioAsync(Usuario u)
         {
-            SqlParameter[] sqlParams = [
-                new SqlParameter("@ci", u.Persona.Ci),
-                new SqlParameter("@nombre", u.Persona.Nombre),
-                new SqlParameter("@ap_paterno", u.Persona.ApPaterno),
-                new SqlParameter("@ap_materno", u.Persona.ApMaterno ?? (object)DBNull.Value),
-                new SqlParameter("@usuario", u.NombreUsuario),
-                new SqlParameter("@pass", u.Pass),
-                new SqlParameter("@tipo", u.Tipo),
-                new SqlParameter("@estado", u.Estado)
-
-            ];
-
-            var rowsAffected = await _dbContext.Database.ExecuteSqlRawAsync(
-                "EXEC dbo.sp_insertar_usuario @ci, @nombre, @ap_paterno, @ap_materno, @usuario, @pass, @tipo, @estado",
-                sqlParams);
-
-            return rowsAffected > 0;
+            const string sql = "EXEC dbo.sp_insertar_usuario @ci, @nombre, @ap_paterno, @ap_materno, @usuario, @pass, @tipo, @estado";
+            try
+            {
+                dbContext.Connect();
+                using SqlCommand cmd = new SqlCommand(sql, dbContext.Con);
+                cmd.Parameters.AddWithValue("@ci", u.Persona.Ci);
+                cmd.Parameters.AddWithValue("@nombre", u.Persona.Nombre);
+                cmd.Parameters.AddWithValue("@ap_paterno", u.Persona.ApPaterno);
+                cmd.Parameters.AddWithValue("@ap_materno", u.Persona.ApMaterno ?? (object)DBNull.Value);
+                cmd.Parameters.AddWithValue("@usuario", u.NombreUsuario);
+                cmd.Parameters.AddWithValue("@pass", u.Pass);
+                cmd.Parameters.AddWithValue("@tipo", u.Tipo);
+                cmd.Parameters.AddWithValue("@estado", u.Estado);
+                return await cmd.ExecuteNonQueryAsync() > 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al crear el usuario:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            finally { dbContext.Close(); }
         }
 
         public async Task<List<Usuario>> ListarUsuariosAsync()
         {
+            const string sql = "EXEC dbo.sp_listar_usuarios";
             var usuarios = new List<Usuario>();
-            using var connection = _dbContext.Database.GetDbConnection();
-
             try
             {
-                await connection.OpenAsync();
-
-                using var command = connection.CreateCommand();
-                command.CommandText = "EXEC dbo.sp_listar_usuarios";
-                command.CommandType = System.Data.CommandType.Text;
-
-                using var reader = await command.ExecuteReaderAsync();
+                dbContext.Connect();
+                using SqlCommand cmd = new SqlCommand(sql, dbContext.Con);
+                using SqlDataReader reader = await cmd.ExecuteReaderAsync();
                 while (await reader.ReadAsync())
                 {
                     usuarios.Add(new Usuario
@@ -74,60 +94,60 @@ namespace upds_ventas.Repos
                     });
                 }
             }
-            finally
+            catch (Exception ex)
             {
-                await connection.CloseAsync();
+                MessageBox.Show($"Error al listar usuarios:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            finally { dbContext.Close(); }
 
             return usuarios;
         }
 
         public async Task<bool> ModificarUsuarioAsync(Usuario u)
         {
-            SqlParameter[] sqlParams = [
-                new SqlParameter("@id_usuario", u.IdUsuario),
-                new SqlParameter("@ci", u.Persona.Ci),
-                new SqlParameter("@nombre", u.Persona.Nombre),
-                new SqlParameter("@ap_paterno", u.Persona.ApPaterno),
-                new SqlParameter("@ap_materno", u.Persona.ApMaterno ?? (object)DBNull.Value),
-                new SqlParameter("@usuario", u.NombreUsuario),
-                new SqlParameter("@pass", u.Pass),
-                new SqlParameter("@tipo", u.Tipo),
-                new SqlParameter("@estado", u.Estado),
-            ];
-            int rowsAffected = 0;
+            const string sql = "EXEC dbo.sp_modificar_usuario @id_usuario, @ci, @nombre, @ap_paterno, @ap_materno, @usuario, @pass, @tipo, @estado";
             try
             {
-                rowsAffected = await _dbContext.Database.ExecuteSqlRawAsync(
-                    "EXEC dbo.sp_modificar_usuario @id_usuario, @ci, @nombre, @ap_paterno, @ap_materno, @usuario, @pass, @tipo, @estado",
-                    sqlParams);
+                dbContext.Connect();
+                using SqlCommand cmd = new SqlCommand(sql, dbContext.Con);
+                cmd.Parameters.AddWithValue("@id_usuario", u.IdUsuario);
+                cmd.Parameters.AddWithValue("@ci", u.Persona.Ci);
+                cmd.Parameters.AddWithValue("@nombre", u.Persona.Nombre);
+                cmd.Parameters.AddWithValue("@ap_paterno", u.Persona.ApPaterno);
+                cmd.Parameters.AddWithValue("@ap_materno", u.Persona.ApMaterno ?? (object)DBNull.Value);
+                cmd.Parameters.AddWithValue("@usuario", u.NombreUsuario);
+                cmd.Parameters.AddWithValue("@pass", u.Pass);
+                cmd.Parameters.AddWithValue("@tipo", u.Tipo);
+                cmd.Parameters.AddWithValue("@estado", u.Estado);
+                return await cmd.ExecuteNonQueryAsync() > 0;
             }
-            catch (Exception ex) {
-                MessageBox.Show(ex.ToString());
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al modificar el usuario:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
-
-            return rowsAffected > 0;
+            finally { dbContext.Close(); }
         }
 
         public async Task<bool> EliminarUsuarioAsync(Usuario u)
         {
-            SqlParameter[] sqlParams = [
-                new SqlParameter("@id_usuario", u.IdUsuario),
-                new SqlParameter("@estado", u.Estado),
-            ];
-            int rowsAffected = 0;
+            const string sql = "EXEC dbo.sp_deshabilitar_usuario @id_usuario, @estado";
             try
             {
-                rowsAffected = await _dbContext.Database.ExecuteSqlRawAsync(
-                    "EXEC dbo.sp_deshabilitar_usuario @id_usuario, @estado",
-                    sqlParams);
-            } catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
+                dbContext.Connect();
+
+                using SqlCommand cmd = new SqlCommand(sql, dbContext.Con);
+                cmd.Parameters.AddWithValue("@id_usuario", u.IdUsuario);
+                cmd.Parameters.AddWithValue("@estado", u.Estado);
+
+                return await cmd.ExecuteNonQueryAsync() > 0;
             }
-
-            return rowsAffected > 0;
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al modificar el usuario:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            finally { dbContext.Close(); }
         }
-
     }
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -16,7 +17,7 @@ namespace upds_ventas.Forms
     public partial class MenuPrincipal : Form
     {
         private readonly UsuarioRepo _usuarioRepo;
-        //private readonly ProveedorRepo _proveedorRepo;
+        private readonly ProveedorRepo _proveedorRepo;
 
         List<Usuario> usuarios;
         int IdUsuarioSeleccionado;
@@ -25,19 +26,21 @@ namespace upds_ventas.Forms
         List<Proveedor> proveedores;
         int IdProveedorSeleccionado;
         Proveedor? proveedorSeleccionado;
+        bool buscandoProveedor;
+        string nombreProvBuscar = "";
 
-        public MenuPrincipal(UsuarioRepo usuarioRepo)//, ProveedorRepo proveedorRepo)
+        public MenuPrincipal()
         {
-            _usuarioRepo = usuarioRepo;
-            //_proveedorRepo = proveedorRepo;
+            _usuarioRepo = new UsuarioRepo();
+            _proveedorRepo = new ProveedorRepo();
 
             usuarios = new List<Usuario>();
             proveedores = new List<Proveedor>();
+            buscandoProveedor = false;
 
             InitializeComponent();
             _ = CargarUsuarios();
-            //Task loadProveedores = CargarProveedores();
-            //DataUsuarios.DataSource = usuarios;
+            _ = CargarProveedores();
 
             txtUNombre.Text = txtUApPaterno.Text = txtUApMaterno.Text = txtUCi.Text = txtUTipo.Text = "";
             btnModificarUsuario.BaseColor = Color.DarkOliveGreen;
@@ -69,28 +72,34 @@ namespace upds_ventas.Forms
 
                 DataUsuarios.Rows.Add(rowData);
             }
-            MessageBox.Show("CargarUsuarios finalized");
+            //MessageBox.Show("CargarUsuarios finalized");
         }
 
-        //private async Task CargarProveedores()
-        //{
-        //    proveedores = await _proveedorRepo.ListarProveedoresAsync();
-        //    DataProveedores.Rows.Clear();
+        private async Task CargarProveedores()
+        {
+            if (buscandoProveedor) {
+                proveedores = _proveedorRepo.BuscarProveedor(nombreProvBuscar);
+                Debug.WriteLine("nombreProvBuscar: " + nombreProvBuscar);
+            }
+            else { proveedores = await _proveedorRepo.ListarProveedoresAsync(); }
+            
+            DataProveedores.Rows.Clear();
 
-        //    foreach (var p in proveedores)
-        //    {
-        //        object[] rowData = [
-        //            p.IdProveedor,
-        //            p.Nit!,
-        //            p.Nombre,
-        //            p.Direccion,
-        //            p.Telefono,
-        //            p.Ciudad!,
-        //        ];
+            foreach (var p in proveedores)
+            {
+                object[] rowData = [
+                    p.IdProveedor,
+                    p.Nit!,
+                    p.Nombre,
+                    p.Direccion,
+                    p.Telefono,
+                    p.Ciudad!,
+                ];
 
-        //        DataProveedores.Rows.Add(rowData);
-        //    }
-        //}
+                DataProveedores.Rows.Add(rowData);
+            }
+            //MessageBox.Show("CargarPROVEEDORES finalized");
+        }
 
         private void DataUsuarios_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -138,14 +147,14 @@ namespace upds_ventas.Forms
 
         private void btnNuevoUsuario_Click(object sender, EventArgs e)
         {
-            var formSetUsuario = Program.ServiceProvider.GetRequiredService<SetUsuario>();
+            var formSetUsuario = new SetUsuario();
             formSetUsuario.ShowDialog();
             _ = CargarUsuarios();
         }
 
         private void btnModificarUsuario_Click(object sender, EventArgs e)
         {
-            var formSetUsuario = Program.ServiceProvider.GetRequiredService<SetUsuario>();
+            var formSetUsuario = new SetUsuario();
             formSetUsuario.SetForModificar(usuarioSeleccionado!);
             formSetUsuario.ShowDialog();
             _ = CargarUsuarios();
@@ -167,17 +176,28 @@ namespace upds_ventas.Forms
 
         private void BtnNuevoProveedor_Click(object sender, EventArgs e)
         {
-            //var formSetProveedor = Program.ServiceProvider.GetRequiredService<SetProveedor>();
-            //formSetProveedor.ShowDialog();
-            //_ = CargarProveedores();
+            var formSetProveedor = new SetProveedor();
+            formSetProveedor.ShowDialog();
+            _ = CargarProveedores();
         }
 
         private void BtnModificarProveedor_Click(object sender, EventArgs e)
         {
-            //var formSetProveedor = Program.ServiceProvider.GetRequiredService<SetProveedor>();
-            //formSetProveedor.SetForModificar(proveedorSeleccionado!);
-            //formSetProveedor.ShowDialog();
-            //_ = CargarUsuarios();
+            var formSetProveedor = new SetProveedor();
+            formSetProveedor.SetForModificar(proveedorSeleccionado!);
+            formSetProveedor.ShowDialog();
+            _ = CargarProveedores();
+        }
+
+        private void TbBuscarProv_TextChanged(object sender, EventArgs e)
+        {
+            if (String.IsNullOrEmpty(TbBuscarProv.Text)) { buscandoProveedor = false; }
+            else
+            {
+                buscandoProveedor = true;
+                nombreProvBuscar = TbBuscarProv.Text;
+            }
+            _ = CargarProveedores();
         }
 
         //private void BtnEliminarProveedor_Click(object sender, EventArgs e)

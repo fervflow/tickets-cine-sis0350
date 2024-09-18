@@ -18,9 +18,9 @@ namespace upds_ventas.Forms
         private bool isNew;
         private Proveedor proveedor;
 
-        public SetProveedor(ProveedorRepo proveedorRepo)
+        public SetProveedor()
         {
-            repo = proveedorRepo;
+            repo = new ProveedorRepo();
             isNew = true;
             proveedor = new Proveedor();
 

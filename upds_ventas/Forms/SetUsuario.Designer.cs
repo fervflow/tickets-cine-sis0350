@@ -32,6 +32,8 @@
             foreverClose1 = new ReaLTaiizor.Controls.ForeverClose();
             btnGuardar = new ReaLTaiizor.Controls.ForeverButtonSticky();
             gbDatosUsuario = new ReaLTaiizor.Controls.ForeverGroupBox();
+            lbHabilitado = new ReaLTaiizor.Controls.ForeverLabel();
+            tglHabilitado = new ReaLTaiizor.Controls.ForeverToggle();
             cbTipo = new ReaLTaiizor.Controls.ForeverComboBox();
             tbUsuario = new ReaLTaiizor.Controls.TextBoxEdit();
             tbPass = new ReaLTaiizor.Controls.TextBoxEdit();
@@ -47,8 +49,6 @@
             lbApMaterno = new ReaLTaiizor.Controls.ForeverLabel();
             lbApPaterno = new ReaLTaiizor.Controls.ForeverLabel();
             lbNombre = new ReaLTaiizor.Controls.ForeverLabel();
-            tglHabilitado = new ReaLTaiizor.Controls.ForeverToggle();
-            lbHabilitado = new ReaLTaiizor.Controls.ForeverLabel();
             SetUsuarioForm.SuspendLayout();
             gbDatosUsuario.SuspendLayout();
             gbDatosPersonales.SuspendLayout();
@@ -106,7 +106,7 @@
             btnGuardar.Name = "btnGuardar";
             btnGuardar.Rounded = false;
             btnGuardar.Size = new Size(160, 40);
-            btnGuardar.TabIndex = 3;
+            btnGuardar.TabIndex = 8;
             btnGuardar.Text = "GUARDAR";
             btnGuardar.TextColor = Color.FromArgb(243, 243, 243);
             btnGuardar.Click += btnGuardar_Click;
@@ -135,6 +135,35 @@
             gbDatosUsuario.Text = "DATOS DE USUARIO";
             gbDatosUsuario.TextColor = Color.FromArgb(35, 168, 109);
             // 
+            // lbHabilitado
+            // 
+            lbHabilitado.AutoSize = true;
+            lbHabilitado.BackColor = Color.Transparent;
+            lbHabilitado.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            lbHabilitado.ForeColor = Color.LightGray;
+            lbHabilitado.Location = new Point(249, 150);
+            lbHabilitado.Name = "lbHabilitado";
+            lbHabilitado.Size = new Size(95, 21);
+            lbHabilitado.TabIndex = 16;
+            lbHabilitado.Text = "Habilitado:";
+            // 
+            // tglHabilitado
+            // 
+            tglHabilitado.BackColor = Color.Transparent;
+            tglHabilitado.BaseColor = Color.FromArgb(35, 168, 109);
+            tglHabilitado.BaseColorRed = Color.FromArgb(220, 85, 96);
+            tglHabilitado.BGColor = Color.FromArgb(84, 85, 86);
+            tglHabilitado.Checked = true;
+            tglHabilitado.Font = new Font("Segoe UI", 10F);
+            tglHabilitado.Location = new Point(357, 142);
+            tglHabilitado.Name = "tglHabilitado";
+            tglHabilitado.Options = ReaLTaiizor.Controls.ForeverToggle._Options.Style2;
+            tglHabilitado.Size = new Size(76, 33);
+            tglHabilitado.TabIndex = 7;
+            tglHabilitado.Text = "tglHabilitado";
+            tglHabilitado.TextColor = Color.FromArgb(243, 243, 243);
+            tglHabilitado.ToggleColor = Color.FromArgb(45, 47, 49);
+            // 
             // cbTipo
             // 
             cbTipo.BaseColor = Color.FromArgb(25, 27, 29);
@@ -150,7 +179,7 @@
             cbTipo.Location = new Point(87, 145);
             cbTipo.Name = "cbTipo";
             cbTipo.Size = new Size(142, 30);
-            cbTipo.TabIndex = 15;
+            cbTipo.TabIndex = 6;
             // 
             // tbUsuario
             // 
@@ -164,7 +193,7 @@
             tbUsuario.Name = "tbUsuario";
             tbUsuario.ReadOnly = false;
             tbUsuario.Size = new Size(240, 41);
-            tbUsuario.TabIndex = 12;
+            tbUsuario.TabIndex = 4;
             tbUsuario.Text = "Juan Gabriel Alejandro Treinta";
             tbUsuario.TextAlignment = HorizontalAlignment.Left;
             tbUsuario.UseSystemPasswordChar = false;
@@ -181,7 +210,7 @@
             tbPass.Name = "tbPass";
             tbPass.ReadOnly = false;
             tbPass.Size = new Size(240, 41);
-            tbPass.TabIndex = 14;
+            tbPass.TabIndex = 5;
             tbPass.Text = "10vecest";
             tbPass.TextAlignment = HorizontalAlignment.Left;
             tbPass.UseSystemPasswordChar = true;
@@ -258,7 +287,7 @@
             tbNombre.Name = "tbNombre";
             tbNombre.ReadOnly = false;
             tbNombre.Size = new Size(240, 41);
-            tbNombre.TabIndex = 8;
+            tbNombre.TabIndex = 0;
             tbNombre.Text = "Juan Gabriel Alejandro Treinta";
             tbNombre.TextAlignment = HorizontalAlignment.Left;
             tbNombre.UseSystemPasswordChar = false;
@@ -275,7 +304,7 @@
             tbCi.Name = "tbCi";
             tbCi.ReadOnly = false;
             tbCi.Size = new Size(240, 41);
-            tbCi.TabIndex = 8;
+            tbCi.TabIndex = 3;
             tbCi.Text = "Juan Gabriel Alejandro Treinta";
             tbCi.TextAlignment = HorizontalAlignment.Left;
             tbCi.UseSystemPasswordChar = false;
@@ -292,7 +321,7 @@
             tbApMaterno.Name = "tbApMaterno";
             tbApMaterno.ReadOnly = false;
             tbApMaterno.Size = new Size(240, 41);
-            tbApMaterno.TabIndex = 8;
+            tbApMaterno.TabIndex = 2;
             tbApMaterno.Text = "Juan Gabriel Alejandro Treinta";
             tbApMaterno.TextAlignment = HorizontalAlignment.Left;
             tbApMaterno.UseSystemPasswordChar = false;
@@ -309,7 +338,7 @@
             tbApPaterno.Name = "tbApPaterno";
             tbApPaterno.ReadOnly = false;
             tbApPaterno.Size = new Size(240, 41);
-            tbApPaterno.TabIndex = 8;
+            tbApPaterno.TabIndex = 1;
             tbApPaterno.Text = "Juan Gabriel Alejandro Treinta";
             tbApPaterno.TextAlignment = HorizontalAlignment.Left;
             tbApPaterno.UseSystemPasswordChar = false;
@@ -362,35 +391,6 @@
             lbNombre.TabIndex = 4;
             lbNombre.Text = "Nombre:";
             // 
-            // tglHabilitado
-            // 
-            tglHabilitado.BackColor = Color.Transparent;
-            tglHabilitado.BaseColor = Color.FromArgb(35, 168, 109);
-            tglHabilitado.BaseColorRed = Color.FromArgb(220, 85, 96);
-            tglHabilitado.BGColor = Color.FromArgb(84, 85, 86);
-            tglHabilitado.Checked = true;
-            tglHabilitado.Font = new Font("Segoe UI", 10F);
-            tglHabilitado.Location = new Point(357, 142);
-            tglHabilitado.Name = "tglHabilitado";
-            tglHabilitado.Options = ReaLTaiizor.Controls.ForeverToggle._Options.Style2;
-            tglHabilitado.Size = new Size(76, 33);
-            tglHabilitado.TabIndex = 5;
-            tglHabilitado.Text = "tglHabilitado";
-            tglHabilitado.TextColor = Color.FromArgb(243, 243, 243);
-            tglHabilitado.ToggleColor = Color.FromArgb(45, 47, 49);
-            // 
-            // lbHabilitado
-            // 
-            lbHabilitado.AutoSize = true;
-            lbHabilitado.BackColor = Color.Transparent;
-            lbHabilitado.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            lbHabilitado.ForeColor = Color.LightGray;
-            lbHabilitado.Location = new Point(249, 150);
-            lbHabilitado.Name = "lbHabilitado";
-            lbHabilitado.Size = new Size(95, 21);
-            lbHabilitado.TabIndex = 16;
-            lbHabilitado.Text = "Habilitado:";
-            // 
             // SetUsuario
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -402,12 +402,12 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "SetUsuario";
             TransparencyKey = Color.Fuchsia;
+            Load += SetUsuario_Load;
             SetUsuarioForm.ResumeLayout(false);
             gbDatosUsuario.ResumeLayout(false);
             gbDatosUsuario.PerformLayout();
             gbDatosPersonales.ResumeLayout(false);
             gbDatosPersonales.PerformLayout();
-            Load += SetUsuario_Load;
             ResumeLayout(false);
         }
 

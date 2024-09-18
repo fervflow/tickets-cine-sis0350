@@ -1,10 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.SqlClient;
 using upds_ventas.Data;
 using upds_ventas.Models;
 
@@ -12,44 +6,44 @@ namespace upds_ventas.Repos
 {
     public class ProveedorRepo
     {
-        private readonly UpdsVentasContext _dbContext;
+        private readonly DatabaseContext dbContext;
 
-        public ProveedorRepo(UpdsVentasContext dbContext)
+        public ProveedorRepo()
         {
-            _dbContext = dbContext;
+            dbContext = new DatabaseContext();
         }
 
         public async Task<bool> InsertarProveedorAsync(Proveedor p)
         {
-            SqlParameter[] sqlParams = [
-                new SqlParameter("@nit", p.Nit),
-                new SqlParameter("@nombre", p.Nombre),
-                new SqlParameter("@direccion", p.Direccion),
-                new SqlParameter("@telefono", p.Telefono),
-                new SqlParameter("@ciudad", p.Ciudad),
-            ];
-
-            var rowsAffected = await _dbContext.Database.ExecuteSqlRawAsync(
-                "EXEC dbo.sp_insertar_proveedor @nit, @nombre, @direccion, @telefono, @ciudad",
-                sqlParams);
-
-            return rowsAffected > 0;
+            const string sql = "EXEC dbo.sp_insertar_proveedor @nit, @nombre, @direccion, @telefono, @ciudad";
+            try
+            {
+                dbContext.Connect();
+                using SqlCommand cmd = new SqlCommand(sql, dbContext.Con);
+                cmd.Parameters.AddWithValue("@nit", p.Nit);
+                cmd.Parameters.AddWithValue("@nombre", p.Nombre);
+                cmd.Parameters.AddWithValue("@direccion", p.Direccion);
+                cmd.Parameters.AddWithValue("@telefono", p.Telefono);
+                cmd.Parameters.AddWithValue("@ciudad", p.Ciudad);
+                return await cmd.ExecuteNonQueryAsync() > 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al insertar el proveedor:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            finally { dbContext.Close(); }
         }
 
         public async Task<List<Proveedor>> ListarProveedoresAsync()
         {
+            const string sql = "EXEC dbo.sp_listar_proveedores";
             var proveedores = new List<Proveedor>();
-            using var connection = _dbContext.Database.GetDbConnection();
-
             try
             {
-                await connection.OpenAsync();
-
-                using var command = connection.CreateCommand();
-                command.CommandText = "EXEC dbo.sp_listar_proveedores";
-                command.CommandType = System.Data.CommandType.Text;
-
-                using var reader = await command.ExecuteReaderAsync();
+                dbContext.Connect();
+                using SqlCommand cmd = new SqlCommand(sql, dbContext.Con);
+                using SqlDataReader reader = await cmd.ExecuteReaderAsync();
                 while (await reader.ReadAsync())
                 {
                     proveedores.Add(new Proveedor
@@ -63,37 +57,67 @@ namespace upds_ventas.Repos
                     });
                 }
             }
-            finally
+            catch (Exception ex)
             {
-                await connection.CloseAsync();
+                MessageBox.Show($"Error al listar proveedores:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
+            finally { dbContext.Close(); }
             return proveedores;
         }
 
         public async Task<bool> ModificarProveedorAsync(Proveedor p)
         {
-            SqlParameter[] sqlParams = [
-                new SqlParameter("@id_proveedor", p.IdProveedor),
-                new SqlParameter("@nit", p.Nit ?? (object)DBNull.Value),
-                new SqlParameter("@nombre", p.Nombre),
-                new SqlParameter("@direccion", p.Direccion),
-                new SqlParameter("@telefono", p.Telefono),
-                new SqlParameter("@ciudad", p.Ciudad ?? (object)DBNull.Value),
-            ];
-            int rowsAffected = 0;
+            const string sql = "EXEC dbo.sp_modificar_proveedor @id_proveedor, @nit, @nombre, @direccion, @telefono, @ciudad";
             try
             {
-                rowsAffected = await _dbContext.Database.ExecuteSqlRawAsync(
-                    "EXEC dbo.sp_modificar_proveedor @id_proveedor, @nit, @nombre, @direccion, @telefono, @ciudad",
-                    sqlParams);
+                dbContext.Connect();
+                using SqlCommand cmd = new SqlCommand(sql, dbContext.Con);
+                cmd.Parameters.AddWithValue("@id_proveedor", p.IdProveedor);
+                cmd.Parameters.AddWithValue("@nit", p.Nit ?? (object)DBNull.Value);
+                cmd.Parameters.AddWithValue("@nombre", p.Nombre);
+                cmd.Parameters.AddWithValue("@direccion", p.Direccion);
+                cmd.Parameters.AddWithValue("@telefono", p.Telefono);
+                cmd.Parameters.AddWithValue("@ciudad", p.Ciudad ?? (object)DBNull.Value);
+                return await cmd.ExecuteNonQueryAsync() > 0;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show($"Error al modificar el proveedor:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
+            finally { dbContext.Close(); }
+        }
 
-            return rowsAffected > 0;
+        public List<Proveedor> BuscarProveedor(string nombre)
+        {
+            const string sql = "EXEC dbo.sp_buscar_proveedor @nombre";
+            var proveedores = new List<Proveedor>();
+            try
+            {
+                dbContext.Connect();
+                using SqlCommand cmd = new SqlCommand(sql, dbContext.Con);
+                cmd.Parameters.AddWithValue("@nombre", nombre);
+
+                using SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    proveedores.Add(new Proveedor
+                    {
+                        IdProveedor = reader.GetInt32(reader.GetOrdinal("id_proveedor")),
+                        Nit = reader.IsDBNull(reader.GetOrdinal("nit")) ? null : reader.GetString(reader.GetOrdinal("nit")),
+                        Nombre = reader.GetString(reader.GetOrdinal("nombre")),
+                        Direccion = reader.GetString(reader.GetOrdinal("direccion")),
+                        Telefono = reader.GetString(reader.GetOrdinal("telefono")),
+                        Ciudad = reader.IsDBNull(reader.GetOrdinal("ciudad")) ? null : reader.GetString(reader.GetOrdinal("ciudad")),
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al buscar el proveedor:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally { dbContext.Close(); }
+            return proveedores;
         }
 
     }

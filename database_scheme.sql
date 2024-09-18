@@ -90,3 +90,23 @@ CREATE TABLE detatalle_venta
     FOREIGN KEY (id_producto) REFERENCES producto(id_producto),
 )
 GO
+
+-- Creacion del usuario para login correspondiente a la cadena de conexion
+USE master;
+IF EXISTS (SELECT * FROM sys.server_principals WHERE name = 'upds_ventas_admin')
+BEGIN
+    DROP LOGIN upds_ventas_admin;
+END
+GO
+CREATE LOGIN upds_ventas_admin WITH PASSWORD = 'admin123', CHECK_POLICY = OFF;
+GO
+USE upds_ventas;
+DROP USER IF EXISTS upds_ventas_admin;
+GO
+CREATE USER upds_ventas_admin FOR LOGIN upds_ventas_admin;
+GO
+ALTER USER upds_ventas_admin WITH DEFAULT_SCHEMA = [dbo];
+ALTER ROLE [db_owner] ADD MEMBER upds_ventas_admin;
+GO
+
+-- DROP PROCEDURE sp_insertar_usuario
