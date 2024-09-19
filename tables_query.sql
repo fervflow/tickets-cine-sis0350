@@ -37,3 +37,11 @@ SELECT *
 FROM proveedor
 
 SELECT * FROM producto;
+
+
+SELECT *
+FROM venta
+SELECT *
+FROM detatalle_venta
+SELECT *
+FROM producto

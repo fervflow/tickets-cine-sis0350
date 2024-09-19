@@ -1,3 +1,6 @@
+USE upds_ventas;
+GO
+
 -- INSERTAR USUARIO
 CREATE OR ALTER PROC sp_insertar_usuario
     @ci VARCHAR(20),
@@ -84,8 +87,8 @@ BEGIN
 END;
 GO
 
-EXEC dbo.sp_modificar_usuario 2, '12129090 CBB', 'nando', 'Vel', 'Flowers', 'fervflow', 'asd', 'VENDEDOR', 1;
-GO
+-- EXEC dbo.sp_modificar_usuario 2, '12129090 CBB', 'nando', 'Vel', 'Flowers', 'fervflow', 'asd', 'VENDEDOR', 1;
+-- GO
 
 -- procedimiento almacenado para dar de baja usuario
 CREATE OR ALTER PROC sp_deshabilitar_usuario
@@ -110,7 +113,6 @@ VALUES
 GO
 
 -- procedimiento almacenado para listar proveedores
-GO
 CREATE OR ALTER PROC sp_listar_proveedores
 AS
 SELECT *
@@ -144,7 +146,6 @@ SELECT *
 FROM proveedor
 WHERE LOWER(nombre) LIKE '%'+@nombre+'%'
 GO
-
 
 -- PROCEDIMIENTO ALMACENADO PARA IDENTIFICARSE
 CREATE OR ALTER PROC sp_login
@@ -216,8 +217,6 @@ FROM producto pro INNER JOIN proveedor prove
     ON pro.id_proveedor=prove.id_proveedor
 GO
 
-
-
 -- 2
 -- CARGAR PROVEEDORES
 CREATE OR ALTER PROC sp_nombres_proveedor
@@ -249,13 +248,6 @@ VALUES
     (@nombre, @stock, @precio_compra, @precio_venta, @estado, @id_proveedor)
 GO
 
-----prueba
-SELECT *
-FROM producto
-SELECT *
-FROM proveedor
-GO
-
 -- listar producto
 CREATE OR ALTER PROC sp_listar_productos
     @filter BIT
@@ -272,11 +264,6 @@ SELECT
 FROM producto p INNER JOIN proveedor prov
     ON p.id_proveedor=prov.id_proveedor
 WHERE @filter = 0 OR p.estado = 1
-GO
-
---verificamos
-SELECT *
-FROM producto
 GO
 
 -- procedimiento almacenado para modificar producto
@@ -397,43 +384,29 @@ FROM persona p INNER JOIN cliente c
 WHERE c.nit=@nit
 GO
 
--- procedimiento almacenado para listar productos para la venta
-GO
-CREATE PROC listar_productos
-AS
-SELECT p.id_producto, p.nombre, p.stock, p.precio_v, pro.nombre AS proveedor
-FROM producto p INNER JOIN proveedor pro
-    ON p.id_proveedor=pro.id_proveedor
-WHERE p.estado='ACTIVO'
-
--- procedimiento para almacenar la venta
-GO
-CREATE PROC registrar_venta(@total DECIMAL(10,2),
-    @id_c INT,
-    @id_us INT)
+-- REGISTRAR VENTA
+CREATE OR ALTER PROC sp_registrar_venta
+    @id_ususario INT,
+    @id_cliente INT,
+    @total DECIMAL(10,2)
 AS
 INSERT INTO venta
     (fecha,total,id_cliente,id_usuario)
-VALUES(GETDATE(), @total, @id_c, @id_us)
-
--- procedimiento almacenado para registro de detalle producto
+OUTPUT INSERTED.id_venta
+VALUES (GETDATE(), @total, @id_cliente, @id_ususario)
 GO
-ALTER PROC registrar_detalle(@cant INT,
-    @idp INT)
-AS
-DECLARE @idv INT
-SELECT @idv=max(id_venta)
-FROM venta
-INSERT INTO detatalle_venta
-    (cantidad,id_venta,id_producto)
-VALUES(@cant, @idv, @idp)
-UPDATE producto SET stock=stock-@cant
-WHERE id_producto=@idp
--- verificamos
 
-SELECT *
-FROM venta
-SELECT *
-FROM detatalle_venta
-SELECT *
-FROM producto
+-- REGISTRO DETALLE
+CREATE OR ALTER PROC sp_registrar_detalle
+    @id_venta INT,
+    @id_producto INT,
+    @cantidad INT,
+    @sub_total DECIMAL(10,2)
+AS
+INSERT INTO detalle_venta
+    (id_venta, id_producto, cantidad, sub_total)
+VALUES  (@id_venta, @id_producto, @cantidad, @sub_total)
+UPDATE producto SET stock=stock-@cantidad
+WHERE id_producto=@id_producto
+GO
+

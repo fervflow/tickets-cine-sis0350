@@ -44,6 +44,10 @@ namespace upds_ventas.Forms
         Cliente? clienteSeleccionado;
         Cliente? clienteVenta;
 
+        List<DetalleVenta> detalle;
+        int idDetalle = 0;
+        decimal total = 0.0m;
+
         public MenuPrincipal(Usuario u)
         {
             _usuarioRepo = new UsuarioRepo();
@@ -58,6 +62,7 @@ namespace upds_ventas.Forms
             buscandoProveedor = false;
             productos = new List<Producto>();
             clientes = new List<Cliente>();
+            detalle = new List<DetalleVenta>();
 
             InitializeComponent();
             _ = CargarUsuarios();
@@ -429,11 +434,12 @@ namespace upds_ventas.Forms
             }
         }
 
-        private void CargarDetalle(List<DetalleVenta> detalle)
+        private void CargarDetalle()
         {
             DataDetalle.Rows.Clear();
             foreach (var d in detalle)
             {
+                d.IdDetalleVenta = ++idDetalle;
                 object[] rowData = [
                     d.IdProducto!,
                     d.Producto!.Nombre,
@@ -441,6 +447,8 @@ namespace upds_ventas.Forms
                     d.SubTotal!,
                 ];
                 DataDetalle.Rows.Add(rowData);
+                total += d.SubTotal!.Value!;
+                LbTotal.Text = total.ToString();
             }
         }
         private void DataProdVenta_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -448,8 +456,8 @@ namespace upds_ventas.Forms
             IdProductoVenta = (int)DataProdVenta.CurrentRow.Cells[0].Value;
 
             productoVenta = productos.FirstOrDefault(p => p.IdProducto.Equals(IdProductoVenta))!;
-            
-            List<DetalleVenta> detalle = new List<DetalleVenta>();
+
+            //List<DetalleVenta> detalle = new List<DetalleVenta>();
             detalle.Add(new DetalleVenta
             {
                 IdProducto = IdProductoVenta,
@@ -457,19 +465,29 @@ namespace upds_ventas.Forms
                 SubTotal = Convert.ToDecimal(Convert.ToInt32(TbCantidad.Text) * productoVenta.PrecioVenta),
                 Producto = productoVenta,
             });
-            CargarDetalle(detalle);
-
-            Venta venta = new Venta
-            {
-                Fecha = DateTime.Now,
-
-            };
+            CargarDetalle();
 
             LbPrNombre.Text = productoVenta.Nombre;
             LbPrStock.Text = productoVenta.Stock.ToString();
             LbPrPrecioCompra.Text = productoVenta.PrecioCompra.ToString();
             LbPrPrecioVenta.Text = productoVenta.PrecioVenta.ToString();
             LbPrProveedor.Text = productoVenta.Proveedor?.Nombre.ToString();
+        }
+
+        private void BtnRegistrarVenta_Click(object sender, EventArgs e)
+        {
+            Venta venta = new Venta
+            {
+                IdUsuario = usuarioActual.IdUsuario,
+                IdCliente = clienteVenta!.IdCliente,
+                Fecha = DateTime.Now,
+                Total = total,
+                Usuario = usuarioActual,
+                Cliente = clienteVenta,
+                DetalleVenta = detalle,
+            };
+
+            CargarDetalle();
         }
 
 

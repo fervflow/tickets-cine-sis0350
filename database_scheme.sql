@@ -108,5 +108,3 @@ GO
 ALTER USER upds_ventas_admin WITH DEFAULT_SCHEMA = [dbo];
 ALTER ROLE [db_owner] ADD MEMBER upds_ventas_admin;
 GO
-
--- DROP PROCEDURE sp_insertar_usuario
