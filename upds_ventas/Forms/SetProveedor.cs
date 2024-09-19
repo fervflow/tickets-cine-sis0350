@@ -64,11 +64,11 @@ namespace upds_ventas.Forms
             bool querySuccess;
             if (isNew)
             {
-                querySuccess = await repo.InsertarProveedorAsync(proveedor);
+                querySuccess = await repo.InsertarAsync(proveedor);
             }
             else
             {
-                querySuccess = await repo.ModificarProveedorAsync(proveedor);
+                querySuccess = await repo.ModificarAsync(proveedor);
             }
             if (querySuccess)
             {

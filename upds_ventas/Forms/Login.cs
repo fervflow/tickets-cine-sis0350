@@ -1,4 +1,5 @@
-﻿using upds_ventas.Repos;
+﻿using upds_ventas.Models;
+using upds_ventas.Repos;
 
 namespace upds_ventas.Forms
 {
@@ -18,7 +19,8 @@ namespace upds_ventas.Forms
             switch (result)
             {
                 case 0:
-                    var formMenuPrincipal = new MenuPrincipal();
+                    Usuario usuarioActual = await repo.ObtenerUsuarioLogueado(TbUsuario.Text);
+                    var formMenuPrincipal = new MenuPrincipal(usuarioActual);
                     formMenuPrincipal.FormClosed += (s, args) => this.Close();
                     this.Hide();
                     formMenuPrincipal.Show();

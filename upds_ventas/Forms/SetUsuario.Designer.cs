@@ -402,7 +402,6 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "SetUsuario";
             TransparencyKey = Color.Fuchsia;
-            Load += SetUsuario_Load;
             SetUsuarioForm.ResumeLayout(false);
             gbDatosUsuario.ResumeLayout(false);
             gbDatosUsuario.PerformLayout();

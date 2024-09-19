@@ -40,7 +40,47 @@ namespace upds_ventas.Repos
             finally { dbContext.Close(); }
         }
 
-        public async Task<bool> InsertarUsuarioAsync(Usuario u)
+        public async Task<Usuario> ObtenerUsuarioLogueado(string nombre_usuario)
+        {
+            Usuario usuario = new Usuario();
+            const string sql = "EXEC dbo.sp_obtener_usuario_logueado @usuario";
+            try
+            {
+                dbContext.Connect();
+                using SqlCommand cmd = new SqlCommand(sql, dbContext.Con);
+                cmd.Parameters.AddWithValue("@usuario", nombre_usuario);
+
+                using SqlDataReader reader = await cmd.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
+                {
+                    usuario = new Usuario
+                    {
+                        IdUsuario = reader.GetInt32(reader.GetOrdinal("id_persona")),
+                        NombreUsuario = reader.GetString(reader.GetOrdinal("nombre_usuario")),
+                        Pass = reader.GetString(reader.GetOrdinal("pass")),
+                        Tipo = reader.GetString(reader.GetOrdinal("tipo")),
+                        Estado = reader.GetBoolean(reader.GetOrdinal("estado")),
+                        Persona = new Persona
+                        {
+                            IdPersona = reader.GetInt32(reader.GetOrdinal("id_persona")),
+                            Ci = reader.IsDBNull(reader.GetOrdinal("ci")) ? null : reader.GetString(reader.GetOrdinal("ci")),
+                            Nombre = reader.GetString(reader.GetOrdinal("nombre")),
+                            ApPaterno = reader.GetString(reader.GetOrdinal("ap_paterno")),
+                            ApMaterno = reader.IsDBNull(reader.GetOrdinal("ap_materno")) ? null : reader.GetString(reader.GetOrdinal("ap_materno"))
+                        }
+                    };
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error inesperado:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally { dbContext.Close(); }
+            return usuario;
+        }
+
+        public async Task<bool> Insertar(Usuario u)
         {
             const string sql = "EXEC dbo.sp_insertar_usuario @ci, @nombre, @ap_paterno, @ap_materno, @usuario, @pass, @tipo, @estado";
             try
@@ -65,7 +105,7 @@ namespace upds_ventas.Repos
             finally { dbContext.Close(); }
         }
 
-        public async Task<List<Usuario>> ListarUsuariosAsync()
+        public async Task<List<Usuario>> ListarAsync()
         {
             const string sql = "EXEC dbo.sp_listar_usuarios";
             var usuarios = new List<Usuario>();
@@ -103,7 +143,7 @@ namespace upds_ventas.Repos
             return usuarios;
         }
 
-        public async Task<bool> ModificarUsuarioAsync(Usuario u)
+        public async Task<bool> ModificarAsync(Usuario u)
         {
             const string sql = "EXEC dbo.sp_modificar_usuario @id_usuario, @ci, @nombre, @ap_paterno, @ap_materno, @usuario, @pass, @tipo, @estado";
             try
@@ -129,7 +169,7 @@ namespace upds_ventas.Repos
             finally { dbContext.Close(); }
         }
 
-        public async Task<bool> EliminarUsuarioAsync(Usuario u)
+        public async Task<bool> EliminarAsync(Usuario u)
         {
             const string sql = "EXEC dbo.sp_deshabilitar_usuario @id_usuario, @estado";
             try

@@ -55,18 +55,6 @@ namespace upds_ventas.Forms
             usuario.IdUsuario = u.IdUsuario;
         }
 
-        private void SetUsuario_Load(object sender, EventArgs e)
-        {
-            //cbTipo.Items.Clear();
-            //cbTipo.Items.Add("VENDEDOR");
-            //cbTipo.Items.Add("ADMINISTRADOR");
-
-            //if (isNewUser)
-            //{
-            //    cbTipo.SelectedItem = usuario!.Tipo;
-            //}
-        }
-
         private async void btnGuardar_Click(object sender, EventArgs e)
         {
             usuario.Persona.Ci = tbCi.Text;
@@ -82,11 +70,11 @@ namespace upds_ventas.Forms
             bool querySuccess = false;
             if (isNewUser)
             {
-                querySuccess = await _usuarioRepo.InsertarUsuarioAsync(usuario);
+                querySuccess = await _usuarioRepo.Insertar(usuario);
             }
             else
             {
-                querySuccess = await _usuarioRepo.ModificarUsuarioAsync(usuario);
+                querySuccess = await _usuarioRepo.ModificarAsync(usuario);
                 //MessageBox.Show("SP modificar executed with rowsAffected: " + rowsAffected);
             }
 

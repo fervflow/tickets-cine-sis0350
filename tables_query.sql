@@ -5,6 +5,7 @@ GO
 -- USUARIOS
     -- Login
 EXEC dbo.sp_login 'qwe', 'qwe';
+EXEC dbo.sp_obtener_usuario_logueado 'qwe';
 
 UPDATE usuario
 SET estado = 1
@@ -28,8 +29,11 @@ SELECT
     u.estado
 FROM persona p INNER JOIN usuario u
     ON p.id_persona=u.id_usuario
+WHERE u.nombre_usuario = 'qwe' AND pass = 'qwe'
 GO
 
 -- PROVEEDORES
 SELECT *
 FROM proveedor
+
+SELECT * FROM producto;

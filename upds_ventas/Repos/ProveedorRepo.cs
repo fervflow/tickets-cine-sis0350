@@ -13,7 +13,7 @@ namespace upds_ventas.Repos
             dbContext = new DatabaseContext();
         }
 
-        public async Task<bool> InsertarProveedorAsync(Proveedor p)
+        public async Task<bool> InsertarAsync(Proveedor p)
         {
             const string sql = "EXEC dbo.sp_insertar_proveedor @nit, @nombre, @direccion, @telefono, @ciudad";
             try
@@ -35,7 +35,7 @@ namespace upds_ventas.Repos
             finally { dbContext.Close(); }
         }
 
-        public async Task<List<Proveedor>> ListarProveedoresAsync()
+        public async Task<List<Proveedor>> ListarAsync()
         {
             const string sql = "EXEC dbo.sp_listar_proveedores";
             var proveedores = new List<Proveedor>();
@@ -65,7 +65,7 @@ namespace upds_ventas.Repos
             return proveedores;
         }
 
-        public async Task<bool> ModificarProveedorAsync(Proveedor p)
+        public async Task<bool> ModificarAsync(Proveedor p)
         {
             const string sql = "EXEC dbo.sp_modificar_proveedor @id_proveedor, @nit, @nombre, @direccion, @telefono, @ciudad";
             try
@@ -88,7 +88,7 @@ namespace upds_ventas.Repos
             finally { dbContext.Close(); }
         }
 
-        public List<Proveedor> BuscarProveedor(string nombre)
+        public List<Proveedor> Buscar(string nombre)
         {
             const string sql = "EXEC dbo.sp_buscar_proveedor @nombre";
             var proveedores = new List<Proveedor>();
