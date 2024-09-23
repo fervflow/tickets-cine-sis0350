@@ -189,5 +189,41 @@ namespace upds_ventas.Repos
             }
             finally { dbContext.Close(); }
         }
+
+        public List<Usuario> Reporte()
+        {
+            const string sql = "EXEC dbo.sp_reporte_usuarios";
+            var usuarios = new List<Usuario>();
+            try
+            {
+                dbContext.Connect();
+                using SqlCommand cmd = new SqlCommand(sql, dbContext.Con);
+                using SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    usuarios.Add(new Usuario
+                    {
+                        NombreUsuario = reader.GetString(reader.GetOrdinal("nombre_usuario")),
+                        Tipo = reader.GetString(reader.GetOrdinal("tipo")),
+                        Estado = reader.GetBoolean(reader.GetOrdinal("estado")),
+                        Persona = new Persona
+                        {
+                            Ci = reader.GetString(reader.GetOrdinal("ci")),
+                            Nombre = reader.GetString(reader.GetOrdinal("nombre")),
+                            ApPaterno = reader.GetString(reader.GetOrdinal("ap_paterno")),
+                            ApMaterno = reader.IsDBNull(reader.GetOrdinal("ap_materno")) ? "" : reader.GetString(reader.GetOrdinal("ap_materno")),
+                        }
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al listar usuarios:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally { dbContext.Close(); }
+
+            return usuarios;
+        }
+
     }
 }

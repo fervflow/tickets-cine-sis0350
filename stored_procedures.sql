@@ -1,3 +1,5 @@
+USE master;
+GO
 USE upds_ventas;
 GO
 
@@ -203,6 +205,7 @@ FROM persona p INNER JOIN usuario u
 WHERE u.nombre_usuario = @usuario
 GO
 
+-- REPORTES
 -- reporte de productos con sus proveedores
 --
 CREATE OR ALTER PROC sp_reporte_producto
@@ -212,22 +215,51 @@ SELECT
     pro.stock,
     pro.precio_venta,
     prove.nombre AS proveedor,
-    prove.ciudad
+    prove.ciudad,
+    pro.estado
 FROM producto pro INNER JOIN proveedor prove
     ON pro.id_proveedor=prove.id_proveedor
+ORDER BY proveedor
 GO
+
+CREATE OR ALTER PROC sp_reporte_clientes
+AS
+SELECT
+    p.ci,
+    c.nit,
+    p.nombre,
+    p.ap_paterno,
+    p.ap_materno
+FROM cliente c INNER JOIN persona p
+    ON c.id_cliente = p.id_persona
+GO
+
+CREATE OR ALTER PROC sp_reporte_usuarios
+AS
+SELECT
+    p.ci,
+    p.nombre,
+    p.ap_paterno,
+    p.ap_materno,
+    u.nombre_usuario,
+    u.tipo,
+    u.estado
+FROM persona p INNER JOIN usuario u
+    ON p.id_persona=u.id_usuario
+GO
+
+CREATE OR ALTER PROC sp_reporte_proveedores
+AS
+SELECT nit, nombre, direccion, telefono, ciudad
+FROM proveedor
+GO
+
 
 -- 2
 -- CARGAR PROVEEDORES
 CREATE OR ALTER PROC sp_nombres_proveedor
 AS
 SELECT
-    id_proveedor,
-    nombre + ' - ' + nit AS nombre
-FROM proveedor
-GO
-
-SELECT 
     id_proveedor,
     nombre + ' - ' + nit AS nombre
 FROM proveedor

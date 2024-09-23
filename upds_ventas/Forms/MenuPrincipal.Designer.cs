@@ -28,24 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle22 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle23 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle24 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle25 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle26 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle27 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle28 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle29 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle30 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle31 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle32 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle33 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle34 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle35 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle36 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle15 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle16 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle17 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle18 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle19 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle20 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle21 = new DataGridViewCellStyle();
             MenuPrincipalFor = new ReaLTaiizor.Forms.ForeverForm();
             foreverLabel4 = new ReaLTaiizor.Controls.ForeverLabel();
             LbUsuarioActual = new ReaLTaiizor.Controls.ForeverLabel();
@@ -53,6 +54,7 @@
             tabPageMain = new ReaLTaiizor.Controls.ForeverTabPage();
             tabPageClientes = new TabPage();
             gbDataClientes = new ReaLTaiizor.Controls.ForeverGroupBox();
+            BtnCrearReporteClientes = new ReaLTaiizor.Controls.ForeverButton();
             DataClientes = new ReaLTaiizor.Controls.PoisonDataGridView();
             dataGridViewTextBoxColumn8 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn9 = new DataGridViewTextBoxColumn();
@@ -82,6 +84,7 @@
             foreverLabel24 = new ReaLTaiizor.Controls.ForeverLabel();
             tabPageUsuarios = new TabPage();
             gbListaUsuarios = new ReaLTaiizor.Controls.ForeverGroupBox();
+            BtnCrearReporteUsuarios = new ReaLTaiizor.Controls.ForeverButton();
             DataUsuarios = new ReaLTaiizor.Controls.PoisonDataGridView();
             IdUsuario = new DataGridViewTextBoxColumn();
             ci = new DataGridViewTextBoxColumn();
@@ -145,6 +148,7 @@
             foreverLabel12 = new ReaLTaiizor.Controls.ForeverLabel();
             tabPageProductos = new TabPage();
             GbListaProductos = new ReaLTaiizor.Controls.ForeverGroupBox();
+            BtnCrearReporteProductos = new ReaLTaiizor.Controls.ForeverButton();
             DataProductos = new ReaLTaiizor.Controls.PoisonDataGridView();
             dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
@@ -182,6 +186,7 @@
             NombreProducto = new DataGridViewTextBoxColumn();
             DetalleCantidad = new DataGridViewTextBoxColumn();
             DetallePrecio = new DataGridViewTextBoxColumn();
+            BorrarProducto = new DataGridViewButtonColumn();
             foreverGroupBox4 = new ReaLTaiizor.Controls.ForeverGroupBox();
             BtnRegistrarVenta = new ReaLTaiizor.Controls.ForeverButton();
             foreverLabel3 = new ReaLTaiizor.Controls.ForeverLabel();
@@ -190,6 +195,7 @@
             dataGridViewTextBoxColumn14 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn15 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn16 = new DataGridViewTextBoxColumn();
+            Cantidad = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn18 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn19 = new DataGridViewTextBoxColumn();
             LbTotal = new ReaLTaiizor.Controls.ForeverLabel();
@@ -213,6 +219,7 @@
             foreverLabel27 = new ReaLTaiizor.Controls.ForeverLabel();
             foreverLabel28 = new ReaLTaiizor.Controls.ForeverLabel();
             foreverLabel29 = new ReaLTaiizor.Controls.ForeverLabel();
+            BtnCrearReporteProveedores = new ReaLTaiizor.Controls.ForeverButton();
             MenuPrincipalFor.SuspendLayout();
             tabPageMain.SuspendLayout();
             tabPageClientes.SuspendLayout();
@@ -357,6 +364,7 @@
             gbDataClientes.ArrowColorH = Color.FromArgb(60, 70, 73);
             gbDataClientes.BackColor = Color.FromArgb(45, 47, 49);
             gbDataClientes.BaseColor = Color.FromArgb(60, 70, 73);
+            gbDataClientes.Controls.Add(BtnCrearReporteClientes);
             gbDataClientes.Controls.Add(DataClientes);
             gbDataClientes.Font = new Font("Segoe UI", 10F);
             gbDataClientes.Location = new Point(0, 204);
@@ -368,6 +376,20 @@
             gbDataClientes.Text = "LISTA DE CLIENTES";
             gbDataClientes.TextColor = Color.FromArgb(35, 168, 109);
             // 
+            // BtnCrearReporteClientes
+            // 
+            BtnCrearReporteClientes.BackColor = Color.Transparent;
+            BtnCrearReporteClientes.BaseColor = Color.FromArgb(35, 168, 109);
+            BtnCrearReporteClientes.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            BtnCrearReporteClientes.Location = new Point(573, 18);
+            BtnCrearReporteClientes.Name = "BtnCrearReporteClientes";
+            BtnCrearReporteClientes.Rounded = true;
+            BtnCrearReporteClientes.Size = new Size(176, 22);
+            BtnCrearReporteClientes.TabIndex = 2;
+            BtnCrearReporteClientes.Text = "Reporte de Clientes";
+            BtnCrearReporteClientes.TextColor = Color.FromArgb(243, 243, 243);
+            BtnCrearReporteClientes.Click += BtnCrearReporteClientes_Click;
+            // 
             // DataClientes
             // 
             DataClientes.AllowUserToAddRows = false;
@@ -378,24 +400,24 @@
             DataClientes.BorderStyle = BorderStyle.None;
             DataClientes.CellBorderStyle = DataGridViewCellBorderStyle.None;
             DataClientes.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle22.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle22.BackColor = Color.FromArgb(0, 174, 219);
-            dataGridViewCellStyle22.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle22.ForeColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle22.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle22.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle22.WrapMode = DataGridViewTriState.True;
-            DataClientes.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle1.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle1.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            DataClientes.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             DataClientes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DataClientes.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn8, dataGridViewTextBoxColumn9, dataGridViewTextBoxColumn10, dataGridViewTextBoxColumn11, dataGridViewTextBoxColumn12, dataGridViewTextBoxColumn13 });
-            dataGridViewCellStyle23.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle23.BackColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle23.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle23.ForeColor = Color.FromArgb(136, 136, 136);
-            dataGridViewCellStyle23.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle23.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle23.WrapMode = DataGridViewTriState.False;
-            DataClientes.DefaultCellStyle = dataGridViewCellStyle23;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle2.ForeColor = Color.FromArgb(136, 136, 136);
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            DataClientes.DefaultCellStyle = dataGridViewCellStyle2;
             DataClientes.EnableHeadersVisualStyles = false;
             DataClientes.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
             DataClientes.GridColor = Color.FromArgb(255, 255, 255);
@@ -403,14 +425,14 @@
             DataClientes.Name = "DataClientes";
             DataClientes.ReadOnly = true;
             DataClientes.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle24.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle24.BackColor = Color.FromArgb(0, 174, 219);
-            dataGridViewCellStyle24.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle24.ForeColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle24.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle24.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle24.WrapMode = DataGridViewTriState.True;
-            DataClientes.RowHeadersDefaultCellStyle = dataGridViewCellStyle24;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle3.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            DataClientes.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             DataClientes.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             DataClientes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             DataClientes.Size = new Size(733, 338);
@@ -742,6 +764,7 @@
             gbListaUsuarios.ArrowColorH = Color.FromArgb(60, 70, 73);
             gbListaUsuarios.BackColor = Color.FromArgb(45, 47, 49);
             gbListaUsuarios.BaseColor = Color.FromArgb(60, 70, 73);
+            gbListaUsuarios.Controls.Add(BtnCrearReporteUsuarios);
             gbListaUsuarios.Controls.Add(DataUsuarios);
             gbListaUsuarios.Font = new Font("Segoe UI", 10F);
             gbListaUsuarios.Location = new Point(0, 204);
@@ -753,6 +776,20 @@
             gbListaUsuarios.Text = "LISTA DE USUARIOS";
             gbListaUsuarios.TextColor = Color.FromArgb(35, 168, 109);
             // 
+            // BtnCrearReporteUsuarios
+            // 
+            BtnCrearReporteUsuarios.BackColor = Color.Transparent;
+            BtnCrearReporteUsuarios.BaseColor = Color.FromArgb(35, 168, 109);
+            BtnCrearReporteUsuarios.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            BtnCrearReporteUsuarios.Location = new Point(573, 18);
+            BtnCrearReporteUsuarios.Name = "BtnCrearReporteUsuarios";
+            BtnCrearReporteUsuarios.Rounded = true;
+            BtnCrearReporteUsuarios.Size = new Size(176, 22);
+            BtnCrearReporteUsuarios.TabIndex = 3;
+            BtnCrearReporteUsuarios.Text = "Reporte de Usuarios";
+            BtnCrearReporteUsuarios.TextColor = Color.FromArgb(243, 243, 243);
+            BtnCrearReporteUsuarios.Click += BtnCrearReporteUsuarios_Click;
+            // 
             // DataUsuarios
             // 
             DataUsuarios.AllowUserToAddRows = false;
@@ -763,24 +800,24 @@
             DataUsuarios.BorderStyle = BorderStyle.None;
             DataUsuarios.CellBorderStyle = DataGridViewCellBorderStyle.None;
             DataUsuarios.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle25.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle25.BackColor = Color.FromArgb(0, 174, 219);
-            dataGridViewCellStyle25.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle25.ForeColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle25.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle25.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle25.WrapMode = DataGridViewTriState.True;
-            DataUsuarios.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle25;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle4.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle4.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            DataUsuarios.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             DataUsuarios.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DataUsuarios.Columns.AddRange(new DataGridViewColumn[] { IdUsuario, ci, nombre, ApPaterno, ApMaterno, Tipo, Estado });
-            dataGridViewCellStyle26.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle26.BackColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle26.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle26.ForeColor = Color.FromArgb(136, 136, 136);
-            dataGridViewCellStyle26.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle26.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle26.WrapMode = DataGridViewTriState.False;
-            DataUsuarios.DefaultCellStyle = dataGridViewCellStyle26;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle5.ForeColor = Color.FromArgb(136, 136, 136);
+            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle5.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
+            DataUsuarios.DefaultCellStyle = dataGridViewCellStyle5;
             DataUsuarios.EnableHeadersVisualStyles = false;
             DataUsuarios.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
             DataUsuarios.GridColor = Color.FromArgb(255, 255, 255);
@@ -788,14 +825,14 @@
             DataUsuarios.Name = "DataUsuarios";
             DataUsuarios.ReadOnly = true;
             DataUsuarios.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle27.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle27.BackColor = Color.FromArgb(0, 174, 219);
-            dataGridViewCellStyle27.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle27.ForeColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle27.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle27.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle27.WrapMode = DataGridViewTriState.True;
-            DataUsuarios.RowHeadersDefaultCellStyle = dataGridViewCellStyle27;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle6.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle6.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle6.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
+            DataUsuarios.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             DataUsuarios.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             DataUsuarios.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             DataUsuarios.Size = new Size(733, 338);
@@ -1150,6 +1187,7 @@
             gbListaProveedores.ArrowColorH = Color.FromArgb(60, 70, 73);
             gbListaProveedores.BackColor = Color.FromArgb(45, 47, 49);
             gbListaProveedores.BaseColor = Color.FromArgb(60, 70, 73);
+            gbListaProveedores.Controls.Add(BtnCrearReporteProveedores);
             gbListaProveedores.Controls.Add(foreverLabel1);
             gbListaProveedores.Controls.Add(TbBuscarProv);
             gbListaProveedores.Controls.Add(DataProveedores);
@@ -1203,24 +1241,24 @@
             DataProveedores.BorderStyle = BorderStyle.None;
             DataProveedores.CellBorderStyle = DataGridViewCellBorderStyle.None;
             DataProveedores.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle28.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle28.BackColor = Color.FromArgb(0, 174, 219);
-            dataGridViewCellStyle28.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle28.ForeColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle28.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle28.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle28.WrapMode = DataGridViewTriState.True;
-            DataProveedores.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle28;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle7.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle7.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle7.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle7.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
+            DataProveedores.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             DataProveedores.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DataProveedores.Columns.AddRange(new DataGridViewColumn[] { IdProveedor, Nit, PvNombre, Direccion, Telefono, Ciudad });
-            dataGridViewCellStyle29.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle29.BackColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle29.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle29.ForeColor = Color.FromArgb(136, 136, 136);
-            dataGridViewCellStyle29.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle29.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle29.WrapMode = DataGridViewTriState.False;
-            DataProveedores.DefaultCellStyle = dataGridViewCellStyle29;
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle8.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle8.ForeColor = Color.FromArgb(136, 136, 136);
+            dataGridViewCellStyle8.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle8.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
+            DataProveedores.DefaultCellStyle = dataGridViewCellStyle8;
             DataProveedores.EnableHeadersVisualStyles = false;
             DataProveedores.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
             DataProveedores.GridColor = Color.FromArgb(255, 255, 255);
@@ -1228,14 +1266,14 @@
             DataProveedores.Name = "DataProveedores";
             DataProveedores.ReadOnly = true;
             DataProveedores.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle30.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle30.BackColor = Color.FromArgb(0, 174, 219);
-            dataGridViewCellStyle30.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle30.ForeColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle30.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle30.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle30.WrapMode = DataGridViewTriState.True;
-            DataProveedores.RowHeadersDefaultCellStyle = dataGridViewCellStyle30;
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle9.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle9.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle9.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle9.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.True;
+            DataProveedores.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             DataProveedores.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             DataProveedores.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             DataProveedores.Size = new Size(733, 327);
@@ -1583,6 +1621,7 @@
             GbListaProductos.ArrowColorH = Color.FromArgb(60, 70, 73);
             GbListaProductos.BackColor = Color.FromArgb(45, 47, 49);
             GbListaProductos.BaseColor = Color.FromArgb(60, 70, 73);
+            GbListaProductos.Controls.Add(BtnCrearReporteProductos);
             GbListaProductos.Controls.Add(DataProductos);
             GbListaProductos.Font = new Font("Segoe UI", 10F);
             GbListaProductos.Location = new Point(0, 204);
@@ -1594,6 +1633,20 @@
             GbListaProductos.Text = "LISTA DE PRODUCTOS";
             GbListaProductos.TextColor = Color.FromArgb(35, 168, 109);
             // 
+            // BtnCrearReporteProductos
+            // 
+            BtnCrearReporteProductos.BackColor = Color.Transparent;
+            BtnCrearReporteProductos.BaseColor = Color.FromArgb(35, 168, 109);
+            BtnCrearReporteProductos.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            BtnCrearReporteProductos.Location = new Point(573, 18);
+            BtnCrearReporteProductos.Name = "BtnCrearReporteProductos";
+            BtnCrearReporteProductos.Rounded = true;
+            BtnCrearReporteProductos.Size = new Size(176, 22);
+            BtnCrearReporteProductos.TabIndex = 1;
+            BtnCrearReporteProductos.Text = "Reporte de Productos";
+            BtnCrearReporteProductos.TextColor = Color.FromArgb(243, 243, 243);
+            BtnCrearReporteProductos.Click += BtnCrearReporteProductos_Click;
+            // 
             // DataProductos
             // 
             DataProductos.AllowUserToAddRows = false;
@@ -1604,24 +1657,24 @@
             DataProductos.BorderStyle = BorderStyle.None;
             DataProductos.CellBorderStyle = DataGridViewCellBorderStyle.None;
             DataProductos.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle31.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle31.BackColor = Color.FromArgb(0, 174, 219);
-            dataGridViewCellStyle31.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle31.ForeColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle31.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle31.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle31.WrapMode = DataGridViewTriState.True;
-            DataProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle31;
+            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle10.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle10.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle10.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle10.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.True;
+            DataProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             DataProductos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DataProductos.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, dataGridViewTextBoxColumn3, dataGridViewTextBoxColumn4, dataGridViewTextBoxColumn5, dataGridViewTextBoxColumn6, dataGridViewTextBoxColumn7 });
-            dataGridViewCellStyle32.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle32.BackColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle32.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle32.ForeColor = Color.FromArgb(136, 136, 136);
-            dataGridViewCellStyle32.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle32.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle32.WrapMode = DataGridViewTriState.False;
-            DataProductos.DefaultCellStyle = dataGridViewCellStyle32;
+            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle11.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle11.ForeColor = Color.FromArgb(136, 136, 136);
+            dataGridViewCellStyle11.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle11.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle11.WrapMode = DataGridViewTriState.False;
+            DataProductos.DefaultCellStyle = dataGridViewCellStyle11;
             DataProductos.EnableHeadersVisualStyles = false;
             DataProductos.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
             DataProductos.GridColor = Color.FromArgb(255, 255, 255);
@@ -1629,14 +1682,14 @@
             DataProductos.Name = "DataProductos";
             DataProductos.ReadOnly = true;
             DataProductos.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle33.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle33.BackColor = Color.FromArgb(0, 174, 219);
-            dataGridViewCellStyle33.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle33.ForeColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle33.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle33.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle33.WrapMode = DataGridViewTriState.True;
-            DataProductos.RowHeadersDefaultCellStyle = dataGridViewCellStyle33;
+            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle12.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle12.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle12.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle12.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle12.WrapMode = DataGridViewTriState.True;
+            DataProductos.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
             DataProductos.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             DataProductos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             DataProductos.Size = new Size(733, 338);
@@ -2009,24 +2062,24 @@
             DataDetalle.BorderStyle = BorderStyle.None;
             DataDetalle.CellBorderStyle = DataGridViewCellBorderStyle.None;
             DataDetalle.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle34.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle34.BackColor = Color.FromArgb(0, 174, 219);
-            dataGridViewCellStyle34.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle34.ForeColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle34.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle34.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle34.WrapMode = DataGridViewTriState.True;
-            DataDetalle.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle34;
+            dataGridViewCellStyle13.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle13.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle13.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle13.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle13.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle13.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle13.WrapMode = DataGridViewTriState.True;
+            DataDetalle.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
             DataDetalle.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            DataDetalle.Columns.AddRange(new DataGridViewColumn[] { IdVenta, IdProducto, NombreProducto, DetalleCantidad, DetallePrecio });
-            dataGridViewCellStyle35.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle35.BackColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle35.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle35.ForeColor = Color.FromArgb(136, 136, 136);
-            dataGridViewCellStyle35.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle35.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle35.WrapMode = DataGridViewTriState.False;
-            DataDetalle.DefaultCellStyle = dataGridViewCellStyle35;
+            DataDetalle.Columns.AddRange(new DataGridViewColumn[] { IdVenta, IdProducto, NombreProducto, DetalleCantidad, DetallePrecio, BorrarProducto });
+            dataGridViewCellStyle15.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle15.BackColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle15.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle15.ForeColor = Color.FromArgb(136, 136, 136);
+            dataGridViewCellStyle15.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle15.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle15.WrapMode = DataGridViewTriState.False;
+            DataDetalle.DefaultCellStyle = dataGridViewCellStyle15;
             DataDetalle.EnableHeadersVisualStyles = false;
             DataDetalle.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
             DataDetalle.GridColor = Color.FromArgb(255, 255, 255);
@@ -2034,18 +2087,19 @@
             DataDetalle.Name = "DataDetalle";
             DataDetalle.ReadOnly = true;
             DataDetalle.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle36.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle36.BackColor = Color.FromArgb(0, 174, 219);
-            dataGridViewCellStyle36.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle36.ForeColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle36.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle36.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle36.WrapMode = DataGridViewTriState.True;
-            DataDetalle.RowHeadersDefaultCellStyle = dataGridViewCellStyle36;
+            dataGridViewCellStyle16.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle16.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle16.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle16.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle16.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle16.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle16.WrapMode = DataGridViewTriState.True;
+            DataDetalle.RowHeadersDefaultCellStyle = dataGridViewCellStyle16;
             DataDetalle.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             DataDetalle.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             DataDetalle.Size = new Size(327, 208);
             DataDetalle.TabIndex = 1;
+            DataDetalle.CellContentClick += DataDetalle_CellContentClick;
             // 
             // IdVenta
             // 
@@ -2056,10 +2110,10 @@
             // 
             // IdProducto
             // 
-            IdProducto.HeaderText = "Id Producto";
+            IdProducto.HeaderText = "Id Prod.";
             IdProducto.Name = "IdProducto";
             IdProducto.ReadOnly = true;
-            IdProducto.Width = 60;
+            IdProducto.Width = 40;
             // 
             // NombreProducto
             // 
@@ -2069,10 +2123,10 @@
             // 
             // DetalleCantidad
             // 
-            DetalleCantidad.HeaderText = "Cantidad";
+            DetalleCantidad.HeaderText = "Cant.";
             DetalleCantidad.Name = "DetalleCantidad";
             DetalleCantidad.ReadOnly = true;
-            DetalleCantidad.Width = 55;
+            DetalleCantidad.Width = 35;
             // 
             // DetallePrecio
             // 
@@ -2080,6 +2134,20 @@
             DetallePrecio.Name = "DetallePrecio";
             DetallePrecio.ReadOnly = true;
             DetallePrecio.Width = 60;
+            // 
+            // BorrarProducto
+            // 
+            dataGridViewCellStyle14.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle14.BackColor = Color.Transparent;
+            dataGridViewCellStyle14.Font = new Font("Tahoma", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle14.ForeColor = Color.IndianRed;
+            BorrarProducto.DefaultCellStyle = dataGridViewCellStyle14;
+            BorrarProducto.FlatStyle = FlatStyle.System;
+            BorrarProducto.HeaderText = "Borrar";
+            BorrarProducto.Name = "BorrarProducto";
+            BorrarProducto.ReadOnly = true;
+            BorrarProducto.Text = "X";
+            BorrarProducto.Width = 40;
             // 
             // foreverGroupBox4
             // 
@@ -2152,6 +2220,7 @@
             // DataProdVenta
             // 
             DataProdVenta.AllowUserToAddRows = false;
+            DataProdVenta.AllowUserToDeleteRows = false;
             DataProdVenta.AllowUserToOrderColumns = true;
             DataProdVenta.AllowUserToResizeRows = false;
             DataProdVenta.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -2159,6 +2228,30 @@
             DataProdVenta.BorderStyle = BorderStyle.None;
             DataProdVenta.CellBorderStyle = DataGridViewCellBorderStyle.None;
             DataProdVenta.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle17.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle17.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle17.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle17.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle17.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle17.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle17.WrapMode = DataGridViewTriState.True;
+            DataProdVenta.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle17;
+            DataProdVenta.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            DataProdVenta.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn14, dataGridViewTextBoxColumn15, dataGridViewTextBoxColumn16, Cantidad, dataGridViewTextBoxColumn18, dataGridViewTextBoxColumn19 });
+            dataGridViewCellStyle18.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle18.BackColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle18.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle18.ForeColor = Color.FromArgb(136, 136, 136);
+            dataGridViewCellStyle18.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle18.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle18.WrapMode = DataGridViewTriState.False;
+            DataProdVenta.DefaultCellStyle = dataGridViewCellStyle18;
+            DataProdVenta.EnableHeadersVisualStyles = false;
+            DataProdVenta.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            DataProdVenta.GridColor = Color.FromArgb(255, 255, 255);
+            DataProdVenta.Location = new Point(16, 46);
+            DataProdVenta.Name = "DataProdVenta";
+            DataProdVenta.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle19.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle19.BackColor = Color.FromArgb(0, 174, 219);
             dataGridViewCellStyle19.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
@@ -2166,32 +2259,7 @@
             dataGridViewCellStyle19.SelectionBackColor = Color.FromArgb(0, 198, 247);
             dataGridViewCellStyle19.SelectionForeColor = Color.FromArgb(17, 17, 17);
             dataGridViewCellStyle19.WrapMode = DataGridViewTriState.True;
-            DataProdVenta.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle19;
-            DataProdVenta.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            DataProdVenta.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn14, dataGridViewTextBoxColumn15, dataGridViewTextBoxColumn16, dataGridViewTextBoxColumn18, dataGridViewTextBoxColumn19 });
-            dataGridViewCellStyle20.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle20.BackColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle20.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle20.ForeColor = Color.FromArgb(136, 136, 136);
-            dataGridViewCellStyle20.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle20.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle20.WrapMode = DataGridViewTriState.False;
-            DataProdVenta.DefaultCellStyle = dataGridViewCellStyle20;
-            DataProdVenta.EnableHeadersVisualStyles = false;
-            DataProdVenta.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            DataProdVenta.GridColor = Color.FromArgb(255, 255, 255);
-            DataProdVenta.Location = new Point(16, 46);
-            DataProdVenta.Name = "DataProdVenta";
-            DataProdVenta.ReadOnly = true;
-            DataProdVenta.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle21.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle21.BackColor = Color.FromArgb(0, 174, 219);
-            dataGridViewCellStyle21.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle21.ForeColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle21.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle21.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle21.WrapMode = DataGridViewTriState.True;
-            DataProdVenta.RowHeadersDefaultCellStyle = dataGridViewCellStyle21;
+            DataProdVenta.RowHeadersDefaultCellStyle = dataGridViewCellStyle19;
             DataProdVenta.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             DataProdVenta.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             DataProdVenta.Size = new Size(733, 286);
@@ -2200,9 +2268,10 @@
             // 
             // dataGridViewTextBoxColumn14
             // 
-            dataGridViewTextBoxColumn14.HeaderText = "Id Producto";
+            dataGridViewTextBoxColumn14.HeaderText = "Id Prod.";
             dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
             dataGridViewTextBoxColumn14.ReadOnly = true;
+            dataGridViewTextBoxColumn14.Width = 50;
             // 
             // dataGridViewTextBoxColumn15
             // 
@@ -2213,9 +2282,18 @@
             // 
             // dataGridViewTextBoxColumn16
             // 
+            dataGridViewTextBoxColumn16.DividerWidth = 2;
             dataGridViewTextBoxColumn16.HeaderText = "Stock";
             dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
             dataGridViewTextBoxColumn16.ReadOnly = true;
+            // 
+            // Cantidad
+            // 
+            Cantidad.DividerWidth = 2;
+            Cantidad.HeaderText = "Cantidad";
+            Cantidad.MaxInputLength = 3;
+            Cantidad.Name = "Cantidad";
+            Cantidad.Width = 60;
             // 
             // dataGridViewTextBoxColumn18
             // 
@@ -2228,7 +2306,7 @@
             dataGridViewTextBoxColumn19.HeaderText = "Proveedor";
             dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
             dataGridViewTextBoxColumn19.ReadOnly = true;
-            dataGridViewTextBoxColumn19.Width = 160;
+            dataGridViewTextBoxColumn19.Width = 180;
             // 
             // LbTotal
             // 
@@ -2315,7 +2393,6 @@
             TbNitBuscarCliente.ReadOnly = false;
             TbNitBuscarCliente.Size = new Size(178, 38);
             TbNitBuscarCliente.TabIndex = 0;
-            TbNitBuscarCliente.Text = "textBoxEdit1";
             TbNitBuscarCliente.TextAlignment = HorizontalAlignment.Center;
             TbNitBuscarCliente.UseSystemPasswordChar = false;
             // 
@@ -2496,6 +2573,20 @@
             foreverLabel29.Size = new Size(77, 21);
             foreverLabel29.TabIndex = 4;
             foreverLabel29.Text = "Nombre:";
+            // 
+            // BtnCrearReporteProveedores
+            // 
+            BtnCrearReporteProveedores.BackColor = Color.Transparent;
+            BtnCrearReporteProveedores.BaseColor = Color.FromArgb(35, 168, 109);
+            BtnCrearReporteProveedores.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            BtnCrearReporteProveedores.Location = new Point(206, 22);
+            BtnCrearReporteProveedores.Name = "BtnCrearReporteProveedores";
+            BtnCrearReporteProveedores.Rounded = true;
+            BtnCrearReporteProveedores.Size = new Size(176, 22);
+            BtnCrearReporteProveedores.TabIndex = 4;
+            BtnCrearReporteProveedores.Text = "Reporte de Proveedores";
+            BtnCrearReporteProveedores.TextColor = Color.FromArgb(243, 243, 243);
+            BtnCrearReporteProveedores.Click += BtnCrearReporteProveedores_Click;
             // 
             // MenuPrincipal
             // 
@@ -2703,11 +2794,6 @@
         private ReaLTaiizor.Controls.ForeverLabel foreverLabel30;
         private ReaLTaiizor.Controls.ForeverGroupBox foreverGroupBox5;
         private ReaLTaiizor.Controls.PoisonDataGridView DataDetalle;
-        private DataGridViewTextBoxColumn IdVenta;
-        private DataGridViewTextBoxColumn IdProducto;
-        private DataGridViewTextBoxColumn NombreProducto;
-        private DataGridViewTextBoxColumn DetalleCantidad;
-        private DataGridViewTextBoxColumn DetallePrecio;
         private ReaLTaiizor.Controls.ForeverLabel foreverLabel3;
         private ReaLTaiizor.Controls.TextBoxEdit TbCantidad;
         private ReaLTaiizor.Controls.ForeverLabel LbTotal;
@@ -2716,7 +2802,18 @@
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
+        private DataGridViewTextBoxColumn Cantidad;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn19;
+        private DataGridViewTextBoxColumn IdVenta;
+        private DataGridViewTextBoxColumn IdProducto;
+        private DataGridViewTextBoxColumn NombreProducto;
+        private DataGridViewTextBoxColumn DetalleCantidad;
+        private DataGridViewTextBoxColumn DetallePrecio;
+        private DataGridViewButtonColumn BorrarProducto;
+        private ReaLTaiizor.Controls.ForeverButton BtnCrearReporteProductos;
+        private ReaLTaiizor.Controls.ForeverButton BtnCrearReporteClientes;
+        private ReaLTaiizor.Controls.ForeverButton BtnCrearReporteUsuarios;
+        private ReaLTaiizor.Controls.ForeverButton BtnCrearReporteProveedores;
     }
 }

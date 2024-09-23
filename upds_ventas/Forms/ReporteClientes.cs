@@ -11,15 +11,15 @@ using upds_ventas.Reports;
 
 namespace upds_ventas.Forms
 {
-    public partial class ReporteProductos : Form
+    public partial class ReporteClientes : Form
     {
-        CrearReporteProductos reporte;
-        public ReporteProductos()
+        CrearReporteClientes reporteClientes;
+        public ReporteClientes()
         {
             InitializeComponent();
 
-            reporte = new CrearReporteProductos();
-            reporte.GenerarReporte();
+            reporteClientes = new CrearReporteClientes();
+            reporteClientes.GenerarReporte();
         }
     }
 }

@@ -107,7 +107,7 @@ namespace upds_ventas.Repos
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al listar usuarios:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al listar productos:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally { db.Close(); }
 
@@ -132,6 +132,40 @@ namespace upds_ventas.Repos
                 return false;
             }
             finally { db.Close(); }
+        }
+
+        public List<Producto> Reporte()
+        {
+            const string sql = "EXEC dbo.sp_reporte_producto";
+            var productos = new List<Producto>();
+            try
+            {
+                db.Connect();
+                using SqlCommand cmd = new SqlCommand(sql, db.Con);
+                using SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    productos.Add(new Producto
+                    {
+                        Nombre = reader.GetString(reader.GetOrdinal("nombre")),
+                        Stock = reader.GetInt32(reader.GetOrdinal("stock")),
+                        PrecioVenta = reader.GetDecimal(reader.GetOrdinal("precio_venta")),
+                        Estado = reader.GetBoolean(reader.GetOrdinal("estado")),
+                        Proveedor = new Proveedor
+                        {
+                            Nombre = reader.GetString(reader.GetOrdinal("proveedor")),
+                            Ciudad = reader.GetString(reader.GetOrdinal("ciudad")),
+                        }
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al listar productos:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally { db.Close(); }
+
+            return productos;
         }
     }
 }

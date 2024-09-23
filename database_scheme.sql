@@ -26,14 +26,14 @@ GO
 CREATE TABLE cliente
 (
     id_cliente INT         PRIMARY KEY,
-    nit        VARCHAR(20) UNIQUE,
+    nit        VARCHAR(20) UNIQUE NOT NULL,
     FOREIGN KEY(id_cliente) REFERENCES persona(id_persona),
 )
 
 CREATE TABLE usuario
 (
     id_usuario     INT            PRIMARY KEY,
-    nombre_usuario VARCHAR(30)    UNIQUE,
+    nombre_usuario VARCHAR(30)    UNIQUE NOT NULL,
     pass           VARBINARY(256) NOT NULL,
     tipo           VARCHAR(15)    CHECK(tipo IN('VENDEDOR', 'ADMINISTRADOR')),
     -- activo: 1, inactivo: 0
@@ -73,13 +73,13 @@ CREATE TABLE producto
     nombre        VARCHAR(30)    NOT NULL,
     precio_compra DECIMAL(10, 2) CHECK(precio_compra>0),
     precio_venta  DECIMAL(10, 2) CHECK(precio_venta>0),
-    stock         INT            CHECK(stock > 5),
+    stock         INT            CHECK(stock >= 0),
     -- activo: 1, inactivo: 0
     estado        BIT            NOT NULL,
     FOREIGN KEY(id_proveedor) REFERENCES proveedor(id_proveedor),
 )
 
-CREATE TABLE detatalle_venta
+CREATE TABLE detalle_venta
 (
     id_detalle_venta INT            PRIMARY KEY IDENTITY(1, 1),
     id_venta         INT,
@@ -89,6 +89,35 @@ CREATE TABLE detatalle_venta
     FOREIGN KEY (id_venta) REFERENCES venta(id_venta),
     FOREIGN KEY (id_producto) REFERENCES producto(id_producto),
 )
+GO
+
+-- Carga de datos iniciales
+INSERT INTO persona VALUES
+    ('1234 PO', 'Erick Fernando', 'Velasco', 'Flores'),
+    ('2345 OR', 'Ani', 'Melon', NULL),
+    ('333 CBB', 'Mar', 'Apollo', 'Guerrero'),
+    ('444 AR', 'Nicki', 'Nicole', NULL)
+GO
+INSERT INTO usuario VALUES
+    (1, 'erick', ENCRYPTBYPASSPHRASE('upds2024', '123'), 'ADMINISTRADOR', 1),
+    (2, 'anime', ENCRYPTBYPASSPHRASE('upds2024', 'anime'), 'VENDEDOR', 1)
+GO
+INSERT INTO cliente VALUES
+    (3, '333010'),
+    (4, '444018')
+GO
+INSERT INTO proveedor VALUES
+    ('511015', 'Campos de Solana', 'Carretera a Bermejo Km 12', '+591 466 45498', 'TARIJA'),
+    ('522012', 'XSport', 'Calle San Alberto S/N', '60708090', 'POTOSI'),
+    ('577017', 'Coca Cola', 'Av. Periférica #333-E', '61616262', 'COCHABAMBA')
+GO
+INSERT INTO producto VALUES
+    (2, 'Agua 500 ml', 3.70, 4.50, 120, 1),
+    (1, 'ESTHER ORTIZ 10 años', 250.00, 300.00, 6, 1),
+    (1, 'MALBEC', 50.00, 60.00, 40, 1),
+    (1, 'ROSÉ', 39.50, 46.50, 24, 1),
+    (2, 'Agua botellón 20 L', 31.30, 35.00, 20, 1),
+    (3, 'Coca Cola 2 L', 8.70, 10.00, 41, 1)
 GO
 
 -- Creacion del usuario para login correspondiente a la cadena de conexion

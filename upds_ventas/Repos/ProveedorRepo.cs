@@ -120,5 +120,36 @@ namespace upds_ventas.Repos
             return proveedores;
         }
 
+        public List<Proveedor> Reporte()
+        {
+            const string sql = "EXEC dbo.sp_reporte_proveedores";
+            var proveedores = new List<Proveedor>();
+            try
+            {
+                dbContext.Connect();
+                using SqlCommand cmd = new SqlCommand(sql, dbContext.Con);
+                using SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    proveedores.Add(new Proveedor
+                    {
+                        Nit = reader.GetString(reader.GetOrdinal("nit")),
+                        Nombre = reader.GetString(reader.GetOrdinal("nombre")),
+                        Direccion = reader.GetString(reader.GetOrdinal("direccion")),
+                        Telefono = reader.GetString(reader.GetOrdinal("telefono")),
+                        Ciudad = reader.GetString(reader.GetOrdinal("ciudad")),
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al listar proveedores:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally { dbContext.Close(); }
+
+            return proveedores;
+        }
+
+
     }
 }

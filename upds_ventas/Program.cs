@@ -12,6 +12,8 @@ namespace upds_ventas
         [STAThread]
         static void Main()
         {
+            QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
+
             ApplicationConfiguration.Initialize();
             Application.Run(new Login());
         }

@@ -38,10 +38,18 @@ FROM proveedor
 
 SELECT * FROM producto;
 
+SELECT * FROM persona;
+SELECT * FROM cliente;
 
-SELECT *
-FROM venta
-SELECT *
-FROM detatalle_venta
-SELECT *
-FROM producto
+
+SELECT * FROM venta;
+SELECT * FROM detalle_venta;
+
+SELECT * FROM producto;
+GO
+
+DELETE FROM venta;
+GO
+
+-- DROP PROC sp_registrar_venta;
+-- DROP PROC sp_registrar_detalle;

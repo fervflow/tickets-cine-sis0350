@@ -37,7 +37,7 @@ namespace upds_ventas.Repos
                 cmd.Parameters.AddWithValue("@ci", c.Persona.Ci);
                 cmd.Parameters.AddWithValue("@nombre", c.Persona.Nombre);
                 cmd.Parameters.AddWithValue("@ap_paterno", c.Persona.ApPaterno);
-                cmd.Parameters.AddWithValue("@ap_materno", c.Persona.ApMaterno);
+                cmd.Parameters.AddWithValue("@ap_materno", c.Persona.ApMaterno ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@nit", c.Nit ?? (object)DBNull.Value);
                 return cmd.ExecuteNonQuery() > 0;
             }
@@ -70,7 +70,7 @@ namespace upds_ventas.Repos
                             Ci = reader.GetString(reader.GetOrdinal("ci")),
                             Nombre = reader.GetString(reader.GetOrdinal("nombre")),
                             ApPaterno = reader.GetString(reader.GetOrdinal("ap_paterno")),
-                            ApMaterno = reader.GetString(reader.GetOrdinal("ap_materno"))
+                            ApMaterno = reader.IsDBNull(reader.GetOrdinal("ap_materno")) ? null : reader.GetString(reader.GetOrdinal("ap_materno"))
                         }
                     });
                 }
@@ -106,7 +106,7 @@ namespace upds_ventas.Repos
                             Ci = reader.GetString(reader.GetOrdinal("ci")),
                             Nombre = reader.GetString(reader.GetOrdinal("nombre")),
                             ApPaterno = reader.GetString(reader.GetOrdinal("ap_paterno")),
-                            ApMaterno = reader.GetString(reader.GetOrdinal("ap_materno"))
+                            ApMaterno = reader.IsDBNull(reader.GetOrdinal("ap_materno")) ? null : reader.GetString(reader.GetOrdinal("ap_materno"))
                         }
                     };
                 }
@@ -119,5 +119,39 @@ namespace upds_ventas.Repos
 
             return cliente;
         }
+
+        public List<Cliente> Reporte()
+        {
+            const string sql = "EXEC dbo.sp_reporte_clientes";
+            var clientes = new List<Cliente>();
+            try
+            {
+                db.Connect();
+                using SqlCommand cmd = new SqlCommand(sql, db.Con);
+                using SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    clientes.Add(new Cliente
+                    {
+                        Nit = reader.GetString(reader.GetOrdinal("nit")),
+                        Persona = new Persona
+                        {
+                            Ci = reader.GetString(reader.GetOrdinal("ci")),
+                            Nombre = reader.GetString(reader.GetOrdinal("nombre")),
+                            ApPaterno = reader.GetString(reader.GetOrdinal("ap_paterno")),
+                            ApMaterno = reader.IsDBNull(reader.GetOrdinal("ap_materno")) ? "" : reader.GetString(reader.GetOrdinal("ap_materno")),
+                        }
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al listar clientes:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally { db.Close(); }
+
+            return clientes;
+        }
+
     }
 }

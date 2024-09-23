@@ -20,6 +20,7 @@ namespace upds_ventas.Forms
         private readonly ProveedorRepo _proveedorRepo;
         private readonly ProductoRepo _productoRepo;
         private readonly ClienteRepo _clienteRepo;
+        private readonly VentaRepo _ventaRepo;
 
         private readonly Usuario usuarioActual;
 
@@ -45,8 +46,9 @@ namespace upds_ventas.Forms
         Cliente? clienteVenta;
 
         List<DetalleVenta> detalle;
+        List<Producto> productosVenta;
         int idDetalle = 0;
-        decimal total = 0.0m;
+        decimal total;
 
         public MenuPrincipal(Usuario u)
         {
@@ -54,6 +56,7 @@ namespace upds_ventas.Forms
             _proveedorRepo = new ProveedorRepo();
             _productoRepo = new ProductoRepo();
             _clienteRepo = new ClienteRepo();
+            _ventaRepo = new VentaRepo();
 
             usuarioActual = u;
 
@@ -61,6 +64,7 @@ namespace upds_ventas.Forms
             proveedores = new List<Proveedor>();
             buscandoProveedor = false;
             productos = new List<Producto>();
+            productosVenta = new List<Producto>();
             clientes = new List<Cliente>();
             detalle = new List<DetalleVenta>();
 
@@ -69,6 +73,7 @@ namespace upds_ventas.Forms
             _ = CargarProveedores();
             CargarProductos();
             CargarClientes();
+            CargarProdVenta();
 
             LbUsuarioActual.Text = usuarioActual.Persona.Nombre +
                 ' ' + usuarioActual.Persona.ApPaterno +
@@ -99,6 +104,8 @@ namespace upds_ventas.Forms
             BtnModificarCliente.Enabled = false;
 
             VNombre.Text = VApPaterno.Text = VApMaterno.Text = VCi.Text = VNit.Text = LbTotal.Text = "";
+            LbTotal.Text = "0.00 Bs";
+            total = 0.0m;
 
         }
 
@@ -193,16 +200,17 @@ namespace upds_ventas.Forms
 
         private void CargarProdVenta()
         {
-            productos = _productoRepo.Listar(true);
+            productosVenta = _productoRepo.Listar(true);
 
             DataProdVenta.Rows.Clear();
 
-            foreach (var p in productos)
+            foreach (var p in productosVenta)
             {
                 object[] rowData = [
                     p.IdProducto,
                     p.Nombre,
                     p.Stock!,
+                    "",
                     p.PrecioVenta!,
                     p.Proveedor!.Nombre,
                 ];
@@ -437,32 +445,36 @@ namespace upds_ventas.Forms
         private void CargarDetalle()
         {
             DataDetalle.Rows.Clear();
+            idDetalle = 0;
+            total = 0.0m;
             foreach (var d in detalle)
             {
                 d.IdDetalleVenta = ++idDetalle;
                 object[] rowData = [
+                    d.IdDetalleVenta,
                     d.IdProducto!,
                     d.Producto!.Nombre,
                     d.Cantidad!,
                     d.SubTotal!,
+                    "X",
                 ];
                 DataDetalle.Rows.Add(rowData);
                 total += d.SubTotal!.Value!;
-                LbTotal.Text = total.ToString();
+                LbTotal.Text = total.ToString() + " Bs.";
             }
         }
         private void DataProdVenta_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            IdProductoVenta = (int)DataProdVenta.CurrentRow.Cells[0].Value;
+            IdProductoVenta = Convert.ToInt32(DataProdVenta.CurrentRow.Cells[0].Value);
 
-            productoVenta = productos.FirstOrDefault(p => p.IdProducto.Equals(IdProductoVenta))!;
+            productoVenta = productosVenta.FirstOrDefault(p => p.IdProducto.Equals(IdProductoVenta))!;
 
             //List<DetalleVenta> detalle = new List<DetalleVenta>();
             detalle.Add(new DetalleVenta
             {
                 IdProducto = IdProductoVenta,
                 Cantidad = Convert.ToInt32(TbCantidad.Text),
-                SubTotal = Convert.ToDecimal(Convert.ToInt32(TbCantidad.Text) * productoVenta.PrecioVenta),
+                SubTotal = Convert.ToDecimal(Convert.ToInt32(TbCantidad.Text)) * productoVenta.PrecioVenta,
                 Producto = productoVenta,
             });
             CargarDetalle();
@@ -487,8 +499,61 @@ namespace upds_ventas.Forms
                 DetalleVenta = detalle,
             };
 
-            CargarDetalle();
+            bool querySuccess = _ventaRepo.Insertar(venta);
+            if (querySuccess)
+            {
+                MessageBox.Show("Venta registrada exitosamente.");
+            }
+            else
+            {
+                MessageBox.Show("Error al registrar la venta.");
+            }
+
+            //CargarDetalle();
+            CargarProdVenta();
         }
+
+        private void DataDetalle_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 5 && e.RowIndex >= 0)
+            {
+                var detalleEliminado = detalle.SingleOrDefault(
+                    d => d.IdDetalleVenta == Convert.ToInt32(DataDetalle.CurrentRow.Cells[0].Value)
+                );
+                if (detalleEliminado != null)
+                {
+                    total -= (decimal)detalleEliminado.SubTotal!;
+                    detalle.Remove(detalleEliminado);
+                    DataDetalle.Rows.RemoveAt(e.RowIndex);
+                }
+                CargarDetalle();
+            }
+        }
+
+        private void BtnCrearReporteProductos_Click(object sender, EventArgs e)
+        {
+            var formReporteProductos = new ReporteProductos();
+            formReporteProductos.ShowDialog();
+        }
+
+        private void BtnCrearReporteClientes_Click(object sender, EventArgs e)
+        {
+            var formReporteClientes = new ReporteClientes();
+            formReporteClientes.ShowDialog();
+        }
+
+        private void BtnCrearReporteUsuarios_Click(object sender, EventArgs e)
+        {
+            var formReporteUsuarios = new ReporteUsuarios();
+            formReporteUsuarios.ShowDialog();
+        }
+
+        private void BtnCrearReporteProveedores_Click(object sender, EventArgs e)
+        {
+            var formReporteProveedores = new ReporteProveedores();
+            formReporteProveedores.ShowDialog();
+        }
+
 
 
         //private void BtnEliminarProveedor_Click(object sender, EventArgs e)
