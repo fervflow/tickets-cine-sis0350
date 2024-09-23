@@ -53,3 +53,5 @@ GO
 
 -- DROP PROC sp_registrar_venta;
 -- DROP PROC sp_registrar_detalle;
+
+EXEC dbo.sp_reporte_venta 1;

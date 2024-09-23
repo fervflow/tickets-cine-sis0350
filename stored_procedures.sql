@@ -254,6 +254,45 @@ SELECT nit, nombre, direccion, telefono, ciudad
 FROM proveedor
 GO
 
+-- REPORTE VENTA
+CREATE OR ALTER PROC sp_reporte_venta
+    @id_venta INT
+AS
+BEGIN
+    SELECT 
+        v.id_venta,
+        v.fecha,
+        v.total,
+        
+        c.nit AS cliente_nit,
+        p_cliente.ci AS cliente_ci,
+        p_cliente.nombre AS cliente_nombre,
+        p_cliente.ap_paterno AS cliente_ap_paterno,
+        p_cliente.ap_materno AS cliente_ap_materno,
+        
+        u.nombre_usuario AS usuario_nombre,
+        p_usuario.ci AS usuario_ci,
+        p_usuario.nombre AS usuario_nombre_real,
+        p_usuario.ap_paterno AS usuario_ap_paterno,
+        p_usuario.ap_materno AS usuario_ap_materno,
+        
+        dv.id_detalle_venta,
+        dv.id_producto,
+        dv.cantidad,
+        dv.sub_total
+    FROM venta v
+    INNER JOIN cliente c ON v.id_cliente = c.id_cliente
+    INNER JOIN persona p_cliente ON c.id_cliente = p_cliente.id_persona
+    INNER JOIN usuario u ON v.id_usuario = u.id_usuario
+    INNER JOIN persona p_usuario ON u.id_usuario = p_usuario.id_persona
+    LEFT JOIN detalle_venta dv ON v.id_venta = dv.id_venta
+    WHERE v.id_venta = @id_venta;
+    -- WHERE v.id_venta = 1;
+END;
+GO
+
+EXEC sp_reporte_venta 2;
+
 
 -- 2
 -- CARGAR PROVEEDORES

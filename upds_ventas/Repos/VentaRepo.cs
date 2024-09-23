@@ -57,5 +57,76 @@ namespace upds_ventas.Repos
             }
             finally { db.Close(); }
         }
+
+        public Venta Reporte(int idVenta)
+        {
+            const string sql = "EXEC dbo.sp_reporte_venta @id_venta";
+            Venta venta = null;
+            try
+            {
+                db.Connect();
+                using SqlCommand cmd = new SqlCommand(sql, db.Con);
+                cmd.Parameters.AddWithValue("@id_venta", idVenta);
+                using SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    venta = new Venta
+                    {
+                        IdVenta = reader.GetInt32(reader.GetOrdinal("id_venta")),
+                        Fecha = reader.GetDateTime(reader.GetOrdinal("fecha")),
+                        Total = reader.GetDecimal(reader.GetOrdinal("total")),
+                        Cliente = new Cliente
+                        {
+                            Nit = reader.GetString(reader.GetOrdinal("cliente_nit")),
+                            Persona = new Persona
+                            {
+                                Ci = reader.GetString(reader.GetOrdinal("cliente_ci")),
+                                Nombre = reader.GetString(reader.GetOrdinal("cliente_nombre")),
+                                ApPaterno = reader.GetString(reader.GetOrdinal("cliente_ap_paterno")),
+                                ApMaterno = reader.GetString(reader.GetOrdinal("cliente_ap_materno"))
+                            }
+                        },
+                        Usuario = new Usuario
+                        {
+                            NombreUsuario = reader.GetString(reader.GetOrdinal("usuario_nombre")),
+                            Persona = new Persona
+                            {
+                                Ci = reader.GetString(reader.GetOrdinal("usuario_ci")),
+                                Nombre = reader.GetString(reader.GetOrdinal("usuario_nombre_real")),
+                                ApPaterno = reader.GetString(reader.GetOrdinal("usuario_ap_paterno")),
+                                ApMaterno = reader.GetString(reader.GetOrdinal("usuario_ap_materno"))
+                            }
+                        },
+                        DetalleVenta = new List<DetalleVenta>()
+                    };
+                }
+
+                if (venta != null && reader.NextResult())
+                {
+                    while (reader.Read())
+                    {
+                        venta.DetalleVenta.Add(new DetalleVenta
+                        {
+                            IdDetalleVenta = reader.GetInt32(reader.GetOrdinal("id_detalle_venta")),
+                            IdProducto = reader.GetInt32(reader.GetOrdinal("id_producto")),
+                            Cantidad = reader.GetInt32(reader.GetOrdinal("cantidad")),
+                            SubTotal = reader.GetDecimal(reader.GetOrdinal("sub_total"))
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al obtener reporte de la venta:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                db.Close();
+            }
+
+            return venta;
+        }
+
     }
 }
