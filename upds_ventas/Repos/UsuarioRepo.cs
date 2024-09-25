@@ -1,13 +1,7 @@
 ﻿//using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Text;
-using System.Threading.Tasks;
 using upds_ventas.Data;
 using upds_ventas.Models;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace upds_ventas.Repos
 {
@@ -70,7 +64,7 @@ namespace upds_ventas.Repos
                         }
                     };
                 }
-                
+
             }
             catch (Exception ex)
             {

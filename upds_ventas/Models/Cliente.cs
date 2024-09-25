@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace upds_ventas.Models;
+﻿namespace upds_ventas.Models;
 
 public partial class Cliente
 {

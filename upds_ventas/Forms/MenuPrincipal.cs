@@ -1,15 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Diagnostics;
+//using upds_ventas.Utils;
 using upds_ventas.Models;
+using upds_ventas.Reports;
 using upds_ventas.Repos;
 
 namespace upds_ventas.Forms
@@ -364,8 +356,7 @@ namespace upds_ventas.Forms
 
         private void BtnGenerarReporte_Click(object sender, EventArgs e)
         {
-            var formReporteProductos = new ReporteProductos();
-            formReporteProductos.Show();
+
         }
 
         private void BtnNuevoProducto_Click(object sender, EventArgs e)
@@ -532,26 +523,47 @@ namespace upds_ventas.Forms
 
         private void BtnCrearReporteProductos_Click(object sender, EventArgs e)
         {
-            var formReporteProductos = new ReporteProductos();
-            formReporteProductos.ShowDialog();
+            string reportPath = Utils.Utils.ReportPath("Reporte Productos");
+            CrearReporteProductos reporteProductos = new CrearReporteProductos(reportPath);
+            reporteProductos.GenerarReporte();
+            var formVisualizarReporte = new VisualizarReporte(reportPath);
+            formVisualizarReporte.ShowDialog();
         }
 
         private void BtnCrearReporteClientes_Click(object sender, EventArgs e)
         {
-            var formReporteClientes = new ReporteClientes();
-            formReporteClientes.ShowDialog();
+            string reportPath = Utils.Utils.ReportPath("Reporte Clientes");
+            CrearReporteClientes reporteClientes = new CrearReporteClientes(reportPath);
+            reporteClientes.GenerarReporte();
+            var formVisualizarReporte = new VisualizarReporte(reportPath);
+            formVisualizarReporte.ShowDialog();
         }
 
         private void BtnCrearReporteUsuarios_Click(object sender, EventArgs e)
         {
-            var formReporteUsuarios = new ReporteUsuarios();
-            formReporteUsuarios.ShowDialog();
+            string reportPath = Utils.Utils.ReportPath("Reporte Usuarios");
+            CrearReporteUsuarios reporteUsuarios = new CrearReporteUsuarios(reportPath);
+            reporteUsuarios.GenerarReporte();
+            var formVisualizarReporte = new VisualizarReporte(reportPath);
+            formVisualizarReporte.ShowDialog();
         }
 
         private void BtnCrearReporteProveedores_Click(object sender, EventArgs e)
         {
-            var formReporteProveedores = new ReporteProveedores();
-            formReporteProveedores.ShowDialog();
+            string reportPath = Utils.Utils.ReportPath("Reporte Proveedores");
+            CrearReporteProveedores reporteProveedores = new CrearReporteProveedores(reportPath);
+            reporteProveedores.GenerarReporte();
+            var formVisualizarReporte = new VisualizarReporte(reportPath);
+            formVisualizarReporte.ShowDialog();
+        }
+
+        private void BtnCrearReporteVentas_Click(object sender, EventArgs e)
+        {
+            string reportPath = Utils.Utils.ReportPath("Reporte Ventas");
+            CrearReporteVenta reporteVenta = new CrearReporteVenta(reportPath);
+            reporteVenta.GenerarReporte();
+            var formVisualizarReporte = new VisualizarReporte(reportPath);
+            formVisualizarReporte.ShowDialog();
         }
 
 

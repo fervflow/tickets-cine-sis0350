@@ -1,8 +1,4 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using upds_ventas.Data;
 using upds_ventas.Forms;
-using upds_ventas.Repos;
 
 namespace upds_ventas
 {

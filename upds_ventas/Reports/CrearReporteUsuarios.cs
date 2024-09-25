@@ -10,11 +10,13 @@ namespace upds_ventas.Reports
     {
         private UsuarioRepo repo;
         private List<Usuario> usuarios;
+        private string reportPath;
 
-        public CrearReporteUsuarios()
+        public CrearReporteUsuarios(string reportPath)
         {
             repo = new UsuarioRepo();
             usuarios = repo.Reporte();
+            this.reportPath = reportPath;
         }
 
         public void GenerarReporte()
@@ -79,15 +81,15 @@ namespace upds_ventas.Reports
                 });
             });
 
-            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string reportFolder = Path.Combine(documentsPath, "Reportes upds_ventas");
+            //string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            //string reportFolder = Path.Combine(documentsPath, "Reportes upds_ventas");
 
-            if (!Directory.Exists(reportFolder))
-            {
-                Directory.CreateDirectory(reportFolder);
-            }
+            //if (!Directory.Exists(reportFolder))
+            //{
+            //    Directory.CreateDirectory(reportFolder);
+            //}
 
-            string reportPath = Path.Combine(reportFolder, "Reporte Usuarios.pdf");
+            //string reportPath = Path.Combine(reportFolder, "Reporte Usuarios.pdf");
 
             document.GeneratePdf(reportPath);
         }

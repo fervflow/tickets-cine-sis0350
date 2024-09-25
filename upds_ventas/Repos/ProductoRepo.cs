@@ -1,10 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.SqlClient;
 using upds_ventas.Data;
 using upds_ventas.Models;
 
@@ -13,7 +7,7 @@ namespace upds_ventas.Repos
     public class ProductoRepo
     {
         private readonly DatabaseContext db;
-        
+
         public ProductoRepo()
         {
             db = new DatabaseContext();
@@ -59,7 +53,7 @@ namespace upds_ventas.Repos
             {
                 db.Connect();
                 using SqlCommand cmd = new SqlCommand(sql, db.Con);
-                if(!isNew) cmd.Parameters.AddWithValue("@id_producto", p.IdProducto);
+                if (!isNew) cmd.Parameters.AddWithValue("@id_producto", p.IdProducto);
                 cmd.Parameters.AddWithValue("@nombre", p.Nombre);
                 cmd.Parameters.AddWithValue("@stock", p.Stock ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@precio_compra", p.PrecioCompra);
@@ -70,7 +64,7 @@ namespace upds_ventas.Repos
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al {(isNew ? "crear": "modificar")} el producto:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al {(isNew ? "crear" : "modificar")} el producto:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             finally { db.Close(); }

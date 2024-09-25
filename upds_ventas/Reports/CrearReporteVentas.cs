@@ -9,12 +9,14 @@ namespace upds_ventas.Reports
     internal class CrearReporteVenta
     {
         private VentaRepo repo;
-        private Venta venta;
+        private List<Venta> ventas;
+        private string reportPath;
 
-        public CrearReporteVenta(int idVenta)
+        public CrearReporteVenta(string reportPath)
         {
             repo = new VentaRepo();
-            venta = repo.Reporte(idVenta);
+            ventas = repo.Reporte();
+            this.reportPath = reportPath;
         }
 
         public void GenerarReporte()
@@ -25,67 +27,75 @@ namespace upds_ventas.Reports
                 {
                     page.Size(PageSizes.Letter);
                     page.Margin(2, Unit.Centimetre);
-                    page.Header().Padding(10).Text($"Reporte de Venta: {venta.IdVenta}").FontSize(20).Bold().AlignCenter();
+                    page.Header().Padding(10).Text($"Reporte de Ventas").FontSize(15).Bold().AlignCenter();
 
-                    page.Content().PaddingBottom(10).Text($"Usuario: {venta.Usuario.NombreUsuario} ({venta.Usuario.Persona.Ci}) - " +
-                        $"{venta.Usuario.Persona.Nombre} {venta.Usuario.Persona.ApPaterno} {venta.Usuario.Persona.ApMaterno}")
-                        .FontSize(12);
-
-                    page.Content().PaddingBottom(10).Text($"Cliente: {venta.Cliente.Nit} ({venta.Cliente.Persona.Ci}) - " +
-                        $"{venta.Cliente.Persona.Nombre} {venta.Cliente.Persona.ApPaterno} {venta.Cliente.Persona.ApMaterno}")
-                        .FontSize(12);
-
-                    page.Content().Table(table =>
+                    page.Content().PaddingVertical(10).Column(stack =>
                     {
-                        table.ColumnsDefinition(columns =>
+                        foreach (Venta v in ventas)
                         {
-                            columns.ConstantColumn(80);   // IdDetalleVenta
-                            columns.ConstantColumn(80);   // IdProducto
-                            columns.RelativeColumn(1);    // Cantidad
-                            columns.RelativeColumn(2);    // Subtotal
-                        });
+                            stack.Item().Padding(4).Text($"VENDEDOR: ({v.Usuario!.Persona.Ci}) - " +
+                                $"{v.Usuario.Persona.Nombre} {v.Usuario.Persona.ApPaterno} {v.Usuario.Persona.ApMaterno} " +
+                                $"- {v.Usuario.Tipo}")
+                                .FontSize(11);
 
-                        table.Header(header =>
-                        {
-                            header.Cell().Text("IdDetalleVenta").Bold().FontSize(10);
-                            header.Cell().Text("IdProducto").Bold().FontSize(10);
-                            header.Cell().Text("Cantidad").Bold().FontSize(10);
-                            header.Cell().Text("SubTotal").Bold().FontSize(10);
-                        });
+                            stack.Item().Padding(4).Text($"CLIENTE: {v.Cliente!.Nit} - " +
+                                $"{v.Cliente.Persona.Nombre} {v.Cliente.Persona.ApPaterno} {v.Cliente.Persona.ApMaterno}")
+                                .FontSize(11);
+                            stack.Item().Padding(4).Text($"FECHA DE VENTA: {v.Fecha}").FontSize(11);
+                            stack.Item().Padding(4).Text($"MONTO TOTAL: {v.Total} Bs.").FontSize(11);
 
-                        foreach (var detalle in venta.DetalleVenta)
-                        {
-                            table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
-                            table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
-                            table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
-                            table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
+                            stack.Item().Table(table =>
+                            {
+                                table.ColumnsDefinition(columns =>
+                                {
+                                    columns.ConstantColumn(50); // IdProducto
+                                    columns.RelativeColumn(1);  // Nombre Producto
+                                    columns.RelativeColumn(1);  // Precio Venta
+                                    columns.RelativeColumn(1);  // Cantidad
+                                    columns.RelativeColumn(2);  // Subtotal
+                                });
 
-                            table.Cell().Padding(4).Text(detalle.IdDetalleVenta.ToString()).FontSize(10);
-                            table.Cell().Padding(4).Text(detalle.IdProducto.ToString()).FontSize(10);
-                            table.Cell().Padding(4).Text(detalle.Cantidad.ToString()).FontSize(10);
-                            table.Cell().Padding(4).Text(detalle.SubTotal.ToString() + "Bs.").FontSize(10);
+                                table.Header(header =>
+                                {
+                                    header.Cell().Text("Id Producto").Bold().FontSize(10);
+                                    header.Cell().Text("Nombre").Bold().FontSize(10);
+                                    header.Cell().Text("Precio").Bold().FontSize(10);
+                                    header.Cell().Text("Cantidad").Bold().FontSize(10);
+                                    header.Cell().Text("SubTotal").Bold().FontSize(10);
+                                });
 
+                                table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
+                                table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
+                                table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
+                                table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
+                                table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
+
+                                foreach (var detalle in v.DetalleVenta)
+                                {
+
+                                    table.Cell().Padding(4).Text(detalle.IdProducto.ToString()).FontSize(10);
+                                    table.Cell().Padding(4).Text(detalle.Producto!.Nombre).FontSize(10);
+                                    table.Cell().Padding(4).Text(detalle.Producto!.PrecioVenta.ToString()).FontSize(10);
+                                    table.Cell().Padding(4).Text(detalle.Cantidad.ToString()).FontSize(10);
+                                    table.Cell().Padding(4).Text($"{detalle.SubTotal:F2} Bs.").FontSize(10);
+
+                                    table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
+                                    table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
+                                    table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
+                                    table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
+                                    table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
+                                }
+                            });
+                            stack.Item().PaddingTop(15);
                         }
+
                     });
 
                     page.Footer().AlignCenter().Text($"Generado en fecha y hora: {DateTime.Now}").FontSize(10);
                 });
             });
 
-            // Save to the user's Documents folder
-            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string reportFolder = Path.Combine(documentsPath, "Reportes_upds_ventas");
-
-            if (!Directory.Exists(reportFolder))
-            {
-                Directory.CreateDirectory(reportFolder);
-            }
-
-            string reportPath = Path.Combine(reportFolder, $"Reporte_Venta_{venta.IdVenta}.pdf");
-
-            // Generate the PDF report
             document.GeneratePdf(reportPath);
         }
     }
-
 }

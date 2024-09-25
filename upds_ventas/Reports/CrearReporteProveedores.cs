@@ -10,11 +10,13 @@ namespace upds_ventas.Reports
     {
         private ProveedorRepo repo;
         private List<Proveedor> proveedores;
+        private string reportPath;
 
-        public CrearReporteProveedores()
+        public CrearReporteProveedores(string reportPath)
         {
             repo = new ProveedorRepo();
             proveedores = repo.Reporte();
+            this.reportPath = reportPath;
         }
 
         public void GenerarReporte()
@@ -67,16 +69,6 @@ namespace upds_ventas.Reports
                     page.Footer().AlignCenter().Text($"Generado en fecha y hora: {DateTime.Now}").FontSize(10);
                 });
             });
-
-            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string reportFolder = Path.Combine(documentsPath, "Reportes upds_ventas");
-
-            if (!Directory.Exists(reportFolder))
-            {
-                Directory.CreateDirectory(reportFolder);
-            }
-
-            string reportPath = Path.Combine(reportFolder, "Reporte Proveedores.pdf");
 
             document.GeneratePdf(reportPath);
         }

@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Diagnostics;
 using upds_ventas.Models;
 using upds_ventas.Repos;
 
@@ -30,7 +21,8 @@ namespace upds_ventas.Forms
             InitializeComponent();
 
             TbNombre.Text = TbStock.Text = TbPrecioCompra.Text = TbPrecioVenta.Text = "";
-            for (int i = 0; i < proveedores.Count; i++) {
+            for (int i = 0; i < proveedores.Count; i++)
+            {
                 CbProveedores.Items.Add(proveedores[i].Item2);
             }
         }

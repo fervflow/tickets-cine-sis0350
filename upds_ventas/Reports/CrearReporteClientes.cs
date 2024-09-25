@@ -10,11 +10,13 @@ namespace upds_ventas.Reports
     {
         private ClienteRepo repo;
         private List<Cliente> clientes;
+        private string reportPath;
 
-        public CrearReporteClientes()
+        public CrearReporteClientes(string reportPath)
         {
             repo = new ClienteRepo();
             clientes = repo.Reporte();
+            this.reportPath = reportPath;
         }
 
         public void GenerarReporte()
@@ -63,7 +65,7 @@ namespace upds_ventas.Reports
                             table.Cell().Padding(4).Text(cliente.Nit).FontSize(10);
                             table.Cell().Padding(4).Text(cliente.Persona.Nombre).FontSize(10);
                             table.Cell().Padding(4).Text(cliente.Persona.ApPaterno).FontSize(10);
-                            table.Cell().Padding(4).Text(cliente.Persona.ApMaterno).FontSize(10);                                                    
+                            table.Cell().Padding(4).Text(cliente.Persona.ApMaterno).FontSize(10);
                         }
                     });
 
@@ -71,15 +73,15 @@ namespace upds_ventas.Reports
                 });
             });
 
-            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string reportFolder = Path.Combine(documentsPath, "Reportes upds_ventas");
+            //string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            //string reportFolder = Path.Combine(documentsPath, "Reportes upds_ventas");
 
-            if (!Directory.Exists(reportFolder))
-            {
-                Directory.CreateDirectory(reportFolder);
-            }
+            //if (!Directory.Exists(reportFolder))
+            //{
+            //    Directory.CreateDirectory(reportFolder);
+            //}
 
-            string reportPath = Path.Combine(reportFolder, "Reporte Clientes.pdf");
+            //string reportPath = Path.Combine(reportFolder, "Reporte Clientes.pdf");
 
             document.GeneratePdf(reportPath);
         }
