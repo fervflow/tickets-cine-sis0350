@@ -7,33 +7,36 @@ DECLARE @Password NVARCHAR(128) = 'admin123';
 
 IF EXISTS (SELECT name
 FROM sys.databases
-WHERE name = @DatabaseName)
+WHERE name = 'tickets_cine')
 BEGIN
     USE master;
-    EXEC('ALTER DATABASE [' + @DatabaseName + '] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;');
-    EXEC('DROP DATABASE [' + @DatabaseName + '];');
+    ALTER DATABASE tickets_cine SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+    DROP DATABASE tickets_cine;
 END
+GO
 
-EXEC('CREATE DATABASE [' + @DatabaseName + '];');
+CREATE DATABASE tickets_cine;
+GO
 
 -- Creacion del usuario para login correspondiente a la cadena de conexion
 IF EXISTS (SELECT *
 FROM sys.server_principals
-WHERE name = @LoginName)
+WHERE name = 'tickets_admin')
 BEGIN
-    EXEC('DROP LOGIN [' + @LoginName + '];');
+    DROP LOGIN tickets_admin;
 END
+GO
+CREATE LOGIN tickets_admin WITH PASSWORD = 'admin123', CHECK_POLICY = OFF;
+GO
 
-EXEC('CREATE LOGIN [' + @LoginName + '] WITH PASSWORD = ''' + @Password + ''', CHECK_POLICY = OFF;');
+USE tickets_cine;
+DROP USER IF EXISTS tickets_admin;
+GO
 
-EXEC('USE [' + @DatabaseName + '];');
-
-EXEC('IF EXISTS (SELECT * FROM sys.database_principals WHERE name = ''' + @LoginName + ''') DROP USER [' + @LoginName + '];');
-
-EXEC('CREATE USER [' + @LoginName + '] FOR LOGIN [' + @LoginName + '];');
-
-EXEC('ALTER USER [' + @LoginName + '] WITH DEFAULT_SCHEMA = [dbo];');
-EXEC('ALTER ROLE [db_owner] ADD MEMBER [' + @LoginName + '];');
+CREATE USER tickets_admin FOR LOGIN tickets_admin;
+GO
+ALTER USER tickets_admin WITH DEFAULT_SCHEMA = [dbo];
+ALTER ROLE [db_owner] ADD MEMBER tickets_admin;
 GO
 
 USE tickets_cine;
@@ -126,12 +129,14 @@ VALUES
     ('1234 PO', 'Erick Fernando', 'Velasco', 'Flores'),
     ('2345 OR', 'Ani', 'Melon', NULL),
     ('333 CBB', 'Mar', 'Apollo', 'Guerrero'),
-    ('444 AR', 'Nicki', 'Nicole', NULL)
+    ('444 AR', 'Nicki', 'Nicole', NULL),
+    ('555 CO', 'Test', 'Foo', NULL)
 GO
 INSERT INTO Usuario
 VALUES
     (1, 'erick', ENCRYPTBYPASSPHRASE('upds', '123'), 'ADMINISTRADOR', 1),
-    (2, 'anime', ENCRYPTBYPASSPHRASE('upds', 'anime'), 'VENDEDOR', 1)
+    (2, 'anime', ENCRYPTBYPASSPHRASE('upds', 'anime'), 'VENDEDOR', 1),
+    (5, 'test', ENCRYPTBYPASSPHRASE('upds', 'test'), 'VENDEDOR', 1)
 GO
 INSERT INTO Cliente
 VALUES
