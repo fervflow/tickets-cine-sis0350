@@ -26,11 +26,11 @@ namespace upds_ventas.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=localhost;Initial Catalog=upds_ventas;Integrated Security=True;TrustS" +
-            "erverCertificate=True")]
-        public string upds_ventasConnectionString {
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=localhost;Initial Catalog=tickets_cine;Integrated Security=True;Trust" +
+            "ServerCertificate=True")]
+        public string tickets_cineConnectionString {
             get {
-                return ((string)(this["upds_ventasConnectionString"]));
+                return ((string)(this["tickets_cineConnectionString"]));
             }
         }
     }

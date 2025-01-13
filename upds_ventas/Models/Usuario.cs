@@ -8,5 +8,5 @@ public partial class Usuario
     public string? Tipo { get; set; }
     public bool Estado { get; set; }
     public virtual Persona Persona { get; set; } = null!;
-    public virtual ICollection<Venta> Venta { get; set; } = new List<Venta>();
+    //public virtual ICollection<Venta> Venta { get; set; } = new List<Venta>();
 }

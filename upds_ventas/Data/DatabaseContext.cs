@@ -8,7 +8,7 @@ namespace upds_ventas.Data
         public SqlConnection Con { get; set; }
         public DatabaseContext()
         {
-            ConString = @"Data Source=localhost;Initial Catalog=upds_ventas;User ID=upds_ventas_admin;Password=admin123";
+            ConString = @"Data Source=localhost;Initial Catalog=tickets_cine;User ID=tickets_admin;Password=admin123";
             Con = new SqlConnection(ConString);
         }
         public void Connect()

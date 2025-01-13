@@ -1,6 +1,63 @@
 USE master;
 GO
-USE upds_ventas;
+USE tickets_cine;
+GO
+
+
+-- PROCEDIMIENTO ALMACENADO PARA IDENTIFICARSE
+CREATE OR ALTER PROC sp_login
+    @usuario VARCHAR(30),
+    @pass VARCHAR(30)
+AS
+BEGIN
+    -- 0: Success, 1: Usuario no encontrado, 2: Usuario Deshabilitado, 3: Password incorrecto
+    IF EXISTS (
+        SELECT 1
+        FROM Usuario
+        WHERE nombre_usuario = @usuario
+    )
+    BEGIN
+        DECLARE @id_usuario INT = (
+            SELECT id_usuario
+            FROM Usuario
+            WHERE nombre_usuario = @usuario
+        );
+        IF (SELECT estado
+            FROM Usuario
+            WHERE id_usuario = @id_usuario
+        ) = 1
+        BEGIN
+            IF (
+                SELECT DECRYPTBYPASSPHRASE('upds', pass)
+                FROM Usuario
+                WHERE id_usuario = @id_usuario
+            ) = @pass
+                SELECT 0;
+            ELSE SELECT 3;
+        END
+        ELSE SELECT 2;
+    END
+    ELSE SELECT 1;
+END;
+GO
+
+-- procedimiento almacenado para mostrar Usuario logeado
+CREATE OR ALTER PROC sp_obtener_usuario_logueado
+    @usuario VARCHAR(30)
+AS
+SELECT
+    p.id_persona,
+    p.ci,
+    p.nombre,
+    p.ap_paterno,
+    p.ap_materno,
+    u.nombre_usuario,
+    CONVERT(VARCHAR(30), DECRYPTBYPASSPHRASE('upds',u.pass)) AS pass,
+    u.tipo,
+    u.estado
+FROM Persona p INNER JOIN Usuario u
+    ON p.id_persona=u.id_usuario
+WHERE u.nombre_usuario = @usuario
 GO
 
 --USUARIOS
@@ -17,15 +74,15 @@ CREATE OR ALTER PROC sp_insertar_usuario
     @estado BIT
 AS
 DECLARE @id_persona INT
-INSERT INTO persona
+INSERT INTO Persona
     (ci, nombre, ap_paterno, ap_materno)
 VALUES
     (@ci, @nombre, @ap_paterno, @ap_materno);
 SET @id_persona=SCOPE_IDENTITY();
-INSERT INTO usuario
+INSERT INTO Usuario
     (id_usuario, nombre_usuario, pass, tipo, estado)
 VALUES
-    (@id_persona, @usuario, ENCRYPTBYPASSPHRASE('upds2024',@pass), @tipo, @estado)
+    (@id_persona, @usuario, ENCRYPTBYPASSPHRASE('upds',@pass), @tipo, @estado)
 GO
 
 -- LISTAR USUARIOS
@@ -38,10 +95,10 @@ SELECT
     p.ap_paterno,
     p.ap_materno,
     u.nombre_usuario,
-    CONVERT(VARCHAR(30), DECRYPTBYPASSPHRASE('upds2024',u.pass)) AS pass,
+    CONVERT(VARCHAR(30), DECRYPTBYPASSPHRASE('upds',u.pass)) AS pass,
     u.tipo,
     u.estado
-FROM persona p INNER JOIN usuario u
+FROM Persona p INNER JOIN Usuario u
     ON p.id_persona=u.id_usuario
 GO
 
@@ -62,7 +119,7 @@ BEGIN
     
     BEGIN TRY
         BEGIN TRANSACTION;
-        UPDATE persona
+        UPDATE Persona
         SET
             nombre = @nombre,
             ap_paterno = @ap_paterno,
@@ -70,10 +127,10 @@ BEGIN
             ci = @ci
         WHERE id_persona = @id_usuario;
 
-        UPDATE usuario
+        UPDATE Usuario
         SET
             nombre_usuario = @usuario,
-            pass = ENCRYPTBYPASSPHRASE('upds2024', @pass),
+            pass = ENCRYPTBYPASSPHRASE('upds', @pass),
             tipo = @tipo,
             estado = @estado
         WHERE id_usuario = @id_usuario;
@@ -94,13 +151,102 @@ GO
 -- EXEC dbo.sp_modificar_usuario 2, '12129090 CBB', 'nando', 'Vel', 'Flowers', 'fervflow', 'asd', 'VENDEDOR', 1;
 -- GO
 
--- procedimiento almacenado para dar de baja usuario
+-- procedimiento almacenado para dar de baja Usuario
 CREATE OR ALTER PROC sp_deshabilitar_usuario
     @id_usuario INT,
     @estado BIT
 AS
-    UPDATE usuario SET estado=0 WHERE id_usuario=@id_usuario;
+    UPDATE Usuario SET estado=0 WHERE id_usuario=@id_usuario;
 GO
+
+-- INSERTAR CLIENTE
+CREATE OR ALTER PROC sp_insertar_cliente
+    @ci VARCHAR(20),
+    @nombre VARCHAR(30),
+    @ap_paterno VARCHAR(30),
+    @ap_materno VARCHAR(30),
+    @nit VARCHAR(20)
+AS
+DECLARE @id_persona INT;
+INSERT INTO Persona
+    (ci, nombre, ap_paterno, ap_materno)
+VALUES
+    (@ci, @nombre, @ap_paterno, @ap_materno);
+SET @id_persona=SCOPE_IDENTITY();
+INSERT INTO Cliente
+    (id_cliente, nit)
+VALUES
+    (@id_persona, @nit)
+GO
+
+-- LISTAR CLIENTES
+CREATE OR ALTER PROC sp_listar_clientes
+AS
+SELECT
+    c.id_cliente,
+    p.ci,
+    p.nombre,
+    p.ap_paterno,
+    p.ap_materno,
+    c.nit
+FROM Persona p INNER JOIN Cliente c
+    ON p.id_persona=c.id_cliente
+GO
+
+-- MODIFICAR CLIENTE
+CREATE OR ALTER PROC sp_modificar_cliente
+    @id_cliente INT,
+    @ci VARCHAR(20),
+    @nombre VARCHAR(30),
+    @ap_paterno VARCHAR(30),
+    @ap_materno VARCHAR(30),
+    @nit VARCHAR(20)
+AS
+BEGIN
+    SET XACT_ABORT ON;
+    
+    BEGIN TRY
+        BEGIN TRANSACTION;
+        UPDATE Persona
+        SET
+            nombre = @nombre,
+            ap_paterno = @ap_paterno,
+            ap_materno = @ap_materno,
+            ci = @ci
+        WHERE id_persona = @id_cliente;
+
+        UPDATE Cliente SET nit = @nit
+        WHERE id_cliente = @id_cliente;
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        IF XACT_STATE() <> 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+        DECLARE @ErrorMessage NVARCHAR(4000) = ERROR_MESSAGE();
+        THROW 50000, @ErrorMessage, 1; -- Rethrow the error to the client
+    END CATCH
+END;
+GO
+
+-- BUSCAR CLIENTE
+CREATE OR ALTER PROC sp_buscar_cliente
+    @nit VARCHAR(20)
+AS
+SELECT
+    p.nombre,
+    p.ap_paterno,
+    p.ap_materno,
+    p.ci,
+    c.nit,
+    c.id_cliente
+FROM Persona p INNER JOIN Cliente c
+    ON p.id_persona=c.id_cliente
+WHERE c.nit=@nit
+GO
+
 
 -- procedimiento almacenado para insertar proveedor
 CREATE OR ALTER PROC sp_insertar_proveedor
@@ -151,61 +297,6 @@ FROM proveedor
 WHERE LOWER(nombre) LIKE '%'+@nombre+'%'
 GO
 
--- PROCEDIMIENTO ALMACENADO PARA IDENTIFICARSE
-CREATE OR ALTER PROC sp_login
-    @usuario VARCHAR(30),
-    @pass VARCHAR(30)
-AS
-BEGIN
-    -- 0: Success, 1: Usuario no encontrado, 2: Usuario Deshabilitado, 3: Password incorrecto
-    IF EXISTS (
-        SELECT 1
-        FROM usuario
-        WHERE nombre_usuario = @usuario
-    )
-    BEGIN
-        DECLARE @id_usuario INT = (
-            SELECT id_usuario
-            FROM usuario
-            WHERE nombre_usuario = @usuario
-        );
-        IF (SELECT estado
-            FROM usuario
-            WHERE id_usuario = @id_usuario
-        ) = 1
-        BEGIN
-            IF (
-                SELECT DECRYPTBYPASSPHRASE('upds2024', pass)
-                FROM usuario
-                WHERE id_usuario = @id_usuario
-            ) = @pass
-                SELECT 0;
-            ELSE SELECT 3;
-        END
-        ELSE SELECT 2;
-    END
-    ELSE SELECT 1;
-END;
-GO
-
--- procedimiento almacenado para mostrar usuario logeado
-CREATE OR ALTER PROC sp_obtener_usuario_logueado
-    @usuario VARCHAR(30)
-AS
-SELECT
-    p.id_persona,
-    p.ci,
-    p.nombre,
-    p.ap_paterno,
-    p.ap_materno,
-    u.nombre_usuario,
-    CONVERT(VARCHAR(30), DECRYPTBYPASSPHRASE('upds2024',u.pass)) AS pass,
-    u.tipo,
-    u.estado
-FROM persona p INNER JOIN usuario u
-    ON p.id_persona=u.id_usuario
-WHERE u.nombre_usuario = @usuario
-GO
 
 -- REPORTES
 -- reporte de productos con sus proveedores
@@ -232,7 +323,7 @@ SELECT
     p.nombre,
     p.ap_paterno,
     p.ap_materno
-FROM cliente c INNER JOIN persona p
+FROM Cliente c INNER JOIN Persona p
     ON c.id_cliente = p.id_persona
 GO
 
@@ -246,7 +337,7 @@ SELECT
     u.nombre_usuario,
     u.tipo,
     u.estado
-FROM persona p INNER JOIN usuario u
+FROM Persona p INNER JOIN Usuario u
     ON p.id_persona=u.id_usuario
 GO
 
@@ -285,10 +376,10 @@ BEGIN
         dv.cantidad,
         dv.sub_total
     FROM venta v
-    INNER JOIN cliente c ON v.id_cliente = c.id_cliente
-    INNER JOIN persona p_cliente ON c.id_cliente = p_cliente.id_persona
-    INNER JOIN usuario u ON v.id_usuario = u.id_usuario
-    INNER JOIN persona p_usuario ON u.id_usuario = p_usuario.id_persona
+    INNER JOIN Cliente c ON v.id_cliente = c.id_cliente
+    INNER JOIN Persona p_cliente ON c.id_cliente = p_cliente.id_persona
+    INNER JOIN Usuario u ON v.id_usuario = u.id_usuario
+    INNER JOIN Persona p_usuario ON u.id_usuario = p_usuario.id_persona
     LEFT JOIN detalle_venta dv ON v.id_venta = dv.id_venta
     WHERE v.id_venta = @id_venta;
 END;
@@ -316,10 +407,10 @@ BEGIN
         p_cliente.ap_materno AS cliente_ap_materno
 
     FROM venta v
-    INNER JOIN cliente c ON v.id_cliente = c.id_cliente
-    INNER JOIN persona p_cliente ON c.id_cliente = p_cliente.id_persona
-    INNER JOIN usuario u ON v.id_usuario = u.id_usuario
-    INNER JOIN persona p_usuario ON u.id_usuario = p_usuario.id_persona;
+    INNER JOIN Cliente c ON v.id_cliente = c.id_cliente
+    INNER JOIN Persona p_cliente ON c.id_cliente = p_cliente.id_persona
+    INNER JOIN Usuario u ON v.id_usuario = u.id_usuario
+    INNER JOIN Persona p_usuario ON u.id_usuario = p_usuario.id_persona;
 END;
 GO
 
@@ -412,96 +503,6 @@ CREATE OR ALTER PROC sp_deshabilitar_producto
 AS
 UPDATE producto SET estado=0
 WHERE id_producto=@id_producto
-GO
-
--- INSERTAR CLIENTE
-CREATE OR ALTER PROC sp_insertar_cliente
-    @ci VARCHAR(20),
-    @nombre VARCHAR(30),
-    @ap_paterno VARCHAR(30),
-    @ap_materno VARCHAR(30),
-    @nit VARCHAR(20)
-AS
-DECLARE @id_persona INT;
-INSERT INTO persona
-    (ci, nombre, ap_paterno, ap_materno)
-VALUES
-    (@ci, @nombre, @ap_paterno, @ap_materno);
-SET @id_persona=SCOPE_IDENTITY();
-INSERT INTO cliente
-    (id_cliente, nit)
-VALUES
-    (@id_persona, @nit)
-GO
-
--- LISTAR CLIENTES
-CREATE OR ALTER PROC sp_listar_clientes
-AS
-SELECT
-    c.id_cliente,
-    p.ci,
-    p.nombre,
-    p.ap_paterno,
-    p.ap_materno,
-    c.nit
-FROM persona p INNER JOIN cliente c
-    ON p.id_persona=c.id_cliente
-GO
-
--- MODIFICAR CLIENTE
-CREATE OR ALTER PROC sp_modificar_cliente
-    @id_cliente INT,
-    @ci VARCHAR(20),
-    @nombre VARCHAR(30),
-    @ap_paterno VARCHAR(30),
-    @ap_materno VARCHAR(30),
-    @nit VARCHAR(20)
-AS
-BEGIN
-    SET XACT_ABORT ON;
-    
-    BEGIN TRY
-        BEGIN TRANSACTION;
-        UPDATE persona
-        SET
-            nombre = @nombre,
-            ap_paterno = @ap_paterno,
-            ap_materno = @ap_materno,
-            ci = @ci
-        WHERE id_persona = @id_cliente;
-
-        UPDATE cliente SET nit = @nit
-        WHERE id_cliente = @id_cliente;
-
-        COMMIT TRANSACTION;
-    END TRY
-    BEGIN CATCH
-        IF XACT_STATE() <> 0
-        BEGIN
-            ROLLBACK TRANSACTION;
-        END
-        DECLARE @ErrorMessage NVARCHAR(4000) = ERROR_MESSAGE();
-        THROW 50000, @ErrorMessage, 1; -- Rethrow the error to the client
-    END CATCH
-END;
-GO
-
-
--- 3
--- BUSCAR CLIENTE
-CREATE OR ALTER PROC sp_buscar_cliente
-    @nit VARCHAR(20)
-AS
-SELECT
-    p.nombre,
-    p.ap_paterno,
-    p.ap_materno,
-    p.ci,
-    c.nit,
-    c.id_cliente
-FROM persona p INNER JOIN cliente c
-    ON p.id_persona=c.id_cliente
-WHERE c.nit=@nit
 GO
 
 -- REGISTRAR VENTA
