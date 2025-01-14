@@ -30,6 +30,7 @@
         {
             CineAsientosForeverForm = new ReaLTaiizor.Forms.ForeverForm();
             foreverClose1 = new ReaLTaiizor.Controls.ForeverClose();
+            panel1 = new ReaLTaiizor.Controls.Panel();
             CineAsientosForeverForm.SuspendLayout();
             SuspendLayout();
             // 
@@ -38,6 +39,7 @@
             CineAsientosForeverForm.BackColor = Color.White;
             CineAsientosForeverForm.BaseColor = Color.FromArgb(60, 70, 73);
             CineAsientosForeverForm.BorderColor = Color.DodgerBlue;
+            CineAsientosForeverForm.Controls.Add(panel1);
             CineAsientosForeverForm.Controls.Add(foreverClose1);
             CineAsientosForeverForm.Dock = DockStyle.Fill;
             CineAsientosForeverForm.Font = new Font("Segoe UI", 12F);
@@ -73,6 +75,18 @@
             foreverClose1.Text = "foreverClose1";
             foreverClose1.TextColor = Color.FromArgb(243, 243, 243);
             // 
+            // panel1
+            // 
+            panel1.BackColor = Color.FromArgb(39, 51, 63);
+            panel1.EdgeColor = Color.FromArgb(32, 41, 50);
+            panel1.Location = new Point(12, 54);
+            panel1.Name = "panel1";
+            panel1.Padding = new Padding(5);
+            panel1.Size = new Size(973, 521);
+            panel1.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            panel1.TabIndex = 1;
+            panel1.Text = "panel1";
+            // 
             // CineAsientosForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -92,5 +106,6 @@
 
         private ReaLTaiizor.Forms.ForeverForm CineAsientosForeverForm;
         private ReaLTaiizor.Controls.ForeverClose foreverClose1;
+        private ReaLTaiizor.Controls.Panel panel1;
     }
 }
