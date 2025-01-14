@@ -43,18 +43,15 @@ USE tickets_cine;
 
 CREATE TABLE Persona
 (
-    id_persona INT         PRIMARY KEY IDENTITY(1, 1),
+    id_persona INT          PRIMARY KEY IDENTITY(1, 1),
     ci         VARCHAR(20) UNIQUE,
-    nombre     VARCHAR(30) NOT NULL,
-    ap_paterno VARCHAR(30) NOT NULL,
-    ap_materno VARCHAR(30),
+    nombre     VARCHAR(100) NOT NULL,
 );
 GO
 
 CREATE TABLE Cliente
 (
     id_cliente INT         PRIMARY KEY,
-    nit        VARCHAR(20) UNIQUE,
     FOREIGN KEY(id_cliente) REFERENCES Persona(id_persona),
 );
 
@@ -126,11 +123,11 @@ GO
 -- Carga de datos iniciales
 INSERT INTO Persona
 VALUES
-    ('1234 PO', 'Erick Fernando', 'Velasco', 'Flores'),
-    ('2345 OR', 'Ani', 'Melon', NULL),
-    ('333 CBB', 'Mar', 'Apollo', 'Guerrero'),
-    ('444 AR', 'Nicki', 'Nicole', NULL),
-    ('555 CO', 'Test', 'Foo', NULL)
+    ('1234 PO', 'Erick Fernando Velasco Flores'),
+    ('2345 OR', 'Ani Melon'),
+    ('333 CBB', 'Mar Apollo Guerrero'),
+    ('444 AR', 'Nicki Nicole'),
+    ('555 CO', 'Test Foo')
 GO
 INSERT INTO Usuario
 VALUES
@@ -140,7 +137,7 @@ VALUES
 GO
 INSERT INTO Cliente
 VALUES
-    (3, '333010'),
-    (4, '444018')
+    (3),
+    (4)
 GO
 

@@ -27,9 +27,9 @@ namespace upds_ventas.Forms
 
             TbCi.Text = c.Persona.Ci;
             TbNombre.Text = c.Persona.Nombre;
-            TbApPaterno.Text = c.Persona.ApPaterno;
-            TbApMaterno.Text = c.Persona.ApMaterno;
-            TbNit.Text = c.Nit ?? "";
+            //TbApPaterno.Text = c.Persona.ApPaterno;
+            //TbApMaterno.Text = c.Persona.ApMaterno;
+            //TbNit.Text = c.Nit ?? "";
 
             cliente.IdCliente = c.IdCliente;
         }
@@ -41,10 +41,10 @@ namespace upds_ventas.Forms
                 IdPersona = cliente.IdCliente,
                 Ci = TbCi.Text,
                 Nombre = TbNombre.Text,
-                ApPaterno = TbApPaterno.Text,
-                ApMaterno = TbApMaterno.Text
+                //ApPaterno = TbApPaterno.Text,
+                //ApMaterno = TbApMaterno.Text
             };
-            cliente.Nit = string.IsNullOrWhiteSpace(TbNit.Text) ? null : TbNit.Text;
+            //cliente.Nit = string.IsNullOrWhiteSpace(TbNit.Text) ? null : TbNit.Text;
 
             bool querySuccess = repo.Set(cliente, isNew);
 

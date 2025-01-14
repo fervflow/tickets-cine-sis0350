@@ -34,8 +34,8 @@ namespace upds_ventas.Forms
 
             SetUsuarioForm.Text = "Modificar Usuario";
             tbNombre.Text = u.Persona.Nombre;
-            tbApPaterno.Text = u.Persona.ApPaterno;
-            tbApMaterno.Text = u.Persona.ApMaterno;
+            //tbApPaterno.Text = u.Persona.ApPaterno;
+            //tbApMaterno.Text = u.Persona.ApMaterno;
             tbCi.Text = u.Persona.Ci;
             tbUsuario.Text = u.NombreUsuario;
             tbPass.Text = u.Pass;
@@ -48,8 +48,8 @@ namespace upds_ventas.Forms
         {
             usuario.Persona.Ci = tbCi.Text;
             usuario.Persona.Nombre = tbNombre.Text;
-            usuario.Persona.ApPaterno = tbApPaterno.Text;
-            usuario.Persona.ApMaterno = tbApMaterno.Text;
+            //usuario.Persona.ApPaterno = tbApPaterno.Text;
+            //usuario.Persona.ApMaterno = tbApMaterno.Text;
             usuario.NombreUsuario = tbUsuario.Text;
             usuario.Pass = tbPass.Text;
             usuario.Tipo = cbTipo.Text;

@@ -36,8 +36,8 @@ namespace upds_ventas.Reports
                         {
                             columns.ConstantColumn(80);  // CI
                             columns.RelativeColumn(1);   // Nombre
-                            columns.RelativeColumn(1);   // ApPaterno
-                            columns.RelativeColumn(1);   // ApMaterno
+                            //columns.RelativeColumn(1);   // ApPaterno
+                            //columns.RelativeColumn(1);   // ApMaterno
                             columns.RelativeColumn(1);   // NombreUsuario
                             columns.ConstantColumn(100);  // Tipo
                             columns.ConstantColumn(55);  // Estado
@@ -48,8 +48,8 @@ namespace upds_ventas.Reports
                         {
                             header.Cell().Text("CI").Bold().FontSize(10);
                             header.Cell().Text("Nombre").Bold().FontSize(10);
-                            header.Cell().Text("Ap. Paterno").Bold().FontSize(10);
-                            header.Cell().Text("Ap. Materno").Bold().FontSize(10);
+                            //header.Cell().Text("Ap. Paterno").Bold().FontSize(10);
+                            //header.Cell().Text("Ap. Materno").Bold().FontSize(10);
                             header.Cell().Text("Usuario").Bold().FontSize(10);
                             header.Cell().Text("Tipo").Bold().FontSize(10);
                             header.Cell().Text("Estado").Bold().FontSize(10);
@@ -60,8 +60,8 @@ namespace upds_ventas.Reports
                         {
                             table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
                             table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
-                            table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
-                            table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
+                            //table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
+                            //table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
                             table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
                             table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
                             table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
@@ -69,8 +69,8 @@ namespace upds_ventas.Reports
 
                             table.Cell().Padding(4).Text(usuario.Persona.Ci).FontSize(10);
                             table.Cell().Padding(4).Text(usuario.Persona.Nombre).FontSize(10);
-                            table.Cell().Padding(4).Text(usuario.Persona.ApPaterno).FontSize(10);
-                            table.Cell().Padding(4).Text(usuario.Persona.ApMaterno).FontSize(10);
+                            //table.Cell().Padding(4).Text(usuario.Persona.ApPaterno).FontSize(10);
+                            //table.Cell().Padding(4).Text(usuario.Persona.ApMaterno).FontSize(10);
                             table.Cell().Padding(4).Text(usuario.NombreUsuario).FontSize(10);
                             table.Cell().Padding(4).Text(usuario.Tipo).FontSize(10);
                             table.Cell().Padding(4).Text(usuario.Estado ? "Activo" : "Inactivo").FontSize(10);

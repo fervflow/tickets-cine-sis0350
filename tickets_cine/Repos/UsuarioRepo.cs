@@ -59,8 +59,8 @@ namespace upds_ventas.Repos
                             IdPersona = reader.GetInt32(reader.GetOrdinal("id_persona")),
                             Ci = reader.IsDBNull(reader.GetOrdinal("ci")) ? null : reader.GetString(reader.GetOrdinal("ci")),
                             Nombre = reader.GetString(reader.GetOrdinal("nombre")),
-                            ApPaterno = reader.GetString(reader.GetOrdinal("ap_paterno")),
-                            ApMaterno = reader.IsDBNull(reader.GetOrdinal("ap_materno")) ? null : reader.GetString(reader.GetOrdinal("ap_materno"))
+                            //ApPaterno = reader.GetString(reader.GetOrdinal("ap_paterno")),
+                            //ApMaterno = reader.IsDBNull(reader.GetOrdinal("ap_materno")) ? null : reader.GetString(reader.GetOrdinal("ap_materno"))
                         }
                     };
                 }
@@ -76,15 +76,15 @@ namespace upds_ventas.Repos
 
         public async Task<bool> Insertar(Usuario u)
         {
-            const string sql = "EXEC dbo.sp_insertar_usuario @ci, @nombre, @ap_paterno, @ap_materno, @usuario, @pass, @tipo, @estado";
+            const string sql = "EXEC dbo.sp_insertar_usuario @ci, @nombre, @usuario, @pass, @tipo, @estado";
             try
             {
                 dbContext.Connect();
                 using SqlCommand cmd = new SqlCommand(sql, dbContext.Con);
                 cmd.Parameters.AddWithValue("@ci", u.Persona.Ci);
                 cmd.Parameters.AddWithValue("@nombre", u.Persona.Nombre);
-                cmd.Parameters.AddWithValue("@ap_paterno", u.Persona.ApPaterno);
-                cmd.Parameters.AddWithValue("@ap_materno", u.Persona.ApMaterno ?? (object)DBNull.Value);
+                //cmd.Parameters.AddWithValue("@ap_paterno", u.Persona.ApPaterno);
+                //cmd.Parameters.AddWithValue("@ap_materno", u.Persona.ApMaterno ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@usuario", u.NombreUsuario);
                 cmd.Parameters.AddWithValue("@pass", u.Pass);
                 cmd.Parameters.AddWithValue("@tipo", u.Tipo);
@@ -122,8 +122,8 @@ namespace upds_ventas.Repos
                             IdPersona = reader.GetInt32(reader.GetOrdinal("id_persona")),
                             Ci = reader.IsDBNull(reader.GetOrdinal("ci")) ? null : reader.GetString(reader.GetOrdinal("ci")),
                             Nombre = reader.GetString(reader.GetOrdinal("nombre")),
-                            ApPaterno = reader.GetString(reader.GetOrdinal("ap_paterno")),
-                            ApMaterno = reader.IsDBNull(reader.GetOrdinal("ap_materno")) ? null : reader.GetString(reader.GetOrdinal("ap_materno"))
+                            //ApPaterno = reader.GetString(reader.GetOrdinal("ap_paterno")),
+                            //ApMaterno = reader.IsDBNull(reader.GetOrdinal("ap_materno")) ? null : reader.GetString(reader.GetOrdinal("ap_materno"))
                         }
                     });
                 }
@@ -139,7 +139,7 @@ namespace upds_ventas.Repos
 
         public async Task<bool> ModificarAsync(Usuario u)
         {
-            const string sql = "EXEC dbo.sp_modificar_usuario @id_usuario, @ci, @nombre, @ap_paterno, @ap_materno, @usuario, @pass, @tipo, @estado";
+            const string sql = "EXEC dbo.sp_modificar_usuario @id_usuario, @ci, @nombre, @usuario, @pass, @tipo, @estado";
             try
             {
                 dbContext.Connect();
@@ -147,8 +147,8 @@ namespace upds_ventas.Repos
                 cmd.Parameters.AddWithValue("@id_usuario", u.IdUsuario);
                 cmd.Parameters.AddWithValue("@ci", u.Persona.Ci);
                 cmd.Parameters.AddWithValue("@nombre", u.Persona.Nombre);
-                cmd.Parameters.AddWithValue("@ap_paterno", u.Persona.ApPaterno);
-                cmd.Parameters.AddWithValue("@ap_materno", u.Persona.ApMaterno ?? (object)DBNull.Value);
+                //cmd.Parameters.AddWithValue("@ap_paterno", u.Persona.ApPaterno);
+                //cmd.Parameters.AddWithValue("@ap_materno", u.Persona.ApMaterno ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@usuario", u.NombreUsuario);
                 cmd.Parameters.AddWithValue("@pass", u.Pass);
                 cmd.Parameters.AddWithValue("@tipo", u.Tipo);
@@ -204,8 +204,8 @@ namespace upds_ventas.Repos
                         {
                             Ci = reader.GetString(reader.GetOrdinal("ci")),
                             Nombre = reader.GetString(reader.GetOrdinal("nombre")),
-                            ApPaterno = reader.GetString(reader.GetOrdinal("ap_paterno")),
-                            ApMaterno = reader.IsDBNull(reader.GetOrdinal("ap_materno")) ? "" : reader.GetString(reader.GetOrdinal("ap_materno")),
+                            //ApPaterno = reader.GetString(reader.GetOrdinal("ap_paterno")),
+                            //ApMaterno = reader.IsDBNull(reader.GetOrdinal("ap_materno")) ? "" : reader.GetString(reader.GetOrdinal("ap_materno")),
                         }
                     });
                 }

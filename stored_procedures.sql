@@ -49,8 +49,8 @@ SELECT
     p.id_persona,
     p.ci,
     p.nombre,
-    p.ap_paterno,
-    p.ap_materno,
+    -- p.ap_paterno,
+    -- p.ap_materno,
     u.nombre_usuario,
     CONVERT(VARCHAR(30), DECRYPTBYPASSPHRASE('upds',u.pass)) AS pass,
     u.tipo,
@@ -66,8 +66,8 @@ GO
 CREATE OR ALTER PROC sp_insertar_usuario
     @ci VARCHAR(20),
     @nombre VARCHAR(30),
-    @ap_paterno VARCHAR(30),
-    @ap_materno VARCHAR(30),
+    -- @ap_paterno VARCHAR(30),
+    -- @ap_materno VARCHAR(30),
     @usuario VARCHAR(30),
     @pass VARCHAR(30),
     @tipo VARCHAR(15),
@@ -75,9 +75,9 @@ CREATE OR ALTER PROC sp_insertar_usuario
 AS
 DECLARE @id_persona INT
 INSERT INTO Persona
-    (ci, nombre, ap_paterno, ap_materno)
+    (ci, nombre)
 VALUES
-    (@ci, @nombre, @ap_paterno, @ap_materno);
+    (@ci, @nombre);
 SET @id_persona=SCOPE_IDENTITY();
 INSERT INTO Usuario
     (id_usuario, nombre_usuario, pass, tipo, estado)
@@ -92,8 +92,8 @@ SELECT
     p.id_persona,
     p.ci,
     p.nombre,
-    p.ap_paterno,
-    p.ap_materno,
+    -- p.ap_paterno,
+    -- p.ap_materno,
     u.nombre_usuario,
     CONVERT(VARCHAR(30), DECRYPTBYPASSPHRASE('upds',u.pass)) AS pass,
     u.tipo,
@@ -107,8 +107,8 @@ CREATE OR ALTER PROC sp_modificar_usuario
     @id_usuario INT,
     @ci VARCHAR(20),
     @nombre VARCHAR(30),
-    @ap_paterno VARCHAR(30),
-    @ap_materno VARCHAR(30),
+    -- @ap_paterno VARCHAR(30),
+    -- @ap_materno VARCHAR(30),
     @usuario VARCHAR(30),
     @pass VARCHAR(30),
     @tipo VARCHAR(15),
@@ -122,8 +122,8 @@ BEGIN
         UPDATE Persona
         SET
             nombre = @nombre,
-            ap_paterno = @ap_paterno,
-            ap_materno = @ap_materno,
+            -- ap_paterno = @ap_paterno,
+            -- ap_materno = @ap_materno,
             ci = @ci
         WHERE id_persona = @id_usuario;
 
@@ -162,21 +162,21 @@ GO
 -- INSERTAR CLIENTE
 CREATE OR ALTER PROC sp_insertar_cliente
     @ci VARCHAR(20),
-    @nombre VARCHAR(30),
-    @ap_paterno VARCHAR(30),
-    @ap_materno VARCHAR(30),
-    @nit VARCHAR(20)
+    @nombre VARCHAR(30)
+    -- @ap_paterno VARCHAR(30),
+    -- @ap_materno VARCHAR(30),
+    -- @nit VARCHAR(20)
 AS
 DECLARE @id_persona INT;
 INSERT INTO Persona
-    (ci, nombre, ap_paterno, ap_materno)
+    (ci, nombre)
 VALUES
-    (@ci, @nombre, @ap_paterno, @ap_materno);
+    (@ci, @nombre);
 SET @id_persona=SCOPE_IDENTITY();
 INSERT INTO Cliente
-    (id_cliente, nit)
+    (id_cliente)
 VALUES
-    (@id_persona, @nit)
+    (@id_persona)
 GO
 
 -- LISTAR CLIENTES
@@ -185,10 +185,7 @@ AS
 SELECT
     c.id_cliente,
     p.ci,
-    p.nombre,
-    p.ap_paterno,
-    p.ap_materno,
-    c.nit
+    p.nombre
 FROM Persona p INNER JOIN Cliente c
     ON p.id_persona=c.id_cliente
 GO
@@ -197,10 +194,7 @@ GO
 CREATE OR ALTER PROC sp_modificar_cliente
     @id_cliente INT,
     @ci VARCHAR(20),
-    @nombre VARCHAR(30),
-    @ap_paterno VARCHAR(30),
-    @ap_materno VARCHAR(30),
-    @nit VARCHAR(20)
+    @nombre VARCHAR(30)
 AS
 BEGIN
     SET XACT_ABORT ON;
@@ -210,13 +204,13 @@ BEGIN
         UPDATE Persona
         SET
             nombre = @nombre,
-            ap_paterno = @ap_paterno,
-            ap_materno = @ap_materno,
+            -- ap_paterno = @ap_paterno,
+            -- ap_materno = @ap_materno,
             ci = @ci
         WHERE id_persona = @id_cliente;
 
-        UPDATE Cliente SET nit = @nit
-        WHERE id_cliente = @id_cliente;
+        -- UPDATE Cliente SET nit = @nit
+        -- WHERE id_cliente = @id_cliente;
 
         COMMIT TRANSACTION;
     END TRY
@@ -233,18 +227,18 @@ GO
 
 -- BUSCAR CLIENTE
 CREATE OR ALTER PROC sp_buscar_cliente
-    @nit VARCHAR(20)
+    @ci VARCHAR(20)
 AS
 SELECT
     p.nombre,
-    p.ap_paterno,
-    p.ap_materno,
+    -- p.ap_paterno,
+    -- p.ap_materno,
     p.ci,
-    c.nit,
+    -- c.nit,
     c.id_cliente
 FROM Persona p INNER JOIN Cliente c
     ON p.id_persona=c.id_cliente
-WHERE c.nit=@nit
+WHERE p.ci=@ci
 GO
 
 

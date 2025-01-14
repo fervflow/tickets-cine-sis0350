@@ -35,37 +35,37 @@ namespace upds_ventas.Reports
                         table.ColumnsDefinition(columns =>
                         {
                             columns.ConstantColumn(80);  // CI
-                            columns.ConstantColumn(80);  // NIT
+                            //columns.ConstantColumn(80);  // NIT
                             columns.RelativeColumn(1);   // Nombre
-                            columns.RelativeColumn(1);   // ApPaterno
-                            columns.RelativeColumn(1);   // ApMaterno
+                            //columns.RelativeColumn(1);   // ApPaterno
+                            //columns.RelativeColumn(1);   // ApMaterno
                         });
 
                         // headers
                         table.Header(header =>
                         {
-                            header.Cell().Text("CI").Bold().FontSize(10);
-                            header.Cell().Text("NIT").Bold().FontSize(10);
+                            header.Cell().Text("CI/NIT").Bold().FontSize(10);
+                            //header.Cell().Text("NIT").Bold().FontSize(10);
                             header.Cell().Text("Nombre").Bold().FontSize(10);
-                            header.Cell().Text("Ap. Paterno").Bold().FontSize(10);
-                            header.Cell().Text("Ap. Materno").Bold().FontSize(10);
+                            //header.Cell().Text("Ap. Paterno").Bold().FontSize(10);
+                            //header.Cell().Text("Ap. Materno").Bold().FontSize(10);
                         });
 
                         // rows
                         foreach (var cliente in clientes)
                         {
                             table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
+                            //table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
                             table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
-                            table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
-                            table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
-                            table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
+                            //table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
+                            //table.Cell().BorderBottom(1).BorderColor("#D3D3D3");
 
 
                             table.Cell().Padding(4).Text(cliente.Persona.Ci).FontSize(10);
-                            table.Cell().Padding(4).Text(cliente.Nit).FontSize(10);
+                            //table.Cell().Padding(4).Text(cliente.Nit).FontSize(10);
                             table.Cell().Padding(4).Text(cliente.Persona.Nombre).FontSize(10);
-                            table.Cell().Padding(4).Text(cliente.Persona.ApPaterno).FontSize(10);
-                            table.Cell().Padding(4).Text(cliente.Persona.ApMaterno).FontSize(10);
+                            //table.Cell().Padding(4).Text(cliente.Persona.ApPaterno).FontSize(10);
+                            //table.Cell().Padding(4).Text(cliente.Persona.ApMaterno).FontSize(10);
                         }
                     });
 

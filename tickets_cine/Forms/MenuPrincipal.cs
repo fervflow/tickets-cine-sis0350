@@ -36,10 +36,7 @@ namespace upds_ventas.Forms
             _ = CargarUsuarios();
             CargarClientes();
 
-            LbUsuarioActual.Text = usuarioActual.Persona.Nombre +
-                ' ' + usuarioActual.Persona.ApPaterno +
-                ' ' + usuarioActual.Persona.ApMaterno +
-                " (" + usuarioActual.Tipo + ')';
+            LbUsuarioActual.Text = usuarioActual.Persona.Nombre + " (" + usuarioActual.Tipo + ')';
 
             txtUNombre.Text = txtUApPaterno.Text = txtUApMaterno.Text = txtUCi.Text = txtUTipo.Text = "";
             btnModificarUsuario.BaseColor = Color.DarkOliveGreen;
@@ -65,8 +62,8 @@ namespace upds_ventas.Forms
                     u.IdUsuario,
                     u.Persona.Ci!,
                     u.Persona.Nombre,
-                    u.Persona.ApPaterno,
-                    u.Persona.ApMaterno!,
+                    //u.Persona.ApPaterno,
+                    //u.Persona.ApMaterno!,
                     u.Tipo!,
                     u.Estado ? "Habilidato" : "Deshabilitado"
                 ];
@@ -86,9 +83,9 @@ namespace upds_ventas.Forms
                     c.IdCliente,
                     c.Persona.Ci!,
                     c.Persona.Nombre,
-                    c.Persona.ApPaterno,
-                    c.Persona.ApMaterno!,
-                    c.Nit!
+                    //c.Persona.ApPaterno,
+                    //c.Persona.ApMaterno!,
+                    //c.Nit!
                 };
 
                 DataClientes.Rows.Add(rowData);
@@ -114,8 +111,8 @@ namespace upds_ventas.Forms
 
             usuarioSeleccionado = usuarios.FirstOrDefault(u => u.IdUsuario.Equals(IdUsuarioSeleccionado))!;
             txtUNombre.Text = usuarioSeleccionado.Persona.Nombre;
-            txtUApPaterno.Text = usuarioSeleccionado.Persona.ApPaterno;
-            txtUApMaterno.Text = usuarioSeleccionado.Persona.ApMaterno;
+            //txtUApPaterno.Text = usuarioSeleccionado.Persona.ApPaterno;
+            //txtUApMaterno.Text = usuarioSeleccionado.Persona.ApMaterno;
             txtUCi.Text = usuarioSeleccionado.Persona.Ci;
             txtUTipo.Text = usuarioSeleccionado.Tipo;
         }
@@ -135,9 +132,9 @@ namespace upds_ventas.Forms
 
             LbCCi.Text = clienteSeleccionado.Persona.Ci;
             LbCNombre.Text = clienteSeleccionado.Persona.Nombre;
-            LbCApPaterno.Text = clienteSeleccionado.Persona.ApPaterno;
-            LbCApMaterno.Text = clienteSeleccionado.Persona.ApMaterno;
-            LbCNit.Text = clienteSeleccionado.Nit;
+            //LbCApPaterno.Text = clienteSeleccionado.Persona.ApPaterno;
+            //LbCApMaterno.Text = clienteSeleccionado.Persona.ApMaterno;
+            //LbCNit.Text = clienteSeleccionado.Nit;
         }
 
         private void BtnNuevoUsuario_Click(object sender, EventArgs e)

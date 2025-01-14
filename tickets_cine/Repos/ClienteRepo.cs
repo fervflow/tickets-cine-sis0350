@@ -18,11 +18,11 @@ namespace upds_ventas.Repos
             string sql;
             if (isNew)
             {
-                sql = "EXEC dbo.sp_insertar_cliente @ci, @nombre, @ap_paterno, @ap_materno, @nit";
+                sql = "EXEC dbo.sp_insertar_cliente @ci, @nombre";
             }
             else
             {
-                sql = "EXEC dbo.sp_modificar_cliente @id_cliente, @ci, @nombre, @ap_paterno, @ap_materno, @nit";
+                sql = "EXEC dbo.sp_modificar_cliente @id_cliente, @ci, @nombre";
             }
             try
             {
@@ -31,9 +31,9 @@ namespace upds_ventas.Repos
                 if (!isNew) cmd.Parameters.AddWithValue("@id_cliente", c.IdCliente);
                 cmd.Parameters.AddWithValue("@ci", c.Persona.Ci);
                 cmd.Parameters.AddWithValue("@nombre", c.Persona.Nombre);
-                cmd.Parameters.AddWithValue("@ap_paterno", c.Persona.ApPaterno);
-                cmd.Parameters.AddWithValue("@ap_materno", c.Persona.ApMaterno ?? (object)DBNull.Value);
-                cmd.Parameters.AddWithValue("@nit", c.Nit ?? (object)DBNull.Value);
+                //cmd.Parameters.AddWithValue("@ap_paterno", c.Persona.ApPaterno);
+                //cmd.Parameters.AddWithValue("@ap_materno", c.Persona.ApMaterno ?? (object)DBNull.Value);
+                //cmd.Parameters.AddWithValue("@nit", c.Nit ?? (object)DBNull.Value);
                 return cmd.ExecuteNonQuery() > 0;
             }
             catch (Exception ex)
@@ -58,14 +58,14 @@ namespace upds_ventas.Repos
                     clientes.Add(new Cliente
                     {
                         IdCliente = reader.GetInt32(reader.GetOrdinal("id_cliente")),
-                        Nit = reader.IsDBNull(reader.GetOrdinal("nit")) ? null : reader.GetString(reader.GetOrdinal("nit")),
+                        //Nit = reader.IsDBNull(reader.GetOrdinal("nit")) ? null : reader.GetString(reader.GetOrdinal("nit")),
                         Persona = new Persona
                         {
                             IdPersona = reader.GetInt32(reader.GetOrdinal("id_cliente")),
                             Ci = reader.GetString(reader.GetOrdinal("ci")),
                             Nombre = reader.GetString(reader.GetOrdinal("nombre")),
-                            ApPaterno = reader.GetString(reader.GetOrdinal("ap_paterno")),
-                            ApMaterno = reader.IsDBNull(reader.GetOrdinal("ap_materno")) ? null : reader.GetString(reader.GetOrdinal("ap_materno"))
+                            //ApPaterno = reader.GetString(reader.GetOrdinal("ap_paterno")),
+                            //ApMaterno = reader.IsDBNull(reader.GetOrdinal("ap_materno")) ? null : reader.GetString(reader.GetOrdinal("ap_materno"))
                         }
                     });
                 }
@@ -94,14 +94,14 @@ namespace upds_ventas.Repos
                     cliente = new Cliente
                     {
                         IdCliente = reader.GetInt32(reader.GetOrdinal("id_cliente")),
-                        Nit = reader.IsDBNull(reader.GetOrdinal("nit")) ? null : reader.GetString(reader.GetOrdinal("nit")),
+                        //Nit = reader.IsDBNull(reader.GetOrdinal("nit")) ? null : reader.GetString(reader.GetOrdinal("nit")),
                         Persona = new Persona
                         {
                             IdPersona = reader.GetInt32(reader.GetOrdinal("id_cliente")),
                             Ci = reader.GetString(reader.GetOrdinal("ci")),
                             Nombre = reader.GetString(reader.GetOrdinal("nombre")),
-                            ApPaterno = reader.GetString(reader.GetOrdinal("ap_paterno")),
-                            ApMaterno = reader.IsDBNull(reader.GetOrdinal("ap_materno")) ? null : reader.GetString(reader.GetOrdinal("ap_materno"))
+                            //ApPaterno = reader.GetString(reader.GetOrdinal("ap_paterno")),
+                            //ApMaterno = reader.IsDBNull(reader.GetOrdinal("ap_materno")) ? null : reader.GetString(reader.GetOrdinal("ap_materno"))
                         }
                     };
                 }
@@ -128,13 +128,13 @@ namespace upds_ventas.Repos
                 {
                     clientes.Add(new Cliente
                     {
-                        Nit = reader.GetString(reader.GetOrdinal("nit")),
+                        //Nit = reader.GetString(reader.GetOrdinal("nit")),
                         Persona = new Persona
                         {
                             Ci = reader.GetString(reader.GetOrdinal("ci")),
                             Nombre = reader.GetString(reader.GetOrdinal("nombre")),
-                            ApPaterno = reader.GetString(reader.GetOrdinal("ap_paterno")),
-                            ApMaterno = reader.IsDBNull(reader.GetOrdinal("ap_materno")) ? "" : reader.GetString(reader.GetOrdinal("ap_materno")),
+                            //ApPaterno = reader.GetString(reader.GetOrdinal("ap_paterno")),
+                            //ApMaterno = reader.IsDBNull(reader.GetOrdinal("ap_materno")) ? "" : reader.GetString(reader.GetOrdinal("ap_materno")),
                         }
                     });
                 }
