@@ -44,14 +44,14 @@ USE tickets_cine;
 CREATE TABLE Persona
 (
     id_persona INT          PRIMARY KEY IDENTITY(1, 1),
-    ci         VARCHAR(20) UNIQUE,
+    ci         VARCHAR(20)  UNIQUE,
     nombre     VARCHAR(100) NOT NULL,
 );
 GO
 
 CREATE TABLE Cliente
 (
-    id_cliente INT         PRIMARY KEY,
+    id_cliente INT PRIMARY KEY,
     FOREIGN KEY(id_cliente) REFERENCES Persona(id_persona),
 );
 
@@ -67,12 +67,21 @@ CREATE TABLE Usuario
 );
 GO
 
+CREATE TABLE Salas
+(
+    sala_id  INT PRIMARY KEY IDENTITY(1, 1),
+    filas    INT NOT NULL,
+    columnas INT NOT NULL,
+    bloques  INT NOT NULL,
+)
+
 -- Tabla Peliculas
 CREATE TABLE Peliculas
 (
     pelicula_id   INT          PRIMARY KEY IDENTITY(1, 1),
     titulo        VARCHAR(100) NOT NULL,
     duracion      INT          NOT NULL,
+    genero        VARCHAR(20)  NOT NULL,
     -- en minutos
     clasificacion VARCHAR(10)  NOT NULL
 );
@@ -82,22 +91,24 @@ GO
 CREATE TABLE Horarios
 (
     horario_id  INT           PRIMARY KEY IDENTITY(1, 1),
+    sala_id     INT           NOT NULL,
     pelicula_id INT           NOT NULL,
     fecha       DATE          NOT NULL,
     hora_inicio TIME          NOT NULL,
     precio      DECIMAL(8, 2) NOT NULL,
-    FOREIGN KEY (pelicula_id) REFERENCES Peliculas (pelicula_id)
+    FOREIGN KEY (sala_id) REFERENCES Salas (sala_id),
+    FOREIGN KEY (pelicula_id) REFERENCES Peliculas (pelicula_id),
 );
 
 -- Tabla Asientos
 CREATE TABLE Asientos
 (
     asiento_id INT     PRIMARY KEY IDENTITY(1, 1),
-    fila       CHAR(1) NOT NULL,
-    -- Por ejemplo: 'A', 'B', 'C', etc.
-    columna    INT     NOT NULL,
-    -- Número de columna
-    sala       INT     NOT NULL
+    sala_id    INT     NOT NULL,
+    codigo     CHAR(4),
+    -- true: 1, false: 0
+    ocupado    BIT     NOT NULL DEFAULT 0,
+    FOREIGN KEY (sala_id) REFERENCES Salas (sala_id),
 );
 GO
 
@@ -106,9 +117,7 @@ CREATE TABLE Tickets
 (
     ticket_id    INT           PRIMARY KEY IDENTITY(1, 1),
     cliente_id   INT           NOT NULL,
-    -- Referencia al cliente que compró el ticket
     usuario_id   INT           NOT NULL,
-    -- Usuario que vendió el ticket
     horario_id   INT           NOT NULL,
     asiento_id   INT           NOT NULL,
     fecha_compra DATETIME      DEFAULT CURRENT_TIMESTAMP,
