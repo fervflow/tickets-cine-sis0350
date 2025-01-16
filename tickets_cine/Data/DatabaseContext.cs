@@ -1,6 +1,6 @@
 ﻿using System.Data.SqlClient;
 
-namespace upds_ventas.Data
+namespace tickets_cine.Data
 {
     internal class DatabaseContext
     {

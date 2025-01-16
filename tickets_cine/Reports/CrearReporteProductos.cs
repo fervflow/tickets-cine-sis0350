@@ -1,10 +1,10 @@
 ﻿using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
-using upds_ventas.Models;
-using upds_ventas.Repos;
+using tickets_cine.Models;
+using tickets_cine.Repos;
 
-namespace upds_ventas.Reports
+namespace tickets_cine.Reports
 {
     internal class CrearReporteProductos
     {

@@ -1,4 +1,4 @@
-﻿namespace upds_ventas.Forms
+﻿namespace tickets_cine.Forms
 {
     public partial class VisualizarReporte : Form
     {

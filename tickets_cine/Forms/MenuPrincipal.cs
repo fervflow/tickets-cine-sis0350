@@ -1,10 +1,10 @@
 ﻿using System.Diagnostics;
 //using upds_ventas.Utils;
-using upds_ventas.Models;
-using upds_ventas.Reports;
-using upds_ventas.Repos;
+using tickets_cine.Models;
+using tickets_cine.Reports;
+using tickets_cine.Repos;
 
-namespace upds_ventas.Forms
+namespace tickets_cine.Forms
 {
     public partial class MenuPrincipal : Form
     {

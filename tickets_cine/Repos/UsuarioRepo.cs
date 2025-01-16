@@ -1,9 +1,9 @@
 ﻿//using Microsoft.Data.SqlClient;
 using System.Data.SqlClient;
-using upds_ventas.Data;
-using upds_ventas.Models;
+using tickets_cine.Data;
+using tickets_cine.Models;
 
-namespace upds_ventas.Repos
+namespace tickets_cine.Repos
 {
     internal class UsuarioRepo
     {

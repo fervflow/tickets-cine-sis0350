@@ -1,6 +1,7 @@
-using upds_ventas.Forms;
+using tickets_cine.Forms;
+//using tickets_cine.Forms;
 
-namespace upds_ventas
+namespace tickets_cine
 {
     internal static class Program
     {
@@ -11,7 +12,8 @@ namespace upds_ventas
             QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
 
             ApplicationConfiguration.Initialize();
-            Application.Run(new Login());
+            //Application.Run(new Login());
+            Application.Run(new CineAsientosForm());
         }
         //{
         //    var services = ConfigureServices();

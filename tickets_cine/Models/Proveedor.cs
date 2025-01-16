@@ -1,4 +1,4 @@
-﻿namespace upds_ventas.Models;
+﻿namespace tickets_cine.Models;
 
 public partial class Proveedor
 {

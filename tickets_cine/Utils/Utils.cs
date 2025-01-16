@@ -1,4 +1,4 @@
-﻿namespace upds_ventas.Utils
+﻿namespace tickets_cine.Utils
 {
     internal class Utils
     {
