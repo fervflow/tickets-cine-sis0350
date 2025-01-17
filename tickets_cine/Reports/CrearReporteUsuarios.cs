@@ -81,16 +81,6 @@ namespace tickets_cine.Reports
                 });
             });
 
-            //string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            //string reportFolder = Path.Combine(documentsPath, "Reportes upds_ventas");
-
-            //if (!Directory.Exists(reportFolder))
-            //{
-            //    Directory.CreateDirectory(reportFolder);
-            //}
-
-            //string reportPath = Path.Combine(reportFolder, "Reporte Usuarios.pdf");
-
             document.GeneratePdf(reportPath);
         }
     }
