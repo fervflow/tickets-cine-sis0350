@@ -218,6 +218,41 @@ WHERE p.ci=@ci
 GO
 
 
+-- PELICULAS
+
+-- INSERTAR PELICULA
+CREATE OR ALTER PROCEDURE sp_insertar_pelicula
+    @titulo NVARCHAR(100),
+    @duracion INT,
+    @genero NVARCHAR(20),
+    @clasificacion NVARCHAR(10)
+AS
+BEGIN
+    INSERT INTO Peliculas (titulo, duracion, genero, clasificacion)
+    VALUES (@titulo, @duracion, @genero, @clasificacion);
+
+    SELECT SCOPE_IDENTITY() AS pelicula_id;
+END;
+GO
+
+-- LISTAR PELICULAS
+CREATE OR ALTER PROCEDURE sp_listar_peliculas
+AS
+BEGIN
+    SELECT 
+        pelicula_id,
+        titulo,
+        duracion,
+        genero,
+        clasificacion
+    FROM Peliculas;
+END;
+GO
+
+
+
+
+
 -- SALAS
 -- LISTAR SALAS
 CREATE OR ALTER PROCEDURE sp_listar_salas
@@ -296,7 +331,7 @@ GO
 
 -- HORARIOS
 
--- LISTAR
+-- LISTAR HORARIOS
 CREATE PROCEDURE sp_listar_horarios
 AS
 BEGIN
@@ -322,6 +357,126 @@ BEGIN
     END CATCH
 END;
 GO
+
+-- INSERTAR HORARIOS
+CREATE OR ALTER PROCEDURE sp_insertar_horario
+    @sala_id INT,
+    @pelicula_id INT,
+    @fecha DATE,
+    @hora_inicio TIME,
+    @precio DECIMAL(8, 2)
+AS
+BEGIN
+    INSERT INTO Horarios (sala_id, pelicula_id, fecha, hora_inicio, precio)
+    VALUES (@sala_id, @pelicula_id, @fecha, @hora_inicio, @precio);
+
+    SELECT SCOPE_IDENTITY() AS horario_id;
+END;
+GO
+
+
+-- PELICULAS
+-- INSERTAR PELICULAS
+CREATE OR ALTER PROCEDURE sp_insertar_pelicula
+    @titulo NVARCHAR(100),
+    @duracion INT,
+    @genero NVARCHAR(20),
+    @clasificacion NVARCHAR(10)
+AS
+BEGIN
+    INSERT INTO Peliculas (titulo, duracion, genero, clasificacion)
+    VALUES (@titulo, @duracion, @genero, @clasificacion);
+
+    SELECT SCOPE_IDENTITY() AS pelicula_id;
+END;
+GO
+
+-- LISTAR PELICULAS
+CREATE OR ALTER PROCEDURE sp_listar_peliculas
+AS
+BEGIN
+    SELECT 
+        pelicula_id,
+        titulo,
+        duracion,
+        genero,
+        clasificacion
+    FROM Peliculas;
+END;
+GO
+
+
+-- TICKETS
+
+-- INSERTAR TICKET
+CREATE OR ALTER PROCEDURE sp_insertar_ticket
+    @cliente_id INT,
+    @usuario_id INT,
+    @horario_id INT,
+    @asiento_id INT,
+    @precio_total DECIMAL(8, 2)
+AS
+BEGIN
+    BEGIN TRY
+        UPDATE Asientos
+        SET ocupado = 1
+        WHERE asiento_id = @asiento_id;
+
+        INSERT INTO Tickets (cliente_id, usuario_id, horario_id, asiento_id, precio_total)
+        VALUES (@cliente_id, @usuario_id, @horario_id, @asiento_id, @precio_total);
+
+        SELECT SCOPE_IDENTITY() AS ticket_id;
+    END TRY
+    BEGIN CATCH
+        THROW;
+    END CATCH
+END;
+GO
+
+-- OBTENER TICKET
+CREATE OR ALTER PROCEDURE sp_obtener_ticket
+    @ticket_id INT
+AS
+BEGIN
+    SELECT 
+        t.ticket_id,
+        t.fecha_compra,
+        t.precio_total,
+
+        -- Cliente
+        c.id_cliente AS cliente_id,
+        p.ci AS cliente_ci,
+        p.nombre AS cliente_nombre,
+
+        -- Usuario
+        u.id_usuario AS usuario_id,
+        u.nombre_usuario AS usuario_nombre_usuario,
+
+        -- Horario
+        h.horario_id,
+        h.sala_id AS sala_id,
+        h.fecha AS horario_fecha,
+        h.hora_inicio AS horario_hora_inicio,
+        h.precio AS horario_precio,
+
+        -- Pelicula
+        pel.pelicula_id,
+        pel.titulo AS pelicula_titulo,
+        pel.duracion AS pelicula_duracion,
+        pel.genero AS pelicula_genero,
+        pel.clasificacion AS pelicula_clasificacion
+    FROM 
+        Tickets t
+    INNER JOIN Cliente c ON t.cliente_id = c.id_cliente
+    INNER JOIN Persona p ON c.id_cliente = p.id_persona
+    INNER JOIN Usuario u ON t.usuario_id = u.id_usuario
+    INNER JOIN Horarios h ON t.horario_id = h.horario_id
+    INNER JOIN Peliculas pel ON h.pelicula_id = pel.pelicula_id
+    WHERE 
+        t.ticket_id = @ticket_id;
+END;
+GO
+
 
 
 -- REPORTES
