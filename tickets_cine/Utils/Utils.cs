@@ -5,7 +5,7 @@
         public static string ReportPath(string nombreReporte)
         {
             string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string reportFolder = Path.Combine(documentsPath, "Reportes upds_ventas");
+            string reportFolder = Path.Combine(documentsPath, "Reportes_tickets-cine");
 
             if (!Directory.Exists(reportFolder))
             {

@@ -12,8 +12,8 @@ namespace tickets_cine
             QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
 
             ApplicationConfiguration.Initialize();
-            //Application.Run(new Login());
-            Application.Run(new CineAsientosForm());
+            Application.Run(new Login());
+            //Application.Run(new CineAsientosForm());
         }
         //{
         //    var services = ConfigureServices();

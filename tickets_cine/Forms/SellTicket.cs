@@ -17,7 +17,17 @@ namespace tickets_cine.Forms
             InitializeComponent();
         }
 
-        private void foreverTextBox1_TextChanged(object sender, EventArgs e)
+        private void foreverLabel3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void foreverLabel4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SellTicketForm_Click(object sender, EventArgs e)
         {
 
         }

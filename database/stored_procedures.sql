@@ -323,3 +323,16 @@ BEGIN
 END;
 GO
 
+
+-- REPORTES
+CREATE OR ALTER PROC sp_reporte_usuarios
+AS
+SELECT
+    p.ci,
+    p.nombre,
+    u.nombre_usuario,
+    u.tipo,
+    u.estado
+FROM persona p INNER JOIN usuario u
+    ON p.id_persona=u.id_usuario
+GO

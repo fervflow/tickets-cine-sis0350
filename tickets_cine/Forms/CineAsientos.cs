@@ -20,8 +20,6 @@ namespace tickets_cine.Forms
             _ = CargarSalas();
 
 
-
-            //DrawSeats(10, 15);
         }
 
         private async Task CargarSalas()
@@ -33,7 +31,6 @@ namespace tickets_cine.Forms
             foreach (Sala sala in salas)
             {
                 CBxSalas.Items.Add($"Sala {sala.Id}");
-                //MessageBox.Show($"Cargado Sala: {sala.Id}");
             }
 
             if (CBxSalas.Items.Count > 0)
@@ -65,43 +62,63 @@ namespace tickets_cine.Forms
         {
             int seatSize = 24;
             int margin = 4;
+            int blockSpacing = 10;
+            int seatIndex = 0;
 
             for (int row = 0; row < rows; row++)
             {
-                for (int col = 0; col < columns; col++)
+                for (int col = 0; col < columns; col++, seatIndex++)
                 {
-                    Button seatButton = new Button
+                    //int adjustedCol = col;
+                    //if (bloques > 1)
+                    //{
+                    //    int blockSize = (int)Math.Ceiling(columns / (double)bloques);
+                    //    int extraSpace = (col / blockSize) * blockSpacing;
+                    //    adjustedCol += extraSpace;
+                    //}
+
+                    PictureBox seatPicBox = new PictureBox
                     {
                         Size = new Size(seatSize, seatSize),
                         Location = new Point(
                             10 + col * (seatSize + margin),
                             10 + row * (seatSize + margin)
                         ),
-                        //BackgroundImage = Image.FromFile("seat-available.png"),
                         BackColor = Color.DarkOliveGreen,
                         BackgroundImageLayout = ImageLayout.Stretch,
-                        FlatStyle = FlatStyle.Flat,
-
-                        Tag = new { Row = row, Column = col, Custom = 12 }
+                        BorderStyle = BorderStyle.FixedSingle,
+                        Tag = new { Row = row+1, Column = col+1, AsientoIdx = seatIndex }
                     };
-                    seatButton.FlatAppearance.BorderColor = Color.FromArgb(60, 70, 73);
-                    seatButton.FlatAppearance.BorderSize = 3;
 
-                    seatButton.Click += AsientoButton_Click;
-                    panelAsientos.Controls.Add(seatButton);
+                    seatPicBox.Click += Asiento_Click;
+                    //seatPicBox.MouseDoubleClick += Asiento_DoubleClick;
+                    panelAsientos.Controls.Add(seatPicBox);
                 }
             }
         }
 
-        private void AsientoButton_Click(object sender, EventArgs e)
+        private void Asiento_Click(object sender, EventArgs e)
         {
-            Button? clickedSeat = sender as Button;
+            PictureBox? clickedSeat = sender as PictureBox;
             var seatInfo = (dynamic)clickedSeat!.Tag!;
 
-            MessageBox.Show($"Seat clicked: Row {seatInfo!.Row + 1}, Column {seatInfo.Column + 1}", "Seat Info");
+            MessageBox.Show($"Seat clicked: Row {seatInfo!.Row + 1}, Column {seatInfo.Column + 1}, Cod. Asiento: {asientos[seatInfo.AsientoIdx].Codigo}",
+                "Seat Info"
+            );
             // Logic to open another form or execute further actions
         }
 
-        
+        //private void Asiento_DoubleClick(object sender, MouseEventArgs e)
+        //{
+        //    PictureBox? clickedSeat = sender as PictureBox;
+        //    var seatInfo = (dynamic)clickedSeat!.Tag!;
+
+        //    MessageBox.Show(
+        //        $"Double-click: Row {seatInfo.Row + 1}, Column {seatInfo.Column + 1}",
+        //        "Seat Info"
+        //    );
+        //}
+
+
     }
 }
