@@ -1,5 +1,4 @@
-﻿//using Microsoft.Data.SqlClient;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 using tickets_cine.Data;
 using tickets_cine.Models;
 
@@ -58,9 +57,7 @@ namespace tickets_cine.Repos
                         {
                             IdPersona = reader.GetInt32(reader.GetOrdinal("id_persona")),
                             Ci = reader.IsDBNull(reader.GetOrdinal("ci")) ? null : reader.GetString(reader.GetOrdinal("ci")),
-                            Nombre = reader.GetString(reader.GetOrdinal("nombre")),
-                            //ApPaterno = reader.GetString(reader.GetOrdinal("ap_paterno")),
-                            //ApMaterno = reader.IsDBNull(reader.GetOrdinal("ap_materno")) ? null : reader.GetString(reader.GetOrdinal("ap_materno"))
+                            Nombre = reader.GetString(reader.GetOrdinal("nombre"))
                         }
                     };
                 }
@@ -83,8 +80,6 @@ namespace tickets_cine.Repos
                 using SqlCommand cmd = new SqlCommand(sql, dbContext.Con);
                 cmd.Parameters.AddWithValue("@ci", u.Persona.Ci);
                 cmd.Parameters.AddWithValue("@nombre", u.Persona.Nombre);
-                //cmd.Parameters.AddWithValue("@ap_paterno", u.Persona.ApPaterno);
-                //cmd.Parameters.AddWithValue("@ap_materno", u.Persona.ApMaterno ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@usuario", u.NombreUsuario);
                 cmd.Parameters.AddWithValue("@pass", u.Pass);
                 cmd.Parameters.AddWithValue("@tipo", u.Tipo);
@@ -122,8 +117,6 @@ namespace tickets_cine.Repos
                             IdPersona = reader.GetInt32(reader.GetOrdinal("id_persona")),
                             Ci = reader.IsDBNull(reader.GetOrdinal("ci")) ? null : reader.GetString(reader.GetOrdinal("ci")),
                             Nombre = reader.GetString(reader.GetOrdinal("nombre")),
-                            //ApPaterno = reader.GetString(reader.GetOrdinal("ap_paterno")),
-                            //ApMaterno = reader.IsDBNull(reader.GetOrdinal("ap_materno")) ? null : reader.GetString(reader.GetOrdinal("ap_materno"))
                         }
                     });
                 }

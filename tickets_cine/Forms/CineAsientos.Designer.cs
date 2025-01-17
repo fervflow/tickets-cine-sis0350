@@ -29,7 +29,8 @@
         private void InitializeComponent()
         {
             CineAsientosForeverForm = new ReaLTaiizor.Forms.ForeverForm();
-            button1 = new Button();
+            CBxSalas = new ReaLTaiizor.Controls.ForeverComboBox();
+            foreverLabel1 = new ReaLTaiizor.Controls.ForeverLabel();
             panelAsientos = new ReaLTaiizor.Controls.Panel();
             foreverClose1 = new ReaLTaiizor.Controls.ForeverClose();
             CineAsientosForeverForm.SuspendLayout();
@@ -40,7 +41,8 @@
             CineAsientosForeverForm.BackColor = Color.White;
             CineAsientosForeverForm.BaseColor = Color.FromArgb(60, 70, 73);
             CineAsientosForeverForm.BorderColor = Color.DodgerBlue;
-            CineAsientosForeverForm.Controls.Add(button1);
+            CineAsientosForeverForm.Controls.Add(CBxSalas);
+            CineAsientosForeverForm.Controls.Add(foreverLabel1);
             CineAsientosForeverForm.Controls.Add(panelAsientos);
             CineAsientosForeverForm.Controls.Add(foreverClose1);
             CineAsientosForeverForm.Dock = DockStyle.Fill;
@@ -61,28 +63,45 @@
             CineAsientosForeverForm.TextColor = Color.FromArgb(234, 234, 234);
             CineAsientosForeverForm.TextLight = Color.SeaGreen;
             // 
-            // button1
+            // CBxSalas
             // 
-            button1.BackColor = Color.DarkOliveGreen;
-            button1.FlatAppearance.BorderColor = Color.FromArgb(64, 64, 64);
-            button1.FlatAppearance.BorderSize = 2;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Location = new Point(114, 581);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 41);
-            button1.TabIndex = 2;
-            button1.Text = "button1";
-            button1.UseVisualStyleBackColor = false;
+            CBxSalas.BaseColor = Color.FromArgb(25, 27, 29);
+            CBxSalas.BGColor = Color.FromArgb(45, 47, 49);
+            CBxSalas.DrawMode = DrawMode.OwnerDrawFixed;
+            CBxSalas.DropDownStyle = ComboBoxStyle.DropDownList;
+            CBxSalas.Font = new Font("Segoe UI", 11F);
+            CBxSalas.ForeColor = Color.White;
+            CBxSalas.FormattingEnabled = true;
+            CBxSalas.HoverColor = Color.FromArgb(35, 168, 109);
+            CBxSalas.HoverFontColor = Color.White;
+            CBxSalas.ItemHeight = 24;
+            CBxSalas.Location = new Point(767, 86);
+            CBxSalas.Name = "CBxSalas";
+            CBxSalas.Size = new Size(221, 30);
+            CBxSalas.TabIndex = 4;
+            CBxSalas.SelectedIndexChanged += CBxSalas_SelectedIndexChanged;
+            // 
+            // foreverLabel1
+            // 
+            foreverLabel1.AutoSize = true;
+            foreverLabel1.BackColor = Color.Transparent;
+            foreverLabel1.Font = new Font("Segoe UI", 11F);
+            foreverLabel1.ForeColor = Color.LightGray;
+            foreverLabel1.Location = new Point(767, 63);
+            foreverLabel1.Name = "foreverLabel1";
+            foreverLabel1.Size = new Size(40, 20);
+            foreverLabel1.TabIndex = 2;
+            foreverLabel1.Text = "Sala:";
             // 
             // panelAsientos
             // 
             panelAsientos.AutoScroll = true;
             panelAsientos.BackColor = Color.FromArgb(39, 51, 63);
             panelAsientos.EdgeColor = Color.FromArgb(32, 41, 50);
-            panelAsientos.Location = new Point(12, 54);
+            panelAsientos.Location = new Point(12, 63);
             panelAsientos.Name = "panelAsientos";
             panelAsientos.Padding = new Padding(15);
-            panelAsientos.Size = new Size(976, 521);
+            panelAsientos.Size = new Size(749, 575);
             panelAsientos.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             panelAsientos.TabIndex = 1;
             panelAsientos.Text = "Panel Asientos";
@@ -115,6 +134,7 @@
             Text = "CineAsientos";
             TransparencyKey = Color.Fuchsia;
             CineAsientosForeverForm.ResumeLayout(false);
+            CineAsientosForeverForm.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -123,6 +143,7 @@
         private ReaLTaiizor.Forms.ForeverForm CineAsientosForeverForm;
         private ReaLTaiizor.Controls.ForeverClose foreverClose1;
         private ReaLTaiizor.Controls.Panel panelAsientos;
-        private Button button1;
+        private ReaLTaiizor.Controls.ForeverLabel foreverLabel1;
+        private ReaLTaiizor.Controls.ForeverComboBox CBxSalas;
     }
 }

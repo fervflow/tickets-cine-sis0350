@@ -218,6 +218,22 @@ WHERE p.ci=@ci
 GO
 
 
+-- SALAS
+-- LISTAR SALAS
+CREATE OR ALTER PROCEDURE sp_listar_salas
+AS
+SELECT
+    sala_id,
+    filas,
+    columnas,
+    bloques
+FROM Salas;
+GO
+
+
+DROP PROCEDURE sp_listar_salas;
+GO
+
 -- INSERTAR ASIENTOS para SALAS
 CREATE OR ALTER PROCEDURE sp_insertar_asientos_sala
     @sala_id INT
@@ -262,6 +278,48 @@ BEGIN
         FilaCTE, ColumnaCTE;
 
     PRINT 'Asientos successfully inserted for Sala ID: ' + CAST(@sala_id AS VARCHAR(10));
+END;
+GO
+
+-- OBTENER ASIENTOS DE UNA SALA
+CREATE OR ALTER PROCEDURE sp_obtener_asientos
+    @sala_id INT
+AS
+SELECT
+    asiento_id,
+    codigo,
+    ocupado
+FROM Asientos
+WHERE sala_id = @sala_id;
+GO
+
+
+-- HORARIOS
+
+-- LISTAR
+CREATE PROCEDURE sp_listar_horarios
+AS
+BEGIN
+    BEGIN TRY
+        SELECT
+            H.horario_id,
+            H.sala_id,
+            H.pelicula_id,
+            H.fecha,
+            H.hora_inicio,
+            H.precio,
+            P.titulo AS pelicula_titulo,
+            P.duracion AS pelicula_duracion,
+            P.genero AS pelicula_genero,
+            P.clasificacion AS pelicula_clasificacion
+    FROM Horarios H
+        JOIN Salas S ON H.sala_id = S.sala_id
+        JOIN Peliculas P ON H.pelicula_id = P.pelicula_id
+    ORDER BY H.fecha, H.hora_inicio;
+    END TRY
+    BEGIN CATCH
+        THROW;
+    END CATCH
 END;
 GO
 

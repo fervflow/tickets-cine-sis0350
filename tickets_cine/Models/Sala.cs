@@ -3,7 +3,7 @@
 public partial class Sala
 {
     public int Id { get; set; }
-    public int filas {  get; set; }
-    public int columnas { get; set; }
-    public int bloques { get; set; }
+    public int Filas {  get; set; }
+    public int Columnas { get; set; }
+    public int Bloques { get; set; }
 }

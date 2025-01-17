@@ -7,4 +7,5 @@ public partial class Pelicula
     public int Duracion {  get; set; }
     public string Genero { get; set; } = null!;
     public string Clasificacion { get; set; } = null!;
+    public virtual ICollection<Horario> Horarios { get; set; } = new List<Horario>();
 }
