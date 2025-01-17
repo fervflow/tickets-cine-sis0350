@@ -1,5 +1,4 @@
 using tickets_cine.Forms;
-//using tickets_cine.Forms;
 
 namespace tickets_cine
 {
@@ -31,9 +30,9 @@ namespace tickets_cine
         //    var services = new ServiceCollection();
 
         //    // Register DbContext with the connection string
-        //    services.AddDbContext<UpdsVentasContext>();
-        //    //services.AddDbContext<UpdsVentasContext>(options =>
-        //    //    options.UseSqlServer("Server=localhost;Database=upds_ventas;Trusted_Connection=True;TrustServerCertificate=True"));//,
+        //    services.AddDbContext<TicketsCineContext>();
+        //    //services.AddDbContext<TicketsCineContext>(options =>
+        //    //    options.UseSqlServer("Server=localhost;Database=tickets_cine;Trusted_Connection=True;TrustServerCertificate=True"));//,
         //        //ServiceLifetime.Singleton);
 
         //    // Register repositories

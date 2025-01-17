@@ -19,13 +19,13 @@ BEGIN
     BEGIN
         DECLARE @id_usuario INT = (
             SELECT id_usuario
-        FROM Usuario
-        WHERE nombre_usuario = @usuario
+            FROM Usuario
+            WHERE nombre_usuario = @usuario
         );
         IF (SELECT estado
-        FROM Usuario
-        WHERE id_usuario = @id_usuario
-        ) = 1
+            FROM Usuario
+            WHERE id_usuario = @id_usuario
+            ) = 1
         BEGIN
             IF (
                 SELECT DECRYPTBYPASSPHRASE('upds', pass)
@@ -266,9 +266,6 @@ FROM Salas;
 GO
 
 
-DROP PROCEDURE sp_listar_salas;
-GO
-
 -- INSERTAR ASIENTOS para SALAS
 CREATE OR ALTER PROCEDURE sp_insertar_asientos_sala
     @sala_id INT
@@ -332,7 +329,7 @@ GO
 -- HORARIOS
 
 -- LISTAR HORARIOS
-CREATE PROCEDURE sp_listar_horarios
+CREATE OR ALTER PROCEDURE sp_listar_horarios
 AS
 BEGIN
     BEGIN TRY
@@ -480,6 +477,7 @@ GO
 
 
 -- REPORTES
+-- USUARIOS
 CREATE OR ALTER PROC sp_reporte_usuarios
 AS
 SELECT
@@ -491,3 +489,41 @@ SELECT
 FROM persona p INNER JOIN usuario u
     ON p.id_persona=u.id_usuario
 GO
+
+-- TICKETS VENDIDOS POR UN USUARIO
+CREATE OR ALTER PROCEDURE sp_obtener_tickets_por_usuario
+    @usuario_id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT
+        t.ticket_id,
+        t.cliente_id,
+        cp.nombre AS cliente_nombre,
+        t.usuario_id,
+        t.horario_id,
+        h.fecha AS horario_fecha,
+        h.hora_inicio AS horario_hora_inicio,
+        h.precio AS horario_precio,
+        p.titulo AS pelicula_titulo,
+        t.asiento_id,
+        a.codigo AS asiento_codigo,
+        t.fecha_compra,
+        t.precio_total
+    FROM
+        Tickets t
+    INNER JOIN Cliente c ON t.cliente_id = c.id_cliente
+    INNER JOIN Persona cp ON c.id_cliente = cp.id_persona
+    INNER JOIN Usuario u ON t.usuario_id = u.id_usuario
+    INNER JOIN Persona up ON u.id_usuario = up.id_persona
+    INNER JOIN Horarios h ON t.horario_id = h.horario_id
+    INNER JOIN Peliculas p ON h.pelicula_id = p.pelicula_id
+    INNER JOIN Asientos a ON t.asiento_id = a.asiento_id
+    WHERE
+        t.usuario_id = @usuario_id
+    ORDER BY
+        t.fecha_compra DESC;
+END;
+GO
+

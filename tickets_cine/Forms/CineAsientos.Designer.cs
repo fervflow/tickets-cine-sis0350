@@ -33,6 +33,7 @@
             foreverLabel1 = new ReaLTaiizor.Controls.ForeverLabel();
             panelAsientos = new ReaLTaiizor.Controls.Panel();
             foreverClose1 = new ReaLTaiizor.Controls.ForeverClose();
+            BtnAdmin = new ReaLTaiizor.Controls.ForeverButton();
             CineAsientosForeverForm.SuspendLayout();
             SuspendLayout();
             // 
@@ -41,6 +42,7 @@
             CineAsientosForeverForm.BackColor = Color.White;
             CineAsientosForeverForm.BaseColor = Color.FromArgb(60, 70, 73);
             CineAsientosForeverForm.BorderColor = Color.DodgerBlue;
+            CineAsientosForeverForm.Controls.Add(BtnAdmin);
             CineAsientosForeverForm.Controls.Add(CBxSalas);
             CineAsientosForeverForm.Controls.Add(foreverLabel1);
             CineAsientosForeverForm.Controls.Add(panelAsientos);
@@ -122,6 +124,20 @@
             foreverClose1.Text = "foreverClose1";
             foreverClose1.TextColor = Color.FromArgb(243, 243, 243);
             // 
+            // BtnAdmin
+            // 
+            BtnAdmin.BackColor = Color.Transparent;
+            BtnAdmin.BaseColor = Color.FromArgb(35, 168, 109);
+            BtnAdmin.Font = new Font("Segoe UI", 12F);
+            BtnAdmin.Location = new Point(767, 598);
+            BtnAdmin.Name = "BtnAdmin";
+            BtnAdmin.Rounded = false;
+            BtnAdmin.Size = new Size(221, 40);
+            BtnAdmin.TabIndex = 0;
+            BtnAdmin.Text = "Ir a Administración";
+            BtnAdmin.TextColor = Color.FromArgb(243, 243, 243);
+            BtnAdmin.Click += BtnAdmin_Click;
+            // 
             // CineAsientosForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -145,5 +161,6 @@
         private ReaLTaiizor.Controls.Panel panelAsientos;
         private ReaLTaiizor.Controls.ForeverLabel foreverLabel1;
         private ReaLTaiizor.Controls.ForeverComboBox CBxSalas;
+        private ReaLTaiizor.Controls.ForeverButton BtnAdmin;
     }
 }

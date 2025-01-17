@@ -82,7 +82,6 @@ CREATE TABLE Peliculas
     titulo        VARCHAR(100) NOT NULL,
     duracion      INT          NOT NULL,
     genero        VARCHAR(20)  NOT NULL,
-    -- en minutos
     clasificacion VARCHAR(10)  NOT NULL
 );
 GO

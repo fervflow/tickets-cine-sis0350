@@ -20,10 +20,17 @@ namespace tickets_cine.Forms
             {
                 case 0:
                     Usuario usuarioActual = await repo.ObtenerUsuarioLogueado(TbUsuario.Text);
-                    var formMenuPrincipal = new MenuPrincipal(usuarioActual);
-                    formMenuPrincipal.FormClosed += (s, args) => this.Close();
+                    //var formMenuPrincipal = new MenuPrincipal(usuarioActual);
+                    //formMenuPrincipal.FormClosed += (s, args) => this.Close();
+
+                    var formCine = new CineAsientosForm(usuarioActual);
+                    formCine.FormClosed += (s, args) => this.Close();
+
                     this.Hide();
-                    formMenuPrincipal.Show();
+
+                    //formMenuPrincipal.Show();
+                    formCine.Show();
+                    
                     break;
                 case 1:
                     MessageBox.Show($"Usuario '{TbUsuario.Text}' no encontrado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

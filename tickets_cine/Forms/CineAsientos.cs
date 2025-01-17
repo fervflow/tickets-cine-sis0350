@@ -7,14 +7,18 @@ namespace tickets_cine.Forms
     {
         string asientoDisponiblePath = Path.Combine(Application.StartupPath, "Resources", "seat-available.png");
 
+        private readonly Usuario usuarioActual;
+
         private readonly SalaRepo _salaRepo = new SalaRepo();
         private readonly AsientoRepo _asientoRepo = new AsientoRepo();
 
         private List<Sala> salas = [];
         private List<Asiento> asientos = [];
 
-        public CineAsientosForm()
+        public CineAsientosForm(Usuario u)
         {
+            usuarioActual = u;
+
             InitializeComponent();
 
             _ = CargarSalas();
@@ -65,6 +69,8 @@ namespace tickets_cine.Forms
             int blockSpacing = 10;
             int seatIndex = 0;
 
+            panelAsientos.Controls.Clear();
+
             for (int row = 0; row < rows; row++)
             {
                 for (int col = 0; col < columns; col++, seatIndex++)
@@ -87,7 +93,7 @@ namespace tickets_cine.Forms
                         BackColor = Color.DarkOliveGreen,
                         BackgroundImageLayout = ImageLayout.Stretch,
                         BorderStyle = BorderStyle.FixedSingle,
-                        Tag = new { Row = row+1, Column = col+1, AsientoIdx = seatIndex }
+                        Tag = new { Row = row + 1, Column = col + 1, AsientoIdx = seatIndex }
                     };
 
                     seatPicBox.Click += Asiento_Click;
@@ -105,7 +111,14 @@ namespace tickets_cine.Forms
             MessageBox.Show($"Seat clicked: Row {seatInfo!.Row + 1}, Column {seatInfo.Column + 1}, Cod. Asiento: {asientos[seatInfo.AsientoIdx].Codigo}",
                 "Seat Info"
             );
-            // Logic to open another form or execute further actions
+        }
+
+        private void BtnAdmin_Click(object sender, EventArgs e)
+        {
+            var formMenuPrincipal = new MenuPrincipal(usuarioActual);
+            //formMenuPrincipal.FormClosed += (s, args) => this.Close();
+            //this.Hide();
+            formMenuPrincipal.ShowDialog();
         }
 
         //private void Asiento_DoubleClick(object sender, MouseEventArgs e)
